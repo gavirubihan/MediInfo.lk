@@ -19,7 +19,7 @@ export default function MedicineDetailPage() {
 
   return (
     <>
-      <div className="py-6 bg-off-white">
+      <div className="pt-36 pb-6 bg-off-white">
         <div className="max-w-[1200px] mx-auto px-6 md:px-12">
           <div className="flex items-center gap-1.5 text-[13px] text-mid-gray">
             <Link href="/" className="text-blue no-underline hover:underline">Home</Link>

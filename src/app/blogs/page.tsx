@@ -7,7 +7,7 @@ import { Check } from 'lucide-react';
 export default function BlogsPage() {
   return (
     <>
-      <div className="bg-blue pt-14 pb-10">
+      <div className="bg-blue pt-36 pb-10">
         <div className="max-w-[1200px] mx-auto px-6 md:px-12">
           <p className="text-[13px] text-white/70 uppercase tracking-[1px] mb-2 font-semibold">Knowledge Base</p>
           <h1 className="text-[36px] font-bold leading-[1.2] font-plus-jakarta text-white mb-2">Health Articles & Insights</h1>
