@@ -97,7 +97,9 @@ export const Navbar = () => {
                 </button>
               ))}
             </div>
-            <Button variant="login" className="rounded-full px-6 py-2 text-[14px] h-[38px] font-bold shadow-[0_4px_12px_rgba(26,111,191,0.2)]">Login</Button>
+            <Link href="/login" className="no-underline">
+              <Button variant="login" className="rounded-full px-6 py-2 text-[14px] h-[38px] font-bold shadow-[0_4px_12px_rgba(26,111,191,0.2)]">Login</Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -152,7 +154,9 @@ export const Navbar = () => {
                 </button>
               ))}
             </div>
-            <Button variant="primary" className="w-full justify-center rounded-full py-3.5 h-auto font-bold text-[15px] shadow-[0_4px_16px_rgba(26,111,191,0.25)]">Login</Button>
+            <Link href="/login" className="no-underline block" onClick={() => setIsMobileMenuOpen(false)}>
+              <Button variant="primary" className="w-full justify-center rounded-full py-3.5 h-auto font-bold text-[15px] shadow-[0_4px_16px_rgba(26,111,191,0.25)]">Login</Button>
+            </Link>
           </div>
         </div>
       </div>
