@@ -2,10 +2,12 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { SearchInput } from '@/components/ui/SearchInput';
+import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/Badge';
 import { Pill, Syringe, Circle, AlertCircle, Camera, Search, Filter, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function SearchPage() {
+  const t = useTranslations('SearchPage');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   return (
     <>
@@ -18,9 +20,9 @@ export default function SearchPage() {
             
             {/* Left side: Text Search */}
             <div className="flex-1 w-full pt-2 lg:pt-4 flex flex-col items-center lg:items-start">
-              <p className="text-[12px] sm:text-[13px] text-white/70 uppercase tracking-[1.5px] mb-2 sm:mb-3 font-bold text-center lg:text-left">Medicine Database</p>
-              <h1 className="text-[32px] sm:text-[38px] lg:text-[46px] font-extrabold leading-[1.15] font-plus-jakarta text-white mb-3 sm:mb-5 text-center lg:text-left">Search Medicines</h1>
-              <p className="text-[14px] sm:text-[15px] lg:text-[16px] text-white/85 mb-8 max-w-[500px] text-center lg:text-left leading-relaxed">Find detailed information from our verified database of 500+ medicines by typing the name or generic name.</p>
+              <p className="text-[12px] sm:text-[13px] text-white/70 uppercase tracking-[1.5px] mb-2 sm:mb-3 font-bold text-center lg:text-left">{t('dbTag')}</p>
+              <h1 className="text-[32px] sm:text-[38px] lg:text-[46px] font-extrabold leading-[1.15] font-plus-jakarta text-white mb-3 sm:mb-5 text-center lg:text-left">{t('title')}</h1>
+              <p className="text-[14px] sm:text-[15px] lg:text-[16px] text-white/85 mb-8 max-w-[500px] text-center lg:text-left leading-relaxed">{t('subtitle')}</p>
               
               <div className="w-full flex flex-col items-center lg:items-start">
                 <div className="relative w-full max-w-[600px] shadow-[0_12px_32px_rgba(0,0,0,0.15)] rounded-2xl group transition-all duration-300 hover:shadow-[0_16px_40px_rgba(0,0,0,0.2)]">
@@ -30,7 +32,7 @@ export default function SearchPage() {
                   <input
                     className="w-full h-[56px] lg:h-[64px] border-none rounded-2xl pl-[44px] lg:pl-[52px] pr-[96px] lg:pr-[126px] text-[15px] lg:text-[16px] font-sans text-dark-gray bg-white outline-none transition-all duration-300 placeholder:text-mid-gray/80 focus:ring-[4px] focus:ring-white/30"
                     type="text"
-                    placeholder="Type medicine name..."
+                    placeholder={t('placeholder')}
                   />
                   <button
                     className="absolute right-2 lg:right-2.5 top-1/2 -translate-y-1/2 px-5 lg:px-8 py-[10px] lg:py-[12px] bg-near-black text-white border-none rounded-[10px] lg:rounded-[12px] text-[14px] lg:text-[15px] font-bold font-sans cursor-pointer transition-all duration-300 hover:bg-dark-gray shadow-[0_4px_12px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.15)] hover:-translate-y-[calc(50%+2px)] active:scale-95"
@@ -40,7 +42,7 @@ export default function SearchPage() {
                 </div>
                 
                 <div className="flex gap-2 flex-wrap mt-6 items-center justify-center lg:justify-start">
-                  <span className="text-[12px] lg:text-[13px] text-white/70 mr-1 font-medium">Popular:</span>
+                  <span className="text-[12px] lg:text-[13px] text-white/70 mr-1 font-medium">{t('popular')}</span>
                   {['Paracetamol', 'Amoxicillin', 'Metformin', 'Omeprazole', 'Cetirizine'].map((med, i) => (
                     <button key={med} className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[12px] sm:text-[13px] font-semibold bg-white/10 text-white border border-white/20 cursor-pointer font-sans transition-all duration-200 hover:bg-white/20 hover:border-white/40 hover:-translate-y-0.5 shadow-sm ${i > 2 ? 'hidden sm:block' : ''}`}>
                       {med}
@@ -59,15 +61,15 @@ export default function SearchPage() {
 
             {/* Right side: Image Upload */}
             <div className="w-full max-w-[440px] bg-white rounded-[28px] p-6 sm:p-8 shadow-[0_24px_48px_rgba(0,0,0,0.2)] shrink-0 animate-in fade-in slide-in-from-bottom-4 lg:slide-in-from-right-8 duration-700">
-              <h3 className="text-center font-bold text-[18px] lg:text-[20px] text-near-black mb-6 font-plus-jakarta tracking-tight">Upload Prescription/Medicine Image</h3>
+              <h3 className="text-center font-bold text-[18px] lg:text-[20px] text-near-black mb-6 font-plus-jakarta tracking-tight">{t('uploadTitle')}</h3>
               
               <div className="relative border-2 border-dashed border-light-gray/80 bg-off-white/50 rounded-[20px] h-[160px] lg:h-[180px] flex flex-col items-center justify-center mb-6 cursor-pointer hover:border-blue hover:bg-blue-light/20 transition-all duration-300 group overflow-hidden">
                 <div className="absolute inset-0 bg-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="bg-white p-3 rounded-full shadow-sm mb-3 group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
                   <Camera size={26} className="text-blue/70 group-hover:text-blue" />
                 </div>
-                <p className="text-[14px] font-semibold text-dark-gray mb-1">Click or drag image here</p>
-                <p className="text-[12px] font-medium text-mid-gray">Supports JPG, PNG up to 5MB</p>
+                <p className="text-[14px] font-semibold text-dark-gray mb-1">{t('uploadDesc1')}</p>
+                <p className="text-[12px] font-medium text-mid-gray">{t('uploadDesc2')}</p>
               </div>
 
               <div className="flex justify-center">
@@ -93,7 +95,7 @@ export default function SearchPage() {
             >
               <div className="flex items-center gap-2 font-plus-jakarta font-bold text-[16px] text-near-black">
                 <Filter size={18} className="text-blue" />
-                Filter Results
+                {t('filterResults')}
               </div>
               <div className="bg-off-white w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300">
                 {isFilterOpen ? <ChevronUp size={18} className="text-mid-gray" /> : <ChevronDown size={18} className="text-mid-gray" />}
@@ -103,7 +105,7 @@ export default function SearchPage() {
             {/* Desktop Header */}
             <div className="hidden lg:flex p-6 pb-0 font-plus-jakarta font-bold text-[16px] text-near-black items-center gap-2">
               <Filter size={18} className="text-blue" />
-              Filter Results
+              {t('filterResults')}
             </div>
 
             {/* Filter Content */}
@@ -111,7 +113,7 @@ export default function SearchPage() {
               <div className="h-px bg-light-gray mb-6 lg:hidden" />
               
               <div className="mb-6">
-                <div className="text-[13px] font-bold uppercase text-mid-gray tracking-[0.5px] mb-2.5">Category</div>
+                <div className="text-[13px] font-bold uppercase text-mid-gray tracking-[0.5px] mb-2.5">{t('category')}</div>
                 {['Antibiotic', 'Painkiller', 'Antihistamine', 'Antacid', 'Vitamin', 'Antidiabetic'].map((cat, i) => (
                   <label key={cat} className="flex items-center gap-2 mb-2 cursor-pointer group">
                     <input type="checkbox" defaultChecked={i < 2} className="accent-blue w-4 h-4 cursor-pointer" />
@@ -122,7 +124,7 @@ export default function SearchPage() {
               <div className="h-px bg-light-gray mb-5" />
 
               <div className="mb-6">
-                <div className="text-[13px] font-bold uppercase text-mid-gray tracking-[0.5px] mb-2.5">Language Available</div>
+                <div className="text-[13px] font-bold uppercase text-mid-gray tracking-[0.5px] mb-2.5">{t('language')}</div>
                 {['English', 'සිංහල (Sinhala)', 'தமிழ் (Tamil)'].map((lang, i) => (
                   <label key={lang} className="flex items-center gap-2 mb-2 cursor-pointer group">
                     <input type="checkbox" defaultChecked={i < 2} className="accent-blue w-4 h-4 cursor-pointer" />
@@ -133,7 +135,7 @@ export default function SearchPage() {
               <div className="h-px bg-light-gray mb-5" />
 
               <div className="mb-6">
-                <div className="text-[13px] font-bold uppercase text-mid-gray tracking-[0.5px] mb-2.5">Age Group</div>
+                <div className="text-[13px] font-bold uppercase text-mid-gray tracking-[0.5px] mb-2.5">{t('ageGroup')}</div>
                 {['All Ages', 'Adults Only', 'Children Safe', 'Elderly Friendly'].map((age, i) => (
                   <label key={age} className="flex items-center gap-2 mb-2 cursor-pointer group">
                     <input type="radio" name="age" defaultChecked={i === 0} className="accent-blue w-4 h-4 cursor-pointer" />
@@ -144,7 +146,7 @@ export default function SearchPage() {
               <div className="h-px bg-light-gray mb-5" />
 
               <div className="mb-6">
-                <div className="text-[13px] font-bold uppercase text-mid-gray tracking-[0.5px] mb-2.5">Prescription</div>
+                <div className="text-[13px] font-bold uppercase text-mid-gray tracking-[0.5px] mb-2.5">{t('prescription')}</div>
                 {['All', 'Required', 'Not Required'].map((rx, i) => (
                   <label key={rx} className="flex items-center gap-2 mb-2 cursor-pointer group">
                     <input type="radio" name="rx" defaultChecked={i === 0} className="accent-blue w-4 h-4 cursor-pointer" />
@@ -154,7 +156,7 @@ export default function SearchPage() {
               </div>
 
               <button className="w-full lg:w-auto bg-off-white hover:bg-light-gray lg:bg-transparent lg:hover:bg-transparent border border-light-gray lg:border-none text-red py-2.5 lg:py-0 lg:mt-2 rounded-lg lg:rounded-none text-[13px] font-bold cursor-pointer transition-colors lg:hover:underline text-center lg:text-left">
-                Clear All Filters
+                {t('clearFilters')}
               </button>
             </div>
           </aside>
@@ -162,7 +164,7 @@ export default function SearchPage() {
           {/* Results */}
           <div>
             <div className="flex items-center justify-between flex-wrap gap-3 mb-6">
-              <div className="text-sm text-mid-gray">Showing <strong className="text-near-black font-bold">24 results</strong> for &quot;All Medicines&quot;</div>
+              <div className="text-sm text-mid-gray">{t('showing')} <strong className="text-near-black font-bold">24 results</strong> {t('resultsFor')} "All Medicines"</div>
               <select className="px-3.5 py-2 border-[1.5px] border-light-gray rounded-lg text-sm font-sans text-dark-gray outline-none cursor-pointer bg-white focus:border-blue">
                 <option>Sort: Relevance</option>
                 <option>A–Z</option>

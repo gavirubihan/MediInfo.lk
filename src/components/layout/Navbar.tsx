@@ -1,13 +1,20 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, usePathname, useRouter } from '@/i18n/routing';
+import { useLocale } from 'next-intl';
 import { Button } from '../ui/Button';
 import { Menu, X } from 'lucide-react';
 
 export const Navbar = () => {
   const pathname = usePathname();
-  const [activeLang, setActiveLang] = useState('EN');
+  const router = useRouter();
+  const locale = useLocale();
+  const activeLang = locale === 'si' ? 'සි' : locale === 'ta' ? 'த' : 'EN';
+
+  const handleLangChange = (lang: string) => {
+    const nextLocale = lang === 'සි' ? 'si' : lang === 'த' ? 'ta' : 'en';
+    router.replace(pathname, {locale: nextLocale});
+  };
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -86,7 +93,7 @@ export const Navbar = () => {
               {['EN', 'සි', 'த'].map(lang => (
                 <button
                   key={lang}
-                  onClick={() => setActiveLang(lang)}
+                  onClick={() => handleLangChange(lang)}
                   className={`px-3 py-1.5 border-none cursor-pointer rounded-full text-[12px] font-bold transition-all duration-300 ${
                     activeLang === lang 
                       ? 'bg-white text-blue shadow-sm' 
@@ -143,7 +150,7 @@ export const Navbar = () => {
               {['EN', 'සි', 'த'].map(lang => (
                 <button
                   key={lang}
-                  onClick={() => setActiveLang(lang)}
+                  onClick={() => handleLangChange(lang)}
                   className={`flex-1 py-2.5 border-none cursor-pointer rounded-full text-[13px] font-bold transition-all duration-300 ${
                     activeLang === lang 
                       ? 'bg-white text-blue shadow-sm' 

@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { useTranslations } from 'next-intl';
 import { Pill, Scale, Users, ClipboardList, Check, AlertTriangle, AlertOctagon, X, Download, Share2, Camera } from 'lucide-react';
 
 export default function MedicineDetailPage() {
+  const t = useTranslations('MedicinePage');
   const [activeTab, setActiveTab] = useState('overview');
   const [activeLang, setActiveLang] = useState('EN');
   const [showDisclaimer, setShowDisclaimer] = useState(false);
@@ -17,11 +19,11 @@ export default function MedicineDetailPage() {
   }, []);
 
   const tabs = [
-    { id: 'overview', label: 'Overview' },
-    { id: 'dosage', label: 'Dosage' },
-    { id: 'side-effects', label: 'Side Effects' },
-    { id: 'warnings', label: 'Warnings' },
-    { id: 'reviews', label: 'Reviews' },
+    { id: 'overview', label: t('tabOverview') },
+    { id: 'dosage', label: t('tabDosage') },
+    { id: 'side-effects', label: t('tabSideEffects') },
+    { id: 'warnings', label: t('tabWarnings') },
+    { id: 'reviews', label: t('tabReviews') },
   ];
 
   return (
@@ -29,9 +31,9 @@ export default function MedicineDetailPage() {
       <div className="pt-36 pb-6 bg-off-white">
         <div className="max-w-[1200px] mx-auto px-6 md:px-12">
           <div className="flex items-center gap-1.5 text-[13px] text-mid-gray">
-            <Link href="/" className="text-blue no-underline hover:underline">Home</Link>
+            <Link href="/" className="text-blue no-underline hover:underline">{t('home')}</Link>
             <span className="text-mid-gray">›</span>
-            <Link href="/search" className="text-blue no-underline hover:underline">Search</Link>
+            <Link href="/search" className="text-blue no-underline hover:underline">{t('search')}</Link>
             <span className="text-mid-gray">›</span>
             <span>Paracetamol</span>
           </div>
@@ -45,13 +47,13 @@ export default function MedicineDetailPage() {
             {/* Main Content */}
             <div className="animate-fade-up">
               <h1 className="text-[38px] sm:text-[44px] font-extrabold leading-[1.1] font-plus-jakarta text-near-black mb-1.5 tracking-tight">Paracetamol</h1>
-              <p className="text-[17px] sm:text-[19px] font-semibold leading-[1.4] text-mid-gray mb-4">Acetaminophen <span className="font-normal opacity-80 text-[15px] sm:text-[17px]">(Generic Name)</span></p>
+              <p className="text-[17px] sm:text-[19px] font-semibold leading-[1.4] text-mid-gray mb-4">Acetaminophen <span className="font-normal opacity-80 text-[15px] sm:text-[17px]">{t('genericName')}</span></p>
 
               <div className="flex gap-2.5 flex-wrap mb-5 items-center">
                 <Badge variant="blue" className="shadow-[0_2px_8px_rgba(26,111,191,0.15)]">Painkiller</Badge>
                 <Badge variant="blue" className="shadow-[0_2px_8px_rgba(26,111,191,0.15)]">Antipyretic</Badge>
-                <Badge variant="teal" className="flex items-center gap-1 shadow-[0_2px_8px_rgba(23,169,142,0.15)]"><Check size={12} strokeWidth={3} /> VERIFIED</Badge>
-                <span className="bg-teal/10 text-teal border border-teal/20 text-[11px] font-bold uppercase tracking-wide px-3 py-1 rounded-md shadow-[0_2px_8px_rgba(23,169,142,0.1)] flex items-center h-[26px]">No Prescription Needed</span>
+                <Badge variant="teal" className="flex items-center gap-1 shadow-[0_2px_8px_rgba(23,169,142,0.15)]"><Check size={12} strokeWidth={3} /> {t('verified')}</Badge>
+                <span className="bg-teal/10 text-teal border border-teal/20 text-[11px] font-bold uppercase tracking-wide px-3 py-1 rounded-md shadow-[0_2px_8px_rgba(23,169,142,0.1)] flex items-center h-[26px]">{t('noPrescription')}</span>
               </div>
 
               <div className="mb-5">
@@ -75,19 +77,19 @@ export default function MedicineDetailPage() {
                 
                 <div className="flex items-center gap-3.5 text-white relative z-10 group-hover:translate-x-0.5 transition-transform">
                   <div className="flex items-center justify-center shrink-0 w-11 h-11 bg-white/10 rounded-full shadow-inner"><Pill size={20} /></div>
-                  <div><div className="text-[11px] uppercase tracking-wider opacity-80 font-bold mb-0.5">Form</div><div className="text-[15px] font-bold tracking-tight">Tablet / Syrup</div></div>
+                  <div><div className="text-[11px] uppercase tracking-wider opacity-80 font-bold mb-0.5">{t('form')}</div><div className="text-[15px] font-bold tracking-tight">Tablet / Syrup</div></div>
                 </div>
                 <div className="flex items-center gap-3.5 text-white relative z-10 group-hover:translate-x-0.5 transition-transform delay-75">
                   <div className="flex items-center justify-center shrink-0 w-11 h-11 bg-white/10 rounded-full shadow-inner"><Scale size={20} /></div>
-                  <div><div className="text-[11px] uppercase tracking-wider opacity-80 font-bold mb-0.5">Strength</div><div className="text-[15px] font-bold font-jetbrains tracking-tight">500mg / 1000mg</div></div>
+                  <div><div className="text-[11px] uppercase tracking-wider opacity-80 font-bold mb-0.5">{t('strength')}</div><div className="text-[15px] font-bold font-jetbrains tracking-tight">500mg / 1000mg</div></div>
                 </div>
                 <div className="flex items-center gap-3.5 text-white relative z-10 group-hover:translate-x-0.5 transition-transform delay-100">
                   <div className="flex items-center justify-center shrink-0 w-11 h-11 bg-white/10 rounded-full shadow-inner"><Users size={20} /></div>
-                  <div><div className="text-[11px] uppercase tracking-wider opacity-80 font-bold mb-0.5">Age Group</div><div className="text-[15px] font-bold tracking-tight">Adults & Children</div></div>
+                  <div><div className="text-[11px] uppercase tracking-wider opacity-80 font-bold mb-0.5">{t('ageGroup')}</div><div className="text-[15px] font-bold tracking-tight">Adults & Children</div></div>
                 </div>
                 <div className="flex items-center gap-3.5 text-white relative z-10 group-hover:translate-x-0.5 transition-transform delay-150">
                   <div className="flex items-center justify-center shrink-0 w-11 h-11 bg-white/10 rounded-full shadow-inner"><ClipboardList size={20} /></div>
-                  <div><div className="text-[11px] uppercase tracking-wider opacity-80 font-bold mb-0.5">Prescription</div><div className="text-[15px] font-bold tracking-tight">Not Required</div></div>
+                  <div><div className="text-[11px] uppercase tracking-wider opacity-80 font-bold mb-0.5">{t('prescription')}</div><div className="text-[15px] font-bold tracking-tight">Not Required</div></div>
                 </div>
               </div>
 

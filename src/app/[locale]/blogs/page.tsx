@@ -3,20 +3,22 @@ import { SearchInput } from '@/components/ui/SearchInput';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Check } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function BlogsPage() {
+  const t = useTranslations('BlogsPage');
   return (
     <>
       <div className="bg-blue pt-36 pb-10">
         <div className="max-w-[1200px] mx-auto px-6 md:px-12">
-          <p className="text-[13px] text-white/70 uppercase tracking-[1px] mb-2 font-semibold">Knowledge Base</p>
-          <h1 className="text-[36px] font-bold leading-[1.2] font-plus-jakarta text-white mb-2">Health Articles & Insights</h1>
-          <p className="text-[15px] text-white/80 mb-5">All content written and verified by certified medical professionals</p>
+          <p className="text-[13px] text-white/70 uppercase tracking-[1px] mb-2 font-semibold">{t('tag')}</p>
+          <h1 className="text-[36px] font-bold leading-[1.2] font-plus-jakarta text-white mb-2">{t('title')}</h1>
+          <p className="text-[15px] text-white/80 mb-5">{t('subtitle')}</p>
           <div className="max-w-[560px]">
-            <SearchInput placeholder="Search health articles..." />
+            <SearchInput placeholder={t('placeholder')} />
           </div>
           <div className="flex gap-2 flex-wrap mt-3.5">
-            <button className="px-4 py-1.5 rounded-full text-[13px] font-semibold bg-white text-blue border border-white cursor-pointer font-sans transition-all">All</button>
+            <button className="px-4 py-1.5 rounded-full text-[13px] font-semibold bg-white text-blue border border-white cursor-pointer font-sans transition-all">{t('allBtn')}</button>
             {['Medicine Guide', 'Health Tips', 'Drug Interactions', 'Elderly Care', 'Pediatric'].map(cat => (
               <button key={cat} className="px-4 py-1.5 rounded-full text-[13px] font-semibold bg-white/15 text-white border border-white/30 cursor-pointer font-sans transition-all hover:bg-white/25">
                 {cat}
@@ -47,7 +49,7 @@ export default function BlogsPage() {
                     <span className="bg-teal text-white text-[10px] font-bold uppercase px-1.5 py-[2px] rounded flex items-center gap-0.5 mt-1 w-fit"><Check size={10} /> VERIFIED DR.</span>
                   </div>
                 </div>
-                <Button variant="primary">Read Article →</Button>
+                <Button variant="primary">{t('readArticle')}</Button>
               </div>
             </div>
           </div>
@@ -80,7 +82,7 @@ export default function BlogsPage() {
                     </div>
                     <div className="flex items-center justify-between mt-1">
                       <span className="text-[13px] text-mid-gray">{blog.read} read</span>
-                      <Button variant="text" className="!text-[13px]">Read More →</Button>
+                      <Button variant="text" className="!text-[13px]">{t('readMore')}</Button>
                     </div>
                   </div>
                 ))}
@@ -98,7 +100,7 @@ export default function BlogsPage() {
             {/* Sidebar */}
             <div>
               <div className="bg-white border border-light-gray rounded-2xl p-6 mb-6 shadow-sm">
-                <div className="font-plus-jakarta font-bold text-base text-near-black mb-4">Popular Articles</div>
+                <div className="font-plus-jakarta font-bold text-base text-near-black mb-4">{t('popular')}</div>
                 {[
                   { num: '01', title: 'Safe Use of Antibiotics in Sri Lanka', views: '12 min read · 4.2k views' },
                   { num: '02', title: '5 Drug Interactions You Might Not Know', views: '4 min read · 3.8k views' },
@@ -116,7 +118,7 @@ export default function BlogsPage() {
               </div>
 
               <div className="bg-white border border-light-gray rounded-2xl p-6 mb-6 shadow-sm">
-                <div className="font-plus-jakarta font-bold text-base text-near-black mb-4">Browse by Category</div>
+                <div className="font-plus-jakarta font-bold text-base text-near-black mb-4">{t('browse')}</div>
                 <div className="flex flex-wrap gap-2">
                   {['Medicine Guide', 'Health Tips', 'Drug Interactions', 'Elderly Care', 'Pediatric', 'Diabetes', 'Cardiology', 'Mental Health'].map(cat => (
                     <button key={cat} className="px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-light text-blue cursor-pointer border-none font-sans transition-all hover:bg-blue hover:text-white">
@@ -127,9 +129,9 @@ export default function BlogsPage() {
               </div>
 
               <div className="bg-blue border border-blue rounded-2xl p-6 shadow-sm text-white">
-                <div className="font-plus-jakarta font-bold text-base mb-2">Are You a Doctor?</div>
-                <p className="text-[14px] text-white/85 mb-4">Share your medical expertise with thousands of Sri Lankans. Write verified health articles on MediInfo.LK.</p>
-                <Button variant="white" className="w-full justify-center !text-[14px]">Apply to Contribute</Button>
+                <div className="font-plus-jakarta font-bold text-base mb-2">{t('doctorTitle')}</div>
+                <p className="text-[14px] text-white/85 mb-4">{t('doctorDesc')}</p>
+                <Button variant="white" className="w-full justify-center !text-[14px]">{t('doctorBtn')}</Button>
               </div>
             </div>
 
