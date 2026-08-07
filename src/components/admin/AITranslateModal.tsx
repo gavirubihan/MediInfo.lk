@@ -155,7 +155,7 @@ export function AITranslateModal({
               <div className="flex items-center justify-between p-4 bg-off-white rounded-2xl border border-light-gray">
                 <div className="text-xs font-semibold text-mid-gray">Source Language</div>
                 <span className="px-3 py-1 bg-blue text-white font-bold text-xs rounded-full uppercase">
-                  {sourceLang === 'en' ? 'English 🇬🇧' : sourceLang === 'si' ? 'Sinhala 🇱🇰' : 'Tamil 🇱🇰'}
+                  {sourceLang === 'en' ? 'English' : sourceLang === 'si' ? 'Sinhala' : 'Tamil'}
                 </span>
               </div>
 
@@ -167,7 +167,7 @@ export function AITranslateModal({
                       key={lang}
                       className="px-3 py-1 bg-teal/10 text-teal border border-teal/20 font-bold text-xs rounded-full uppercase"
                     >
-                      {lang === 'si' ? 'Sinhala 🇱🇰' : 'Tamil 🇱🇰'}
+                      {lang === 'si' ? 'Sinhala' : 'Tamil'}
                     </span>
                   ))}
                 </div>
