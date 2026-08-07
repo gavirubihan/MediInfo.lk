@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -49,7 +50,9 @@ export default function BlogsPage() {
                     <span className="bg-teal text-white text-[10px] font-bold uppercase px-1.5 py-[2px] rounded flex items-center gap-0.5 mt-1 w-fit"><Check size={10} /> VERIFIED DR.</span>
                   </div>
                 </div>
-                <Button variant="primary">{t('readArticle')}</Button>
+                <Link href="/blogs/safe-use-of-antibiotics-sri-lanka" className="no-underline">
+                  <Button variant="primary">{t('readArticle')}</Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -59,32 +62,34 @@ export default function BlogsPage() {
             <div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {[
-                  { tag: 'Elderly Care', date: '8 Jun 2025', title: 'Managing Multiple Medications Safely in Older Adults', excerpt: 'Polypharmacy risks are real. A geriatric specialist explains how to review and simplify medication regimens for elderly patients.', avatar: 'DF', color: 'bg-teal', name: 'Dr. Fatima Aslam', read: '7 min' },
-                  { tag: 'Drug Interactions', date: '3 Jun 2025', title: '5 Common Drug Interactions You Might Not Know About', excerpt: 'Some everyday medicines can interact dangerously. Discover the most common combinations to avoid.', avatar: 'DN', color: 'bg-[#7B5EA7]', name: 'Dr. Nimal Bandara', read: '4 min' },
-                  { tag: 'Pediatric', date: '28 May 2025', title: 'Fever in Children: When to Medicate and When to Wait', excerpt: 'A pediatrician\'s guide to managing childhood fever, including when paracetamol is appropriate and when to seek emergency care.', avatar: 'DR', color: 'bg-red', name: 'Dr. Ravi Jayasinghe', read: '6 min' },
-                  { tag: 'Health Tips', date: '20 May 2025', title: 'Reading Medicine Labels: A Complete Guide for Patients', excerpt: 'Understanding your medicine label can prevent dangerous mistakes. This guide walks through every section of a Sri Lankan drug label.', avatar: 'DS', color: 'bg-[#7B5EA7]', name: 'Dr. Sithara Mendis', read: '5 min' },
-                  { tag: 'Medicine Guide', date: '15 May 2025', title: 'Diabetes Medicines in Sri Lanka: Types, Uses, and Costs', excerpt: 'A practical overview of antidiabetic medications available in Sri Lanka, including both government hospital and private pharmacy options.', avatar: 'DW', color: 'bg-blue', name: 'Dr. Wasantha Silva', read: '8 min' },
-                  { tag: 'Health Tips', date: '10 May 2025', title: 'Storing Medicines at Home: The Dos and Don\'ts', excerpt: 'Heat, light, and humidity can destroy medicines. Learn how to store your medications correctly to maintain their effectiveness.', avatar: 'DA', color: 'bg-teal', name: 'Dr. Anoma Wijeratne', read: '3 min' },
+                  { tag: 'Elderly Care', date: '8 Jun 2025', title: 'Managing Multiple Medications Safely in Older Adults', excerpt: 'Polypharmacy risks are real. A geriatric specialist explains how to review and simplify medication regimens for elderly patients.', avatar: 'DF', color: 'bg-teal', name: 'Dr. Fatima Aslam', read: '7 min', slug: 'elderly-medication-safety' },
+                  { tag: 'Drug Interactions', date: '3 Jun 2025', title: '5 Common Drug Interactions You Might Not Know About', excerpt: 'Some everyday medicines can interact dangerously. Discover the most common combinations to avoid.', avatar: 'DN', color: 'bg-[#7B5EA7]', name: 'Dr. Nimal Bandara', read: '4 min', slug: 'drug-interactions-guide' },
+                  { tag: 'Pediatric', date: '28 May 2025', title: 'Fever in Children: When to Medicate and When to Wait', excerpt: 'A pediatrician\'s guide to managing childhood fever, including when paracetamol is appropriate and when to seek emergency care.', avatar: 'DR', color: 'bg-red', name: 'Dr. Ravi Jayasinghe', read: '6 min', slug: 'fever-in-children' },
+                  { tag: 'Health Tips', date: '20 May 2025', title: 'Reading Medicine Labels: A Complete Guide for Patients', excerpt: 'Understanding your medicine label can prevent dangerous mistakes. This guide walks through every section of a Sri Lankan drug label.', avatar: 'DS', color: 'bg-[#7B5EA7]', name: 'Dr. Sithara Mendis', read: '5 min', slug: 'reading-medicine-labels' },
+                  { tag: 'Medicine Guide', date: '15 May 2025', title: 'Diabetes Medicines in Sri Lanka: Types, Uses, and Costs', excerpt: 'A practical overview of antidiabetic medications available in Sri Lanka, including both government hospital and private pharmacy options.', avatar: 'DW', color: 'bg-blue', name: 'Dr. Wasantha Silva', read: '8 min', slug: 'diabetes-medicines-sri-lanka' },
+                  { tag: 'Health Tips', date: '10 May 2025', title: 'Storing Medicines at Home: The Dos and Don\'ts', excerpt: 'Heat, light, and humidity can destroy medicines. Learn how to store your medications correctly to maintain their effectiveness.', avatar: 'DA', color: 'bg-teal', name: 'Dr. Anoma Wijeratne', read: '3 min', slug: 'storing-medicines-home' },
                 ].map((blog, i) => (
-                  <div key={i} className="bg-white border border-light-gray rounded-2xl p-6 flex flex-col gap-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.05)] transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
-                    <div className="flex justify-between items-center">
-                      <Badge variant="blue">{blog.tag}</Badge>
-                      <span className="text-xs text-mid-gray">{blog.date}</span>
-                    </div>
-                    <div className="text-[17px] font-bold font-plus-jakarta text-near-black leading-[1.35]">{blog.title}</div>
-                    <div className="text-[14px] text-dark-gray leading-[1.6] line-clamp-2">{blog.excerpt}</div>
-                    <div className="flex items-center gap-2.5 mt-auto pt-2">
-                      <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0 ${blog.color}`}>{blog.avatar}</div>
-                      <div className="flex-1">
-                        <div className="text-[13px] font-semibold text-near-black">{blog.name}</div>
-                        <span className="bg-teal text-white text-[10px] font-bold uppercase px-1.5 py-[2px] rounded flex items-center gap-0.5 mt-0.5 w-fit"><Check size={10} /> VERIFIED DR.</span>
+                  <Link key={i} href={`/blogs/${blog.slug}`} className="no-underline text-inherit block">
+                    <div className="bg-white border border-light-gray rounded-2xl p-6 flex flex-col gap-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.05)] transition-all duration-200 hover:shadow-lg hover:-translate-y-1 h-full">
+                      <div className="flex justify-between items-center">
+                        <Badge variant="blue">{blog.tag}</Badge>
+                        <span className="text-xs text-mid-gray">{blog.date}</span>
+                      </div>
+                      <div className="text-[17px] font-bold font-plus-jakarta text-near-black leading-[1.35]">{blog.title}</div>
+                      <div className="text-[14px] text-dark-gray leading-[1.6] line-clamp-2">{blog.excerpt}</div>
+                      <div className="flex items-center gap-2.5 mt-auto pt-2">
+                        <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0 ${blog.color}`}>{blog.avatar}</div>
+                        <div className="flex-1">
+                          <div className="text-[13px] font-semibold text-near-black">{blog.name}</div>
+                          <span className="bg-teal text-white text-[10px] font-bold uppercase px-1.5 py-[2px] rounded flex items-center gap-0.5 mt-0.5 w-fit"><Check size={10} /> VERIFIED DR.</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between mt-1">
+                        <span className="text-[13px] text-mid-gray">{blog.read} read</span>
+                        <Button variant="text" className="!text-[13px]">{t('readMore')}</Button>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between mt-1">
-                      <span className="text-[13px] text-mid-gray">{blog.read} read</span>
-                      <Button variant="text" className="!text-[13px]">{t('readMore')}</Button>
-                    </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
 
