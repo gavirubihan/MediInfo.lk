@@ -350,48 +350,13 @@ export default function BlogArticleDetailPage() {
         <div className="absolute right-0 top-0 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none" />
         <div className="max-w-[1200px] mx-auto px-6 md:px-12 relative z-10 space-y-5">
           
-          {/* Breadcrumbs & Language Switcher Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-xs text-white/70 font-medium flex-wrap">
-              <Link href="/" className="hover:text-white no-underline transition-colors">Home</Link>
-              <span>›</span>
-              <Link href="/blogs" className="hover:text-white no-underline transition-colors">Health Articles</Link>
-              <span>›</span>
-              <span className="text-teal font-semibold">{currentArticle.category}</span>
-            </div>
-
-            {/* 3 Sample Language Switcher */}
-            <div className="flex items-center gap-2 bg-white/10 p-1.5 rounded-full border border-white/15 w-fit">
-              <Languages size={14} className="text-teal ml-1.5" />
-              <span className="text-[11px] text-white/80 font-bold mr-1">Sample Articles:</span>
-              <button
-                type="button"
-                onClick={() => setCurrentArticle(articlesDatabase['safe-use-of-antibiotics-sri-lanka'])}
-                className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                  currentArticle.language === 'en' ? 'bg-blue text-white shadow-sm' : 'text-white/70 hover:text-white'
-                }`}
-              >
-                English
-              </button>
-              <button
-                type="button"
-                onClick={() => setCurrentArticle(articlesDatabase['diabetes-management-sinhala'])}
-                className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                  currentArticle.language === 'si' ? 'bg-blue text-white shadow-sm' : 'text-white/70 hover:text-white'
-                }`}
-              >
-                සිංහල
-              </button>
-              <button
-                type="button"
-                onClick={() => setCurrentArticle(articlesDatabase['pediatric-fever-care-tamil'])}
-                className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                  currentArticle.language === 'ta' ? 'bg-blue text-white shadow-sm' : 'text-white/70 hover:text-white'
-                }`}
-              >
-                தமிழ்
-              </button>
-            </div>
+          {/* Breadcrumbs */}
+          <div className="flex items-center gap-2 text-xs text-white/70 font-medium flex-wrap">
+            <Link href="/" className="hover:text-white no-underline transition-colors">Home</Link>
+            <span>›</span>
+            <Link href="/blogs" className="hover:text-white no-underline transition-colors">Health Articles</Link>
+            <span>›</span>
+            <span className="text-teal font-semibold">{currentArticle.category}</span>
           </div>
 
           <div className="flex items-center gap-3 flex-wrap pt-1">
@@ -533,11 +498,11 @@ export default function BlogArticleDetailPage() {
                 </div>
               </div>
 
-              {/* Patient Questions / Comments Form */}
+              {/* Questions / Comments Form */}
               <div className="bg-white border border-light-gray p-6 sm:p-8 rounded-3xl shadow-sm space-y-6">
                 <h3 className="text-lg font-bold font-plus-jakarta text-near-black m-0 flex items-center gap-2">
                   <MessageSquare size={20} className="text-blue" />
-                  <span>Patient Community Comments</span>
+                  <span>Community Comments</span>
                 </h3>
 
                 {/* Comment Input */}
