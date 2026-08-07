@@ -17,22 +17,35 @@ import {
   Share2,
   ShieldAlert,
   Sparkles,
-  ArrowLeft
+  ArrowLeft,
+  Tag
 } from 'lucide-react';
 import { getMedicineBySlug } from '@/data/medicinesData';
 
 export default function MedicineDetailPage() {
   const t = useTranslations('MedicinePage');
   const params = useParams();
-  const slugParam = (params?.slug as string) || 'paracetamol';
-  
-  // Resolve medicine data by slug
+  const slugParam = typeof params.slug === 'string' ? params.slug : Array.isArray(params.slug) ? params.slug[0] : '';
   const medicine = getMedicineBySlug(slugParam);
-
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState<string>('overview');
   const [activeLang, setActiveLang] = useState<'en' | 'si' | 'ta'>('en');
 
-  const currentLocalized = medicine.localized[activeLang];
+  if (!medicine) {
+    return (
+      <div className="min-h-screen pt-36 pb-20 flex flex-col items-center justify-center bg-off-white text-center px-6">
+        <Pill size={48} className="text-mid-gray mb-4" />
+        <h1 className="text-2xl font-bold text-near-black font-plus-jakarta mb-2">Medicine Not Found</h1>
+        <p className="text-sm text-mid-gray mb-6 max-w-md">
+          The requested medicine record could not be found in our verified database.
+        </p>
+        <Link href="/search" className="px-6 py-3 bg-blue text-white rounded-xl font-bold text-sm no-underline hover:bg-blue-dark transition-colors">
+          Browse Medicine Catalog
+        </Link>
+      </div>
+    );
+  }
+
+  const currentLocalized = medicine.localized[activeLang] || medicine.localized.en;
   const isSinhala = activeLang === 'si';
 
   const tabs = [
@@ -68,7 +81,7 @@ export default function MedicineDetailPage() {
                 {medicine.brandName}
               </h1>
               <p className="text-[17px] sm:text-[19px] font-semibold leading-[1.4] text-mid-gray mb-4">
-                {medicine.genericName} <span className="font-normal opacity-80 text-[15px] sm:text-[17px]">{t('genericName')}</span>
+                {medicine.genericName} <span className="font-normal opacity-80 text-[15px] sm:text-[17px]">({t('genericName')})</span>
               </p>
 
               <div className="flex gap-2.5 flex-wrap mb-5 items-center">
@@ -146,6 +159,29 @@ export default function MedicineDetailPage() {
                   </div>
                 </div>
               </div>
+
+              {/* Popular Brand Names Available in Sri Lanka */}
+              {medicine.brandNames && medicine.brandNames.length > 0 && (
+                <div className="my-6 bg-gradient-to-r from-blue-light/50 to-white border border-blue/20 rounded-2xl p-5 sm:p-6 shadow-sm space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Tag size={18} className="text-blue" />
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-near-black m-0 font-plus-jakarta">
+                      Popular Brand Names Available in Sri Lanka:
+                    </h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {medicine.brandNames.map((brand, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3.5 py-1.5 bg-white border border-light-gray rounded-xl text-xs font-bold text-dark-gray flex items-center gap-2 shadow-sm hover:border-blue hover:text-blue transition-all"
+                      >
+                        <span className="w-2 h-2 rounded-full bg-teal shrink-0" />
+                        {brand}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Public Tabs Navigation */}
               <div className="relative mb-7 border-b-2 border-light-gray">
@@ -381,34 +417,6 @@ export default function MedicineDetailPage() {
                   <Share2 size={16} />
                   <span>Share Medicine Page</span>
                 </button>
-              </div>
-
-              {/* Other Sample Medicines Quick Navigator */}
-              <div className="bg-white border border-light-gray rounded-[24px] p-6 shadow-sm space-y-3">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-mid-gray m-0">
-                  Sample Medicines List (3 Languages):
-                </h4>
-                <div className="space-y-2">
-                  {[
-                    { name: 'Paracetamol', generic: 'Acetaminophen', slug: 'paracetamol' },
-                    { name: 'Amoxicillin', generic: 'Antibiotic', slug: 'amoxicillin' },
-                    { name: 'Metformin', generic: 'Antidiabetic', slug: 'metformin' },
-                    { name: 'Cetirizine', generic: 'Antihistamine', slug: 'cetirizine' },
-                  ].map((item) => (
-                    <Link
-                      key={item.slug}
-                      href={`/medicine/${item.slug}`}
-                      className={`flex items-center justify-between p-3 rounded-xl text-xs font-bold no-underline transition-all ${
-                        slugParam === item.slug
-                          ? 'bg-blue text-white shadow-sm'
-                          : 'bg-off-white text-near-black hover:bg-light-gray'
-                      }`}
-                    >
-                      <span>{item.name}</span>
-                      <span className={slugParam === item.slug ? 'text-white/80' : 'text-mid-gray'}>{item.generic}</span>
-                    </Link>
-                  ))}
-                </div>
               </div>
             </div>
 

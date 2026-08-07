@@ -56,6 +56,7 @@ export interface LanguageContent {
 export interface MedicineFormData {
   brandName: string;
   genericName: string;
+  brandNames: string[];
   slug: string;
   category: string;
   form: string[];
@@ -85,6 +86,7 @@ export interface MedicineFormData {
 const initialFormState: MedicineFormData = {
   brandName: 'Paracetamol',
   genericName: 'Acetaminophen',
+  brandNames: ['Panadol', 'Calpol', 'Disprol', 'Febrex', 'P-500', 'Crocin', 'Metacin', 'SPC Paracetamol'],
   slug: 'paracetamol',
   category: 'Painkiller',
   form: ['Tablet', 'Syrup'],

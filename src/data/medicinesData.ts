@@ -30,9 +30,11 @@ export interface LocalizedMedicineContent {
 export interface MedicineRecord {
   id: string;
   slug: string;
-  brandName: string;
-  genericName: string;
+  brandName: string; // Primary Generic Name (e.g. Paracetamol)
+  genericName: string; // Chemical Substance (e.g. Acetaminophen / INN)
+  brandNames: string[]; // Brand names in Sri Lanka (e.g. Panadol, Calpol, Disprol)
   category: string;
+  coverImage: string;
   form: string[];
   strength: string;
   ageGroup: string;
@@ -56,8 +58,10 @@ export const sampleMedicines: MedicineRecord[] = [
     id: 'med-01',
     slug: 'paracetamol',
     brandName: 'Paracetamol',
-    genericName: 'Acetaminophen',
+    genericName: 'Acetaminophen(Paracetamol)',
+    brandNames: ['Panadol', 'Calpol', 'Disprol', 'Febrex', 'P-500', 'Crocin', 'Metacin', 'SPC Paracetamol'],
     category: 'Painkiller & Antipyretic',
+    coverImage: '/images/medicine/paracetamol-cover.png',
     form: ['Tablet', 'Syrup', 'Suppository'],
     strength: '500mg / 1000mg / 120mg/5ml',
     ageGroup: 'Adults & Children',
@@ -168,7 +172,9 @@ export const sampleMedicines: MedicineRecord[] = [
     slug: 'amoxicillin',
     brandName: 'Amoxicillin',
     genericName: 'Amoxicillin Trihydrate',
+    brandNames: ['Amoxil', 'Augmentin', 'Mox', 'Curam', 'Ospamox', 'SPC Amoxicillin'],
     category: 'Antibiotic (Penicillin Derivative)',
+    coverImage: '/images/medicine/amoxicillin-cover.png',
     form: ['Capsule', 'Syrup', 'Dispersible Tablet'],
     strength: '250mg / 500mg / 125mg/5ml',
     ageGroup: 'Adults & Children',
@@ -275,7 +281,9 @@ export const sampleMedicines: MedicineRecord[] = [
     slug: 'metformin',
     brandName: 'Metformin',
     genericName: 'Metformin Hydrochloride',
+    brandNames: ['Glucophage', 'Glycomet', 'Metfor', 'Formin', 'Metfor-XR', 'SPC Metformin'],
     category: 'Antidiabetic (Biguanide)',
+    coverImage: '/images/medicine/metformin-cover.png',
     form: ['Tablet', 'Extended Release (XR) Tablet'],
     strength: '500mg / 850mg / 1000mg',
     ageGroup: 'Adults (≥10 yrs)',
@@ -375,7 +383,9 @@ export const sampleMedicines: MedicineRecord[] = [
     slug: 'cetirizine',
     brandName: 'Cetirizine',
     genericName: 'Cetirizine Dihydrochloride',
+    brandNames: ['Zyrtec', 'Cetriz', 'Alerid', 'Histazine', 'Cetzine', 'SPC Cetirizine'],
     category: 'Antihistamine (2nd Generation)',
+    coverImage: '/images/medicine/cetirizine-cover.png',
     form: ['Tablet', 'Syrup'],
     strength: '10mg / 5mg/5ml',
     ageGroup: 'Adults & Children (≥2 yrs)',
