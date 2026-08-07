@@ -3,3 +3,5 @@ declare module "next/types.js" {
   export type ResolvingMetadata = RM;
   export type ResolvingViewport = RV;
 }
+
+declare module "next/server";
