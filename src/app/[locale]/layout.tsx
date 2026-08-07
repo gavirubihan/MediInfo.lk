@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Nunito, JetBrains_Mono } from "next/font/google";
+import type Metadata from "next";
+import { Plus_Jakarta_Sans, Nunito, JetBrains_Mono, Noto_Sans_Sinhala } from "next/font/google";
 import "../globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -26,6 +26,12 @@ const jetBrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
+const notoSansSinhala = Noto_Sans_Sinhala({
+  variable: "--font-noto-sans-sinhala",
+  subsets: ["sinhala"],
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "MediInfo.LK — Trusted Medicine Information",
   description: "Search medicine information, upload prescriptions, and read trusted health articles — in Sinhala, Tamil, and English.",
@@ -47,7 +53,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${plusJakartaSans.variable} ${nunito.variable} ${jetBrainsMono.variable} antialiased scroll-smooth`}
+      className={`${plusJakartaSans.variable} ${nunito.variable} ${jetBrainsMono.variable} ${notoSansSinhala.variable} antialiased scroll-smooth`}
     >
       <body className="min-h-screen flex flex-col">
         <NextIntlClientProvider messages={messages}>

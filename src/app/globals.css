@@ -25,6 +25,7 @@
   --font-nunito: var(--font-nunito);
   --font-plus-jakarta: var(--font-plus-jakarta);
   --font-jetbrains: var(--font-jetbrains-mono);
+  --font-noto-sinhala: var(--font-noto-sans-sinhala);
 }
 
 :root {
@@ -35,8 +36,12 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-nunito), sans-serif;
+  font-family: var(--font-nunito), var(--font-noto-sans-sinhala), sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+:lang(si) {
+  font-family: var(--font-noto-sans-sinhala), var(--font-nunito), sans-serif;
 }
 
 /* Animations */
