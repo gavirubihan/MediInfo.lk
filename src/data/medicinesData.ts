@@ -73,8 +73,9 @@ export const sampleMedicines: MedicineRecord[] = [
     dosageRows: [
       { ageGroup: 'Adults (≥18 yrs)', dose: '500mg–1000mg', frequency: 'Every 4–6 hours', maxPerDay: '4000mg' },
       { ageGroup: 'Elderly (≥65 yrs)', dose: '500mg', frequency: 'Every 6 hours', maxPerDay: '2000mg' },
-      { ageGroup: 'Children (6–12 yrs)', dose: '250mg–500mg', frequency: 'Every 4–6 hours', maxPerDay: '2000mg' },
-      { ageGroup: 'Infants (1–5 yrs)', dose: '120mg–250mg (Syrup)', frequency: 'Every 6 hours', maxPerDay: '1000mg' },
+      { ageGroup: 'Children (6–11 yrs)', dose: '250mg–500mg', frequency: 'Every 4–6 hours', maxPerDay: '2000mg' },
+      { ageGroup: 'Young Children (2–5 yrs)', dose: '120mg–250mg (Syrup)', frequency: 'Every 4–6 hours', maxPerDay: '1000mg' },
+      { ageGroup: 'Infants & Babies (<2 yrs)', dose: '60mg–120mg (Drops)', frequency: 'Every 6 hours (Doctor advised)', maxPerDay: '480mg' },
     ],
     drugInteractions: [
       { drug: 'Warfarin', note: 'May enhance anticoagulant effect with prolonged daily use. Monitor INR closely.' },

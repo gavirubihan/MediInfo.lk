@@ -407,7 +407,7 @@ export default function MedicineDetailPage() {
                       /elderly|senior|65|geriatric/i.test(row.ageGroup)
                     );
                     const isChildrenSafe = medicine.dosageRows && medicine.dosageRows.some((row) => 
-                      /child|children|infant|pediatric|kid|baby/i.test(row.ageGroup)
+                      /child|children|infant|pediatric|kid|baby|adolescent|teen|neonate|toddler/i.test(row.ageGroup)
                     );
                     return (
                       <>

@@ -98,9 +98,13 @@ const initialFormState: MedicineFormData = {
   maxDailyDoseAdults: '4000mg',
 
   dosageRows: [
-    { ageGroup: 'Adults (≥18 yrs)', dose: '500–1000mg', frequency: 'Every 4–6 hours', maxPerDay: '4000mg' },
+    { ageGroup: 'Adults (18–64 yrs)', dose: '500–1000mg', frequency: 'Every 4–6 hours', maxPerDay: '4000mg' },
     { ageGroup: 'Elderly (≥65 yrs)', dose: '500mg', frequency: 'Every 6–8 hours', maxPerDay: '2000mg' },
-    { ageGroup: 'Children (6–12 yrs)', dose: '250–500mg', frequency: 'Every 4–6 hours', maxPerDay: '2000mg' },
+    { ageGroup: 'Adolescents (12–17 yrs)', dose: '500mg', frequency: 'Every 4–6 hours', maxPerDay: '3000mg' },
+    { ageGroup: 'Children (6–11 yrs)', dose: '250–500mg', frequency: 'Every 4–6 hours', maxPerDay: '2000mg' },
+    { ageGroup: 'Young Children (2–5 yrs)', dose: '120–250mg (Syrup)', frequency: 'Every 4–6 hours', maxPerDay: '1000mg' },
+    { ageGroup: 'Infants (1–23 months)', dose: '60–120mg (Infant Drops)', frequency: 'Every 6 hours (Doctor advised)', maxPerDay: '480mg' },
+    { ageGroup: 'Neonates (0–28 days)', dose: 'Consult Doctor', frequency: 'Medical Supervision Only', maxPerDay: 'Specialist Specified' },
   ],
 
   drugInteractions: [
@@ -874,7 +878,7 @@ export function MedicineForm() {
                         /elderly|senior|65|geriatric/i.test(row.ageGroup)
                       );
                       const isChildrenSafe = formData.dosageRows && formData.dosageRows.some((row) => 
-                        /child|children|infant|pediatric|kid|baby/i.test(row.ageGroup)
+                        /child|children|infant|pediatric|kid|baby|adolescent|teen|neonate|toddler/i.test(row.ageGroup)
                       );
                       return (
                         <>
@@ -1524,11 +1528,21 @@ export function MedicineForm() {
                       <td className="p-2">
                         <input
                           type="text"
+                          list="ageGroupPresets"
                           value={row.ageGroup}
                           onChange={(e) => updateDosageRow(idx, 'ageGroup', e.target.value)}
                           className="w-full h-9 px-2.5 rounded-lg border border-light-gray text-xs font-bold outline-none focus:border-blue"
-                          placeholder="e.g. Adults (≥18 yrs)"
+                          placeholder="e.g. Young Children (2–5 yrs)"
                         />
+                        <datalist id="ageGroupPresets">
+                          <option value="Adults (18–64 yrs)" />
+                          <option value="Elderly (≥65 yrs)" />
+                          <option value="Adolescents (12–17 yrs)" />
+                          <option value="Children (6–11 yrs)" />
+                          <option value="Young Children (2–5 yrs)" />
+                          <option value="Infants (1–23 months)" />
+                          <option value="Neonates (0–28 days)" />
+                        </datalist>
                       </td>
                       <td className="p-2">
                         <input
@@ -1570,6 +1584,27 @@ export function MedicineForm() {
                   ))}
                 </tbody>
               </table>
+            </div>
+
+            {/* Important Dosage Note (Multi-language) */}
+            <div className="pt-4 border-t border-light-gray space-y-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                <label className="block text-xs font-bold text-dark-gray flex items-center gap-1.5">
+                  <Info size={15} className="text-blue" />
+                  <span>Important Dosage Note ({activeLangTab.toUpperCase()}) *</span>
+                </label>
+                <span className="text-[11px] text-mid-gray">Displays as the blue alert banner below the dosage table for patients</span>
+              </div>
+
+              <textarea
+                rows={2}
+                value={currentLocalized.dosageNotes}
+                onChange={(e) => handleLocalizedTextChange('dosageNotes', e.target.value)}
+                className={`w-full p-3 rounded-xl border border-light-gray text-xs text-dark-gray outline-none focus:border-blue transition-all ${
+                  activeLangTab === 'si' ? 'font-noto-sinhala' : ''
+                }`}
+                placeholder="e.g. Always follow your doctor's prescription. Do not exceed maximum daily dose. Leave at least 4 hours between doses..."
+              />
             </div>
           </div>
 
