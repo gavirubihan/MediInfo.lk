@@ -101,7 +101,8 @@
   "MedicinePage": {
     "home": "මුල් පිටුව",
     "search": "සොයන්න",
-    "genericName": "(සාමාන්‍ය නම)",
+    "genericName": "සාමාන්‍ය නම",
+    "chemicalName": "සක්‍රීය රසායනික සංයෝගය / Salt",
     "verified": "තහවුරු කර ඇත",
     "noPrescription": "බෙහෙත් වට්ටෝරුවක් අවශ්‍ය නොවේ",
     "form": "වර්ගය",

@@ -101,7 +101,8 @@
   "MedicinePage": {
     "home": "முகப்பு",
     "search": "தேடு",
-    "genericName": "(பொதுவான பெயர்)",
+    "genericName": "பொதுவான பெயர்",
+    "chemicalName": "வேதியியல் கூட்டுப்பொருள் / Salt",
     "verified": "சரிபார்க்கப்பட்டது",
     "noPrescription": "மருந்துச் சீட்டு தேவையில்லை",
     "form": "வடிவம்",

@@ -30,9 +30,9 @@ export interface LocalizedMedicineContent {
 export interface MedicineRecord {
   id: string;
   slug: string;
-  brandName: string; // Primary Generic Name (e.g. Paracetamol)
-  genericName: string; // Chemical Substance (e.g. Acetaminophen / INN)
-  brandNames: string[]; // Brand names in Sri Lanka (e.g. Panadol, Calpol, Disprol)
+  genericName: string; // Common Generic Name (e.g. Paracetamol, Amoxicillin)
+  chemicalName: string; // Active Ingredient / Chemical Salt Name (e.g. Acetaminophen, Amoxicillin Trihydrate)
+  brandNames: string[]; // Commercial brand names in Sri Lanka (e.g. Panadol, Amoxil, Augmentin)
   category: string;
   coverImage: string;
   form: string[];
@@ -57,8 +57,8 @@ export const sampleMedicines: MedicineRecord[] = [
   {
     id: 'med-01',
     slug: 'paracetamol',
-    brandName: 'Paracetamol',
-    genericName: 'Acetaminophen(Paracetamol)',
+    genericName: 'Paracetamol',
+    chemicalName: 'Acetaminophen (Paracetamol)',
     brandNames: ['Panadol', 'Calpol', 'Disprol', 'Febrex', 'P-500', 'Crocin', 'Metacin', 'SPC Paracetamol'],
     category: 'Painkiller & Antipyretic',
     coverImage: '/images/medicine/paracetamol-cover.png',
@@ -170,8 +170,8 @@ export const sampleMedicines: MedicineRecord[] = [
   {
     id: 'med-02',
     slug: 'amoxicillin',
-    brandName: 'Amoxicillin',
-    genericName: 'Amoxicillin Trihydrate',
+    genericName: 'Amoxicillin',
+    chemicalName: 'Amoxicillin Trihydrate',
     brandNames: ['Amoxil', 'Augmentin', 'Mox', 'Curam', 'Ospamox', 'SPC Amoxicillin'],
     category: 'Antibiotic (Penicillin Derivative)',
     coverImage: '/images/medicine/amoxicillin-cover.png',
@@ -279,8 +279,8 @@ export const sampleMedicines: MedicineRecord[] = [
   {
     id: 'med-03',
     slug: 'metformin',
-    brandName: 'Metformin',
-    genericName: 'Metformin Hydrochloride',
+    genericName: 'Metformin',
+    chemicalName: 'Metformin Hydrochloride',
     brandNames: ['Glucophage', 'Glycomet', 'Metfor', 'Formin', 'Metfor-XR', 'SPC Metformin'],
     category: 'Antidiabetic (Biguanide)',
     coverImage: '/images/medicine/metformin-cover.png',
@@ -381,8 +381,8 @@ export const sampleMedicines: MedicineRecord[] = [
   {
     id: 'med-04',
     slug: 'cetirizine',
-    brandName: 'Cetirizine',
-    genericName: 'Cetirizine Dihydrochloride',
+    genericName: 'Cetirizine',
+    chemicalName: 'Cetirizine Dihydrochloride',
     brandNames: ['Zyrtec', 'Cetriz', 'Alerid', 'Histazine', 'Cetzine', 'SPC Cetirizine'],
     category: 'Antihistamine (2nd Generation)',
     coverImage: '/images/medicine/cetirizine-cover.png',

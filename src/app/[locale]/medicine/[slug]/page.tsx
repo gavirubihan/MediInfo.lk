@@ -66,7 +66,7 @@ export default function MedicineDetailPage() {
             <span className="text-mid-gray">›</span>
             <Link href="/search" className="text-blue no-underline hover:underline">{t('search')}</Link>
             <span className="text-mid-gray">›</span>
-            <span className="font-bold text-dark-gray">{medicine.brandName}</span>
+            <span className="font-bold text-dark-gray">{medicine.genericName}</span>
           </div>
         </div>
       </div>
@@ -78,10 +78,10 @@ export default function MedicineDetailPage() {
             {/* Main Content */}
             <div className={`animate-fade-up ${isSinhala ? 'font-noto-sinhala' : ''}`}>
               <h1 className="text-[38px] sm:text-[44px] font-extrabold leading-[1.1] font-plus-jakarta text-near-black mb-1.5 tracking-tight">
-                {medicine.brandName}
+                {medicine.genericName}
               </h1>
               <p className="text-[17px] sm:text-[19px] font-semibold leading-[1.4] text-mid-gray mb-4">
-                {medicine.genericName} <span className="font-normal opacity-80 text-[15px] sm:text-[17px]">({t('genericName')})</span>
+                {medicine.chemicalName} <span className="font-normal opacity-80 text-[15px] sm:text-[17px]">({t('chemicalName')})</span>
               </p>
 
               <div className="flex gap-2.5 flex-wrap mb-5 items-center">
@@ -210,7 +210,7 @@ export default function MedicineDetailPage() {
                 {activeTab === 'overview' && (
                   <div className="space-y-6">
                     <h3 className="text-[20px] font-bold font-plus-jakarta text-near-black m-0">
-                      What is {medicine.brandName}?
+                      What is {medicine.genericName}?
                     </h3>
                     <p className="text-[15px] leading-[1.7] text-dark-gray m-0">
                       {currentLocalized.description}
@@ -378,7 +378,7 @@ export default function MedicineDetailPage() {
                         </div>
                       </div>
                       <p className="text-xs text-dark-gray leading-relaxed m-0">
-                        "{medicine.brandName} has an excellent safety profile when taken strictly as prescribed. Patients should always verify they do not combine multiple medicines containing the same active ingredient."
+                        "{medicine.genericName} has an excellent safety profile when taken strictly as prescribed. Patients should always verify they do not combine multiple medicines containing the same active ingredient."
                       </p>
                     </div>
                   </div>
@@ -390,7 +390,7 @@ export default function MedicineDetailPage() {
             <div className="space-y-6 lg:sticky lg:top-[120px]">
               <div className="bg-white border border-light-gray rounded-[24px] p-6 shadow-md space-y-4">
                 <div className="font-plus-jakarta font-extrabold text-xl text-near-black">
-                  {medicine.brandName}
+                  {medicine.genericName}
                 </div>
                 <div className="text-amber-500 text-sm">
                   ★★★★☆ <span className="text-xs text-mid-gray font-normal ml-1">({medicine.reviewCount})</span>
@@ -402,8 +402,34 @@ export default function MedicineDetailPage() {
                   <div className="flex justify-between"><span className="text-mid-gray font-semibold">Category</span><span className="font-bold text-near-black">{medicine.category}</span></div>
                   <div className="flex justify-between"><span className="text-mid-gray font-semibold">Form</span><span className="font-bold text-near-black">{medicine.form.join(' / ')}</span></div>
                   <div className="flex justify-between"><span className="text-mid-gray font-semibold">Prescription</span><span className="text-teal font-bold">{medicine.prescriptionRequired ? 'Required' : 'Not Required'}</span></div>
-                  <div className="flex justify-between"><span className="text-mid-gray font-semibold">Elderly Safe</span><span className="text-teal font-bold">✓ Yes</span></div>
-                  <div className="flex justify-between"><span className="text-mid-gray font-semibold">Children Safe</span><span className="text-teal font-bold">✓ Yes</span></div>
+                  {(() => {
+                    const isElderlySafe = medicine.dosageRows && medicine.dosageRows.some((row) => 
+                      /elderly|senior|65|geriatric/i.test(row.ageGroup)
+                    );
+                    const isChildrenSafe = medicine.dosageRows && medicine.dosageRows.some((row) => 
+                      /child|children|infant|pediatric|kid|baby/i.test(row.ageGroup)
+                    );
+                    return (
+                      <>
+                        <div className="flex justify-between">
+                          <span className="text-mid-gray font-semibold">Elderly Safe</span>
+                          {isElderlySafe ? (
+                            <span className="text-teal font-bold">✓ Yes</span>
+                          ) : (
+                            <span className="text-red-500 font-bold">✗ No</span>
+                          )}
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-mid-gray font-semibold">Children Safe</span>
+                          {isChildrenSafe ? (
+                            <span className="text-teal font-bold">✓ Yes</span>
+                          ) : (
+                            <span className="text-red-500 font-bold">✗ No</span>
+                          )}
+                        </div>
+                      </>
+                    );
+                  })()}
                 </div>
 
                 <div className="h-px bg-light-gray w-full" />

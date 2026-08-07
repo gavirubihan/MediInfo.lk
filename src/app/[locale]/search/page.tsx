@@ -19,8 +19,9 @@ export default function SearchPage() {
   const filteredMedicines = sampleMedicines.filter((med) => {
     const matchesSearch =
       searchQuery === '' ||
-      med.brandName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       med.genericName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      med.chemicalName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      med.brandNames.some((brand) => brand.toLowerCase().includes(searchQuery.toLowerCase())) ||
       med.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
       med.localized.en.description.toLowerCase().includes(searchQuery.toLowerCase());
 
@@ -208,7 +209,7 @@ export default function SearchPage() {
                       {/* Image Section */}
                       <div className="relative w-[120px] sm:w-full sm:h-[180px] shrink-0 bg-off-white overflow-hidden border-r sm:border-r-0 sm:border-b border-light-gray/30">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={med.coverImage} alt={med.brandName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={med.coverImage} alt={med.genericName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         <div className="absolute top-3 right-3 hidden sm:block">
                           <Badge variant="blue" className="shadow-sm">{med.category}</Badge>
                         </div>
@@ -218,8 +219,8 @@ export default function SearchPage() {
                       <div className="p-4 sm:p-5 flex flex-col flex-1">
                         <div className="flex justify-between items-start mb-1 sm:mb-0 gap-2">
                           <div className="min-w-0">
-                            <div className="font-plus-jakarta font-extrabold text-[16px] sm:text-[18px] text-near-black leading-tight group-hover:text-blue transition-colors truncate">{med.brandName}</div>
-                            <div className="text-[12px] sm:text-[13px] text-mid-gray mt-0.5 sm:mt-1 truncate">{med.genericName}</div>
+                            <div className="font-plus-jakarta font-extrabold text-[16px] sm:text-[18px] text-near-black leading-tight group-hover:text-blue transition-colors truncate">{med.genericName}</div>
+                            <div className="text-[12px] sm:text-[13px] text-mid-gray mt-0.5 sm:mt-1 truncate">{med.chemicalName}</div>
                           </div>
                           <div className="sm:hidden shrink-0 mt-0.5">
                             <Badge variant="blue" className="text-[9px] px-1.5 py-0.5 rounded-sm">{med.category}</Badge>

@@ -101,7 +101,8 @@
   "MedicinePage": {
     "home": "Home",
     "search": "Search",
-    "genericName": "(Generic Name)",
+    "genericName": "Generic Name",
+    "chemicalName": "Active Ingredient / Chemical Salt",
     "verified": "VERIFIED",
     "noPrescription": "No Prescription Needed",
     "form": "Form",

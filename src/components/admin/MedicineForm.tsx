@@ -18,7 +18,8 @@ import {
   Info,
   Share2,
   ShieldAlert,
-  Activity
+  Activity,
+  Tag
 } from 'lucide-react';
 import { AITranslateModal } from './AITranslateModal';
 
@@ -54,8 +55,8 @@ export interface LanguageContent {
 }
 
 export interface MedicineFormData {
-  brandName: string;
   genericName: string;
+  chemicalName: string;
   brandNames: string[];
   slug: string;
   category: string;
@@ -84,8 +85,8 @@ export interface MedicineFormData {
 }
 
 const initialFormState: MedicineFormData = {
-  brandName: 'Paracetamol',
-  genericName: 'Acetaminophen',
+  genericName: 'Paracetamol',
+  chemicalName: 'Acetaminophen',
   brandNames: ['Panadol', 'Calpol', 'Disprol', 'Febrex', 'P-500', 'Crocin', 'Metacin', 'SPC Paracetamol'],
   slug: 'paracetamol',
   category: 'Painkiller',
@@ -247,6 +248,26 @@ export function MedicineForm() {
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [saveToast, setSaveToast] = useState(false);
+  const [newBrandInput, setNewBrandInput] = useState('');
+
+  const handleAddBrandName = () => {
+    if (!newBrandInput.trim()) return;
+    const trimmed = newBrandInput.trim();
+    if (!formData.brandNames.includes(trimmed)) {
+      setFormData((prev) => ({
+        ...prev,
+        brandNames: [...prev.brandNames, trimmed],
+      }));
+    }
+    setNewBrandInput('');
+  };
+
+  const handleRemoveBrandName = (indexToRemove: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      brandNames: prev.brandNames.filter((_, idx) => idx !== indexToRemove),
+    }));
+  };
 
   const availableForms = ['Tablet', 'Syrup', 'Capsule', 'Injection', 'Ointment', 'Drops', 'Inhaler'];
 
@@ -265,7 +286,7 @@ export function MedicineForm() {
   const handleGeneralChange = (field: keyof MedicineFormData, value: any) => {
     setFormData((prev) => {
       const updated = { ...prev, [field]: value };
-      if (field === 'brandName') {
+      if (field === 'genericName') {
         updated.slug = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
       }
       return updated;
@@ -556,7 +577,7 @@ export function MedicineForm() {
                 <span>›</span>
                 <span className="text-blue cursor-pointer">Search</span>
                 <span>›</span>
-                <span className="text-dark-gray font-bold">{formData.brandName || 'Paracetamol'}</span>
+                <span className="text-dark-gray font-bold">{formData.genericName || 'Paracetamol'}</span>
               </div>
             </div>
 
@@ -565,11 +586,11 @@ export function MedicineForm() {
                 {/* Main Content */}
                 <div className={activeLangTab === 'si' ? 'font-noto-sinhala' : ''}>
                   <h1 className="text-[34px] sm:text-[42px] font-extrabold leading-[1.1] font-plus-jakarta text-near-black mb-1.5 tracking-tight">
-                    {formData.brandName || 'Paracetamol'}
+                    {formData.genericName || 'Paracetamol'}
                   </h1>
                   <p className="text-[17px] sm:text-[19px] font-semibold leading-[1.4] text-mid-gray mb-4">
-                    {formData.genericName || 'Acetaminophen'}{' '}
-                    <span className="font-normal opacity-80 text-[15px]">Generic Name</span>
+                    {formData.chemicalName || 'Acetaminophen'}{' '}
+                    <span className="font-normal opacity-80 text-[15px]">Active Ingredient</span>
                   </p>
 
                   <div className="flex gap-2.5 flex-wrap mb-5 items-center">
@@ -631,6 +652,29 @@ export function MedicineForm() {
                     </div>
                   </div>
 
+                  {/* Popular Brand Names Available in Sri Lanka (Live Preview) */}
+                  {formData.brandNames && formData.brandNames.length > 0 && (
+                    <div className="my-6 bg-gradient-to-r from-blue-light/50 to-white border border-blue/20 rounded-2xl p-5 sm:p-6 shadow-sm space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Tag size={18} className="text-blue" />
+                        <h3 className="text-sm font-bold uppercase tracking-wider text-near-black m-0 font-plus-jakarta">
+                          Popular Brand Names Available in Sri Lanka:
+                        </h3>
+                      </div>
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {formData.brandNames.map((brand, idx) => (
+                          <span
+                            key={idx}
+                            className="px-3.5 py-1.5 bg-white border border-light-gray rounded-xl text-xs font-bold text-dark-gray flex items-center gap-2 shadow-sm"
+                          >
+                            <span className="w-2 h-2 rounded-full bg-teal shrink-0" />
+                            {brand}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   {/* Public Tabs Nav */}
                   <div className="relative mb-7 border-b-2 border-light-gray">
                     <div className="flex gap-2 overflow-x-auto">
@@ -657,7 +701,7 @@ export function MedicineForm() {
                     {activePreviewTab === 'overview' && (
                       <div className="space-y-4">
                         <h3 className="text-[20px] font-bold font-plus-jakarta text-near-black">
-                          What is {formData.brandName}?
+                          What is {formData.genericName}?
                         </h3>
                         <p className="text-[15px] leading-[1.65] text-dark-gray">
                           {currentLocalized.description || 'Description not provided.'}
@@ -813,7 +857,7 @@ export function MedicineForm() {
                 {/* Sticky Right Sidebar */}
                 <div className="bg-white border border-light-gray rounded-[24px] p-6 shadow-md h-fit space-y-4">
                   <div className="font-plus-jakarta font-extrabold text-xl text-near-black">
-                    {formData.brandName || 'Paracetamol'}
+                    {formData.genericName || 'Paracetamol'}
                   </div>
                   <div className="text-amber-500 text-sm">
                     ★★★★☆ <span className="text-xs text-mid-gray font-normal ml-1">(12 Verified Dr Reviews)</span>
@@ -825,8 +869,34 @@ export function MedicineForm() {
                     <div className="flex justify-between"><span className="text-mid-gray font-semibold">Category</span><span className="font-bold text-near-black">{formData.category}</span></div>
                     <div className="flex justify-between"><span className="text-mid-gray font-semibold">Form</span><span className="font-bold text-near-black">{formData.form.join(' / ')}</span></div>
                     <div className="flex justify-between"><span className="text-mid-gray font-semibold">Prescription</span><span className="text-teal font-bold">{formData.prescriptionRequired ? 'Required' : 'Not Required'}</span></div>
-                    <div className="flex justify-between"><span className="text-mid-gray font-semibold">Elderly Safe</span><span className="text-teal font-bold">✓ Yes</span></div>
-                    <div className="flex justify-between"><span className="text-mid-gray font-semibold">Children Safe</span><span className="text-teal font-bold">✓ Yes</span></div>
+                    {(() => {
+                      const isElderlySafe = formData.dosageRows && formData.dosageRows.some((row) => 
+                        /elderly|senior|65|geriatric/i.test(row.ageGroup)
+                      );
+                      const isChildrenSafe = formData.dosageRows && formData.dosageRows.some((row) => 
+                        /child|children|infant|pediatric|kid|baby/i.test(row.ageGroup)
+                      );
+                      return (
+                        <>
+                          <div className="flex justify-between">
+                            <span className="text-mid-gray font-semibold">Elderly Safe</span>
+                            {isElderlySafe ? (
+                              <span className="text-teal font-bold">✓ Yes</span>
+                            ) : (
+                              <span className="text-red-500 font-bold">✗ No</span>
+                            )}
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-mid-gray font-semibold">Children Safe</span>
+                            {isChildrenSafe ? (
+                              <span className="text-teal font-bold">✓ Yes</span>
+                            ) : (
+                              <span className="text-red-500 font-bold">✗ No</span>
+                            )}
+                          </div>
+                        </>
+                      );
+                    })()}
                   </div>
 
                   <div className="h-px bg-light-gray w-full" />
@@ -858,25 +928,25 @@ export function MedicineForm() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div>
-                <label className="block text-xs font-bold text-dark-gray mb-1.5">Trade / Brand Name *</label>
+                <label className="block text-xs font-bold text-dark-gray mb-1.5">Generic / Common Name *</label>
                 <input
                   type="text"
-                  value={formData.brandName}
-                  onChange={(e) => handleGeneralChange('brandName', e.target.value)}
+                  value={formData.genericName}
+                  onChange={(e) => handleGeneralChange('genericName', e.target.value)}
                   className="w-full h-11 px-3.5 rounded-xl border border-light-gray text-sm text-near-black font-bold focus:border-blue outline-none transition-all"
-                  placeholder="e.g. Paracetamol"
+                  placeholder="e.g. Paracetamol or Amoxicillin"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-dark-gray mb-1.5">Generic Name / Active Ingredient *</label>
+                <label className="block text-xs font-bold text-dark-gray mb-1.5">Chemical Name / Active Ingredient (Salt) *</label>
                 <input
                   type="text"
-                  value={formData.genericName}
-                  onChange={(e) => handleGeneralChange('genericName', e.target.value)}
+                  value={formData.chemicalName}
+                  onChange={(e) => handleGeneralChange('chemicalName', e.target.value)}
                   className="w-full h-11 px-3.5 rounded-xl border border-light-gray text-sm text-dark-gray focus:border-blue outline-none transition-all"
-                  placeholder="e.g. Acetaminophen"
+                  placeholder="e.g. Acetaminophen or Amoxicillin Trihydrate"
                   required
                 />
               </div>
@@ -931,6 +1001,63 @@ export function MedicineForm() {
                   placeholder="e.g. 4000mg"
                 />
               </div>
+            </div>
+
+            {/* Popular Brand Names in Sri Lanka */}
+            <div className="pt-2">
+              <label className="block text-xs font-bold text-dark-gray mb-1.5 flex items-center justify-between">
+                <span>Popular Commercial Brand Names (Available in Sri Lanka)</span>
+                <span className="text-[11px] text-mid-gray font-normal">Add trade brands like Panadol, Amoxil, Augmentin, etc.</span>
+              </label>
+              
+              <div className="flex gap-2 mb-3">
+                <input
+                  type="text"
+                  value={newBrandInput}
+                  onChange={(e) => setNewBrandInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleAddBrandName();
+                    }
+                  }}
+                  className="flex-1 h-11 px-3.5 rounded-xl border border-light-gray text-xs font-bold text-dark-gray focus:border-blue outline-none transition-all"
+                  placeholder="Type commercial brand name (e.g. Panadol, Amoxil) and click Add or press Enter..."
+                />
+                <button
+                  type="button"
+                  onClick={handleAddBrandName}
+                  className="px-4 h-11 bg-blue hover:bg-blue-dark text-white text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shrink-0"
+                >
+                  <Plus size={15} />
+                  <span>Add Brand</span>
+                </button>
+              </div>
+
+              {/* Brand Name Badges */}
+              {formData.brandNames.length > 0 ? (
+                <div className="flex flex-wrap gap-2 p-3 bg-off-white border border-light-gray/60 rounded-xl">
+                  {formData.brandNames.map((brand, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-1.5 bg-white border border-light-gray rounded-lg text-xs font-bold text-near-black flex items-center gap-2 shadow-xs group"
+                    >
+                      <span className="w-2 h-2 rounded-full bg-teal shrink-0" />
+                      <span>{brand}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveBrandName(idx)}
+                        className="text-mid-gray hover:text-red-500 transition-colors p-0.5 rounded-full hover:bg-red-50"
+                        title="Remove brand"
+                      >
+                        <X size={13} />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-xs text-mid-gray italic m-0">No commercial brand names added yet.</p>
+              )}
             </div>
 
             {/* Medicine Forms Checkboxes */}

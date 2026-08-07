@@ -8,8 +8,9 @@ export default function MedicineListPage() {
   const [searchTerm, setSearchTerm] = useState('');
 
   const filtered = sampleMedicines.filter((m) =>
-    m.brandName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     m.genericName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    m.chemicalName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    m.brandNames.some((b) => b.toLowerCase().includes(searchTerm.toLowerCase())) ||
     m.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -43,7 +44,7 @@ export default function MedicineListPage() {
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search by brand name, generic name, or category..."
+          placeholder="Search by generic name, chemical salt, brands, or category..."
           className="w-full text-xs font-bold text-near-black outline-none bg-transparent"
         />
       </div>
@@ -54,7 +55,7 @@ export default function MedicineListPage() {
           <table className="w-full text-left text-xs min-w-[700px]">
             <thead>
               <tr className="bg-off-white border-b border-light-gray text-mid-gray font-bold uppercase tracking-wider">
-                <th className="py-3.5 px-6">Brand Name / Generic</th>
+                <th className="py-3.5 px-6">Generic Name / Chemical</th>
                 <th className="py-3.5 px-4">Category</th>
                 <th className="py-3.5 px-4">Form & Strength</th>
                 <th className="py-3.5 px-4">Available Languages</th>
@@ -66,8 +67,8 @@ export default function MedicineListPage() {
               {filtered.map((med) => (
                 <tr key={med.id} className="hover:bg-off-white/60 transition-colors">
                   <td className="py-4 px-6">
-                    <div className="font-bold text-near-black text-sm">{med.brandName}</div>
-                    <div className="text-[11px] text-mid-gray font-medium">{med.genericName}</div>
+                    <div className="font-bold text-near-black text-sm">{med.genericName}</div>
+                    <div className="text-[11px] text-mid-gray font-medium">{med.chemicalName}</div>
                   </td>
                   <td className="py-4 px-4 font-bold text-dark-gray">{med.category}</td>
                   <td className="py-4 px-4">
