@@ -113,5 +113,32 @@
     "tabSideEffects": "Side Effects",
     "tabWarnings": "Warnings",
     "tabReviews": "Reviews"
+  },
+  "AboutPage": {
+    "badge": "OUR STORY",
+    "heroTitle1": "Built for",
+    "heroTitle2": "Sri Lanka,",
+    "heroTitle3": "With Love.",
+    "heroDesc": "MediInfo.LK is a free, multilingual medicine information platform created to help Sri Lankan families make safer, more informed health decisions.",
+    "heroCta1": "Search Medicines →",
+    "heroCta2": "Read Health Articles",
+    "missionBadge": "OUR MISSION",
+    "missionTitle": "Making medicine information accessible to every Sri Lankan",
+    "missionP1": "In Sri Lanka, access to clear, accurate medicine information has long been a challenge — especially for those who aren't fluent in English. MediInfo.LK was born to bridge that gap.",
+    "missionP2": "Built by a team of passionate developers at Sabaragamuwa University under the name Pixel Pirates, our platform provides verified medicine details, dosage guides, side effect warnings, and trusted health articles in Sinhala, Tamil, and English.",
+    "missionP3": "Our commitment is simple: every Sri Lankan deserves to understand their medicines — regardless of their language, location, or background.",
+    "valuesBadge": "WHAT WE STAND FOR",
+    "valuesTitle": "The principles that guide everything we do",
+    "valuesSubtitle": "Our values shape the way we build, verify, and deliver health information to communities across Sri Lanka.",
+    "teamBadge": "THE TEAM",
+    "teamTitle": "Meet the people behind MediInfo.LK",
+    "teamSubtitle": "A group of dedicated students and developers committed to improving health literacy in Sri Lanka.",
+    "contactBadge": "GET IN TOUCH",
+    "contactTitle": "We'd love to hear from you",
+    "contactDesc": "Whether you're a medical professional who wants to contribute, a user with feedback, or a partner interested in collaboration — reach out to us.",
+    "ctaTitle": "Start exploring trusted medicine information today.",
+    "ctaSubtitle": "Free, accurate, and available in your language.",
+    "ctaBtn1": "Search Medicines",
+    "ctaBtn2": "Browse Articles"
   }
 }
