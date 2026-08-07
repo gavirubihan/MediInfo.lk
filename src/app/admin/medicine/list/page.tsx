@@ -1,22 +1,15 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Pill, PlusCircle, Search, Languages, CheckCircle2, Edit3 } from 'lucide-react';
+import { Pill, PlusCircle, Search, Languages, CheckCircle2, Edit3, ExternalLink } from 'lucide-react';
+import { sampleMedicines } from '@/data/medicinesData';
 
 export default function MedicineListPage() {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const medicines = [
-    { id: '1', name: 'Paracetamol', generic: 'Acetaminophen', category: 'Painkiller', form: 'Tablet / Syrup', strength: '500mg / 1000mg', langs: ['EN', 'SI', 'TA'], verified: true },
-    { id: '2', name: 'Amoxicillin', generic: 'Amoxicillin Trihydrate', category: 'Antibiotic', form: 'Capsule', strength: '250mg / 500mg', langs: ['EN', 'SI', 'TA'], verified: true },
-    { id: '3', name: 'Cetirizine', generic: 'Cetirizine Hydrochloride', category: 'Antihistamine', form: 'Tablet', strength: '10mg', langs: ['EN', 'SI'], verified: false },
-    { id: '4', name: 'Omeprazole', generic: 'Omeprazole Magnesium', category: 'Antacid', form: 'Capsule', strength: '20mg', langs: ['EN', 'SI', 'TA'], verified: true },
-    { id: '5', name: 'Metformin', generic: 'Metformin Hydrochloride', category: 'Antidiabetic', form: 'Tablet', strength: '500mg / 850mg', langs: ['EN', 'SI', 'TA'], verified: true },
-  ];
-
-  const filtered = medicines.filter(m => 
-    m.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    m.generic.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  const filtered = sampleMedicines.filter((m) =>
+    m.brandName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    m.genericName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     m.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -73,24 +66,19 @@ export default function MedicineListPage() {
               {filtered.map((med) => (
                 <tr key={med.id} className="hover:bg-off-white/60 transition-colors">
                   <td className="py-4 px-6">
-                    <div className="font-bold text-near-black text-sm">{med.name}</div>
-                    <div className="text-[11px] text-mid-gray font-medium">{med.generic}</div>
+                    <div className="font-bold text-near-black text-sm">{med.brandName}</div>
+                    <div className="text-[11px] text-mid-gray font-medium">{med.genericName}</div>
                   </td>
                   <td className="py-4 px-4 font-bold text-dark-gray">{med.category}</td>
                   <td className="py-4 px-4">
-                    <div className="font-semibold text-dark-gray">{med.form}</div>
+                    <div className="font-semibold text-dark-gray">{med.form.join(' / ')}</div>
                     <div className="text-[11px] text-mid-gray font-jetbrains">{med.strength}</div>
                   </td>
                   <td className="py-4 px-4">
                     <div className="flex gap-1">
-                      {med.langs.map((lang) => (
-                        <span
-                          key={lang}
-                          className="bg-blue-light text-blue text-[10px] font-bold px-2 py-0.5 rounded border border-blue/15"
-                        >
-                          {lang}
-                        </span>
-                      ))}
+                      <span className="bg-blue-light text-blue text-[10px] font-bold px-2 py-0.5 rounded border border-blue/15">EN</span>
+                      <span className="bg-teal/10 text-teal text-[10px] font-bold px-2 py-0.5 rounded border border-teal/15">SI (සිංහල)</span>
+                      <span className="bg-amber-500/10 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded border border-amber-500/15">TA (தமிழ்)</span>
                     </div>
                   </td>
                   <td className="py-4 px-4">
@@ -99,18 +87,29 @@ export default function MedicineListPage() {
                         <CheckCircle2 size={12} /> Verified
                       </span>
                     ) : (
-                      <span className="bg-amber-500/10 text-amber-600 border border-amber-500/20 text-[11px] font-bold px-2 py-0.5 rounded-md">
-                        Pending
+                      <span className="inline-flex items-center gap-1 bg-amber-500/10 text-amber-700 border border-amber-500/20 text-[11px] font-bold px-2 py-0.5 rounded-md">
+                        Draft
                       </span>
                     )}
                   </td>
-                  <td className="py-4 px-6 text-right space-x-2">
-                    <Link
-                      href="/admin/medicine/add"
-                      className="p-2 text-blue hover:bg-blue-light rounded-lg inline-flex items-center no-underline"
-                    >
-                      <Edit3 size={16} />
-                    </Link>
+                  <td className="py-4 px-6 text-right">
+                    <div className="flex items-center justify-end gap-2">
+                      <Link
+                        href={`/medicine/${med.slug}`}
+                        target="_blank"
+                        className="px-3 py-1.5 bg-blue-light text-blue hover:bg-blue/15 text-xs font-bold rounded-lg transition-colors flex items-center gap-1 no-underline"
+                      >
+                        <ExternalLink size={13} />
+                        <span>View Page</span>
+                      </Link>
+                      <Link
+                        href="/admin/medicine/add"
+                        className="px-3 py-1.5 bg-off-white text-dark-gray hover:bg-light-gray text-xs font-bold rounded-lg border border-light-gray transition-colors flex items-center gap-1 no-underline"
+                      >
+                        <Edit3 size={13} />
+                        <span>Edit</span>
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               ))}
