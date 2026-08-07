@@ -41,7 +41,7 @@ export const Navbar = () => {
     { label: 'Home', href: '/' },
     { label: 'Search', href: '/search' },
     { label: 'Blogs', href: '/blogs' },
-    { label: 'About', href: '#' },
+    { label: 'About', href: '/about' },
   ];
 
   return (
