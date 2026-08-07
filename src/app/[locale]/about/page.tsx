@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import {
@@ -24,18 +25,36 @@ export default function AboutPage() {
 
   const teamMembers = [
     {
-      initials: 'MI',
-      name: 'Matheesha Induwara',
+      initials: 'AS',
+      name: 'Gaviru Bihan',
       role: t('teamRole1'),
       color: 'bg-blue',
       desc: t('teamDesc1'),
+      image: '/images/team/team_1.png',
     },
     {
-      initials: 'PP',
-      name: 'Pixel Pirates Team',
+      initials: 'KP',
+      name: 'Nirosha Madhumali',
       role: t('teamRole2'),
       color: 'bg-teal',
       desc: t('teamDesc2'),
+      image: '/images/team/team_2.png',
+    },
+    {
+      initials: 'NK',
+      name: 'Matheesha Induwara',
+      role: t('teamRole3'),
+      color: 'bg-blue',
+      desc: t('teamDesc3'),
+      image: '/images/team/team_3.png',
+    },
+    {
+      initials: 'CF',
+      name: 'Poornima Prasadini',
+      role: t('teamRole4'),
+      color: 'bg-teal',
+      desc: t('teamDesc4'),
+      image: '/images/team/team_4.png',
     },
   ];
 
@@ -82,27 +101,49 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-white pt-36 pb-20 before:content-[''] before:absolute before:-top-20 before:-right-30 before:w-[600px] before:h-[600px] before:bg-[radial-gradient(ellipse,rgba(232,243,252,0.9)_0%,transparent_70%)] before:pointer-events-none after:content-[''] after:absolute after:-bottom-10 after:-left-20 after:w-[400px] after:h-[400px] after:bg-[radial-gradient(ellipse,rgba(23,169,142,0.06)_0%,transparent_70%)] after:pointer-events-none">
+      <section className="relative overflow-hidden bg-[#FAFCFF] pt-36 pb-24">
+        
+        {/* Glow Effects */}
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue/10 blur-[80px] animate-pulse" style={{ animationDuration: '4s' }}></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-teal/10 blur-[100px] animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
+
+        {/* Floating Icons */}
+        <div className="absolute top-[20%] left-[10%] text-blue/20 animate-float hidden lg:block">
+          <Heart size={48} />
+        </div>
+        <div className="absolute top-[30%] right-[12%] text-teal/20 animate-float-delay-1 hidden lg:block">
+          <ShieldCheck size={56} />
+        </div>
+        <div className="absolute bottom-[15%] left-[20%] text-blue/15 animate-float hidden lg:block" style={{ animationDelay: '2s' }}>
+          <Stethoscope size={64} />
+        </div>
+
         <div className="max-w-[1200px] mx-auto px-6 md:px-12 text-center relative z-10">
-          <div className="mb-5 flex justify-center">
-            <Badge variant="hero">
-              <Heart size={14} className="text-blue" /> {t('badge')}
+          <div className="mb-6 flex justify-center">
+            <Badge variant="hero" className="shadow-sm border border-blue/10 bg-white/80 backdrop-blur-sm px-4 py-1.5">
+              <Heart size={14} className="text-blue animate-pulse" style={{ animationDuration: '2s' }} /> {t('badge')}
             </Badge>
           </div>
-          <h1 className="text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.1] font-plus-jakarta text-near-black mb-5 max-w-[760px] mx-auto">
+          <h1 className="text-[clamp(40px,6vw,64px)] font-extrabold leading-[1.1] font-plus-jakarta text-near-black mb-6 max-w-[800px] mx-auto tracking-tight">
             {t('heroTitle1')}{' '}
-            <em className="not-italic text-blue">{t('heroTitle2')}</em>{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue to-teal relative inline-block">
+              {t('heroTitle2')}
+            </span>{' '}
             {t('heroTitle3')}
           </h1>
-          <p className="text-[17px] leading-[1.7] text-dark-gray mb-9 max-w-[600px] mx-auto">
+          <p className="text-[18px] leading-[1.7] text-dark-gray mb-10 max-w-[640px] mx-auto font-medium">
             {t('heroDesc')}
           </p>
-          <div className="flex gap-3.5 flex-wrap justify-center">
-            <Link href="/search" className="no-underline">
-              <Button variant="primary">{t('heroCta1')}</Button>
+          <div className="flex gap-4 flex-wrap justify-center">
+            <Link href="/search" className="no-underline group">
+              <Button variant="primary" className="h-14 px-8 text-base shadow-[0_8px_24px_rgba(26,111,191,0.25)] transition-all duration-300 group-hover:shadow-[0_12px_32px_rgba(26,111,191,0.35)] group-hover:-translate-y-1">
+                {t('heroCta1')}
+              </Button>
             </Link>
-            <Link href="/blogs" className="no-underline">
-              <Button variant="secondary">{t('heroCta2')}</Button>
+            <Link href="/blogs" className="no-underline group">
+              <Button variant="secondary" className="h-14 px-8 text-base bg-white shadow-sm border border-light-gray transition-all duration-300 group-hover:border-blue group-hover:bg-blue-light/50 group-hover:-translate-y-1">
+                {t('heroCta2')}
+              </Button>
             </Link>
           </div>
         </div>
@@ -269,16 +310,25 @@ export default function AboutPage() {
               {t('teamSubtitle')}
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-[760px] mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {teamMembers.map((member, i) => (
               <div
                 key={i}
                 className="flex-1 bg-white border border-light-gray rounded-2xl p-7 flex flex-col gap-4 shadow-[0_2px_12px_rgba(0,0,0,0.05)] transition-all duration-200 hover:shadow-lg hover:-translate-y-1 text-center items-center"
               >
                 <div
-                  className={`w-16 h-16 rounded-2xl flex items-center justify-center text-xl font-bold text-white shrink-0 ${member.color} shadow-[0_4px_16px_rgba(26,111,191,0.25)]`}
+                  className={`w-20 h-20 rounded-full flex items-center justify-center text-xl font-bold text-white shrink-0 overflow-hidden relative shadow-[0_4px_16px_rgba(26,111,191,0.25)] ${!member.image && member.color}`}
                 >
-                  {member.initials}
+                  {member.image ? (
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    member.initials
+                  )}
                 </div>
                 <div>
                   <div className="font-plus-jakarta font-bold text-near-black text-[17px] mb-1">
