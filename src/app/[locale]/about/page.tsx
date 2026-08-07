@@ -19,65 +19,65 @@ import {
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-const teamMembers = [
-  {
-    initials: 'MI',
-    name: 'Matheesha Induwara',
-    role: 'Full-Stack Developer & Project Lead',
-    color: 'bg-blue',
-    desc: 'Leads architecture, development, and overall vision of MediInfo.LK.',
-  },
-  {
-    initials: 'PP',
-    name: 'Pixel Pirates Team',
-    role: 'Design & Development',
-    color: 'bg-teal',
-    desc: 'A passionate team of developers from Sabaragamuwa University of Sri Lanka.',
-  },
-];
-
-const values = [
-  {
-    icon: <ShieldCheck size={24} className="text-blue" />,
-    title: 'Accuracy First',
-    desc: 'Every medicine entry is reviewed and verified by licensed healthcare professionals before going live.',
-  },
-  {
-    icon: <Globe size={24} className="text-blue" />,
-    title: 'Language Inclusion',
-    desc: 'We believe in a Sri Lanka where every citizen can access health information in their mother tongue.',
-  },
-  {
-    icon: <Heart size={24} className="text-blue" />,
-    title: 'Community Care',
-    desc: 'Built for Sri Lankan families — from rural villages to urban hospitals, our platform serves everyone.',
-  },
-  {
-    icon: <Lightbulb size={24} className="text-blue" />,
-    title: 'Innovation',
-    desc: 'Harnessing AI and modern technology to make complex medical information simple and accessible.',
-  },
-  {
-    icon: <Users size={24} className="text-blue" />,
-    title: 'Doctor Partnership',
-    desc: 'We collaborate with verified medical professionals to ensure our content is clinically sound.',
-  },
-  {
-    icon: <BookOpen size={24} className="text-blue" />,
-    title: 'Health Literacy',
-    desc: 'Empowering Sri Lankans with the knowledge to ask better questions and make safer health choices.',
-  },
-];
-
-const stats = [
-  { value: '500+', label: 'Medicines Listed', icon: <Stethoscope size={20} className="text-blue" /> },
-  { value: '3', label: 'Languages Supported', icon: <Globe size={20} className="text-teal" /> },
-  { value: '100%', label: 'Doctor Verified', icon: <ShieldCheck size={20} className="text-blue" /> },
-  { value: 'Free', label: 'For Everyone', icon: <Heart size={20} className="text-red" /> },
-];
-
 export default function AboutPage() {
   const t = useTranslations('AboutPage');
+
+  const teamMembers = [
+    {
+      initials: 'MI',
+      name: 'Matheesha Induwara',
+      role: t('teamRole1'),
+      color: 'bg-blue',
+      desc: t('teamDesc1'),
+    },
+    {
+      initials: 'PP',
+      name: 'Pixel Pirates Team',
+      role: t('teamRole2'),
+      color: 'bg-teal',
+      desc: t('teamDesc2'),
+    },
+  ];
+
+  const values = [
+    {
+      icon: <ShieldCheck size={24} className="text-blue" />,
+      title: t('valueTitle1'),
+      desc: t('valueDesc1'),
+    },
+    {
+      icon: <Globe size={24} className="text-blue" />,
+      title: t('valueTitle2'),
+      desc: t('valueDesc2'),
+    },
+    {
+      icon: <Heart size={24} className="text-blue" />,
+      title: t('valueTitle3'),
+      desc: t('valueDesc3'),
+    },
+    {
+      icon: <Lightbulb size={24} className="text-blue" />,
+      title: t('valueTitle4'),
+      desc: t('valueDesc4'),
+    },
+    {
+      icon: <Users size={24} className="text-blue" />,
+      title: t('valueTitle5'),
+      desc: t('valueDesc5'),
+    },
+    {
+      icon: <BookOpen size={24} className="text-blue" />,
+      title: t('valueTitle6'),
+      desc: t('valueDesc6'),
+    },
+  ];
+
+  const stats = [
+    { value: '500+', label: t('statLabel1'), icon: <Stethoscope size={20} className="text-blue" /> },
+    { value: '3', label: t('statLabel2'), icon: <Globe size={20} className="text-teal" /> },
+    { value: '100%', label: t('statLabel3'), icon: <ShieldCheck size={20} className="text-blue" /> },
+    { value: 'Free', label: t('statLabel4'), icon: <Heart size={20} className="text-red" /> },
+  ];
 
   return (
     <>
@@ -170,16 +170,16 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <div className="font-plus-jakarta font-bold text-near-black text-[17px]">Pixel Pirates</div>
-                    <div className="text-[12px] text-mid-gray">Sabaragamuwa University of Sri Lanka</div>
+                    <div className="text-[12px] text-mid-gray">{t('cardUniversity')}</div>
                   </div>
                 </div>
 
                 <div className="space-y-3.5">
                   {[
-                    { label: 'Platform Type', value: 'Health Information' },
-                    { label: 'Year Founded', value: '2025' },
-                    { label: 'Languages', value: 'EN · සි · த' },
-                    { label: 'Target Region', value: 'Sri Lanka 🇱🇰' },
+                    { label: t('cardPlatformType'), value: t('cardPlatformValue') },
+                    { label: t('cardYearFounded'), value: '2025' },
+                    { label: t('cardLanguages'), value: 'EN · සි · த' },
+                    { label: t('cardTargetRegion'), value: t('cardSriLanka') },
                   ].map((item) => (
                     <div key={item.label} className="flex justify-between items-center text-sm border-b border-light-gray pb-3">
                       <span className="text-mid-gray font-medium">{item.label}</span>
@@ -191,7 +191,7 @@ export default function AboutPage() {
                 <div className="mt-6 bg-blue-light rounded-xl p-4 flex items-center gap-3">
                   <ShieldCheck size={20} className="text-teal shrink-0" />
                   <span className="text-[13px] font-semibold text-near-black">
-                    All content medically reviewed &amp; verified
+                    {t('cardMedicallyReviewed')}
                   </span>
                 </div>
               </div>
@@ -202,8 +202,8 @@ export default function AboutPage() {
                   <Award size={16} className="text-teal" />
                 </div>
                 <div>
-                  <div className="text-[11px] text-mid-gray font-normal">Commitment</div>
-                  Free Forever
+                  <div className="text-[11px] text-mid-gray font-normal">{t('cardCommitment')}</div>
+                  {t('cardFreeForever')}
                 </div>
               </div>
 
@@ -213,8 +213,8 @@ export default function AboutPage() {
                   <MapPin size={16} className="text-blue" />
                 </div>
                 <div>
-                  <div className="text-[11px] text-mid-gray font-normal">Based in</div>
-                  Sri Lanka 🇱🇰
+                  <div className="text-[11px] text-mid-gray font-normal">{t('cardBasedIn')}</div>
+                  {t('cardSriLanka')}
                 </div>
               </div>
             </div>
