@@ -27,13 +27,8 @@ export const Navbar = () => {
       // Add background shadow/blur when scrolled down
       setIsScrolled(currentScrollY > 20);
 
-      // Auto-hide logic (hide on scroll down, show on scroll up)
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false);
-        setIsMobileMenuOpen(false); // Close mobile menu when hiding
-      } else {
-        setIsVisible(true);
-      }
+      // Removed auto-hide logic based on user request
+      setIsVisible(true);
       
       setLastScrollY(currentScrollY);
     };
