@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { Pill, Check, AlertTriangle, Globe, Stethoscope, Search, Bot, CheckCircle, FileText } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function Home() {
+  const t = useTranslations('HomePage');
   return (
     <>
       {/* Hero Section */}
@@ -15,27 +17,27 @@ export default function Home() {
           <div>
             <div className="mb-5">
               <Badge variant="hero">
-                <Pill size={14} className="text-blue" /> TRUSTED MEDICINE INFORMATION
+                <Pill size={14} className="text-blue" /> {t('badge')}
               </Badge>
             </div>
             <h1 className="text-[clamp(36px,5vw,52px)] font-extrabold leading-[1.1] font-plus-jakarta text-near-black mb-5">
-              Understand Your<br />
-              <em className="not-italic text-blue relative">Medicines.</em><br />
-              Stay Safe.
+              {t('titleLine1')}<br />
+              <em className="not-italic text-blue relative">{t('titleLine2')}</em><br />
+              {t('titleLine3')}
             </h1>
             <p className="text-[17px] leading-[1.7] text-dark-gray mb-9 max-w-[480px]">
-              Search medicine information, upload prescriptions, and read trusted health articles — in Sinhala, Tamil, and English.
+              {t('description')}
             </p>
             <div className="flex gap-3.5 flex-wrap mb-8">
               <Link href="/search" className="no-underline">
-                <Button variant="primary">Search a Medicine →</Button>
+                <Button variant="primary">{t('searchBtn')}</Button>
               </Link>
-              <Button variant="secondary">Upload Prescription</Button>
+              <Button variant="secondary">{t('uploadBtn')}</Button>
             </div>
             <div className="flex gap-5 flex-wrap">
-              <span className="flex items-center gap-1.5 text-[13px] font-semibold text-dark-gray"><Check size={16} className="text-teal" /> Verified Doctors</span>
-              <span className="flex items-center gap-1.5 text-[13px] font-semibold text-dark-gray"><Check size={16} className="text-teal" /> Multilingual</span>
-              <span className="flex items-center gap-1.5 text-[13px] font-semibold text-dark-gray"><Check size={16} className="text-teal" /> Free to Use</span>
+              <span className="flex items-center gap-1.5 text-[13px] font-semibold text-dark-gray"><Check size={16} className="text-teal" /> {t('verifiedDoctors')}</span>
+              <span className="flex items-center gap-1.5 text-[13px] font-semibold text-dark-gray"><Check size={16} className="text-teal" /> {t('multilingual')}</span>
+              <span className="flex items-center gap-1.5 text-[13px] font-semibold text-dark-gray"><Check size={16} className="text-teal" /> {t('freeToUse')}</span>
             </div>
           </div>
 
@@ -101,10 +103,10 @@ export default function Home() {
       {/* Search Band */}
       <section className="py-12 bg-off-white text-center">
         <div className="max-w-[720px] mx-auto px-6">
-          <h2 className="text-[28px] font-bold leading-[1.25] font-plus-jakarta text-near-black mb-2">Find Any Medicine Instantly</h2>
-          <p className="text-[15px] text-mid-gray mb-6">Type a medicine name or upload a photo of your prescription</p>
+          <h2 className="text-[28px] font-bold leading-[1.25] font-plus-jakarta text-near-black mb-2">{t('searchBandTitle')}</h2>
+          <p className="text-[15px] text-mid-gray mb-6">{t('searchBandDesc')}</p>
           <div className="max-w-[680px] mx-auto mb-4">
-            <SearchInput placeholder="Search medicine name... e.g. Paracetamol" />
+            <SearchInput placeholder={t('searchPlaceholder')} />
           </div>
           <div className="flex gap-2 justify-center flex-wrap">
             {['Paracetamol', 'Amoxicillin', 'Metformin', 'Omeprazole', 'Cetirizine'].map(med => (
@@ -120,8 +122,8 @@ export default function Home() {
       <section className="py-20">
         <div className="max-w-[1200px] mx-auto px-6 md:px-12">
           <div className="text-center mb-12">
-            <h2 className="text-[28px] font-bold leading-[1.25] font-plus-jakarta text-near-black">How It Works</h2>
-            <p className="text-mid-gray mt-2.5 max-w-[560px] mx-auto">Get reliable medicine information in three simple steps</p>
+            <h2 className="text-[28px] font-bold leading-[1.25] font-plus-jakarta text-near-black">{t('hiwTitle')}</h2>
+            <p className="text-mid-gray mt-2.5 max-w-[560px] mx-auto">{t('hiwSubtitle')}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 relative">
             <div className="md:p-8 flex flex-col gap-3.5 relative md:after:content-['→'] after:absolute after:-right-3 after:top-11 after:text-2xl after:text-mid-gray after:z-10">
@@ -129,24 +131,24 @@ export default function Home() {
               <div className="w-16 h-16 bg-blue rounded-2xl flex items-center justify-center mb-1 shadow-[0_4px_16px_rgba(26,111,191,0.3)]">
                 <Search size={32} className="text-white" />
               </div>
-              <h3 className="text-[20px] font-bold font-plus-jakarta text-near-black">Search or Upload</h3>
-              <p className="text-[15px] text-dark-gray">Type any medicine name, or upload a photo of your prescription using our AI-powered scanner.</p>
+              <h3 className="text-[20px] font-bold font-plus-jakarta text-near-black">{t('hiwStep1Title')}</h3>
+              <p className="text-[15px] text-dark-gray">{t('hiwStep1Desc')}</p>
             </div>
             <div className="md:p-8 flex flex-col gap-3.5 relative md:after:content-['→'] after:absolute after:-right-3 after:top-11 after:text-2xl after:text-mid-gray after:z-10">
               <div className="w-8 h-8 bg-blue-light rounded-full flex items-center justify-center text-[13px] font-bold text-blue">02</div>
               <div className="w-16 h-16 bg-blue rounded-2xl flex items-center justify-center mb-1 shadow-[0_4px_16px_rgba(26,111,191,0.3)]">
                 <Bot size={32} className="text-white" />
               </div>
-              <h3 className="text-[20px] font-bold font-plus-jakarta text-near-black">AI Reads & Identifies</h3>
-              <p className="text-[15px] text-dark-gray">Our AI instantly identifies medicines from your prescription and matches them in our verified database.</p>
+              <h3 className="text-[20px] font-bold font-plus-jakarta text-near-black">{t('hiwStep2Title')}</h3>
+              <p className="text-[15px] text-dark-gray">{t('hiwStep2Desc')}</p>
             </div>
             <div className="md:p-8 flex flex-col gap-3.5 relative">
               <div className="w-8 h-8 bg-blue-light rounded-full flex items-center justify-center text-[13px] font-bold text-blue">03</div>
               <div className="w-16 h-16 bg-blue rounded-2xl flex items-center justify-center mb-1 shadow-[0_4px_16px_rgba(26,111,191,0.3)]">
                 <CheckCircle size={32} className="text-white" />
               </div>
-              <h3 className="text-[20px] font-bold font-plus-jakarta text-near-black">Get Clear Info</h3>
-              <p className="text-[15px] text-dark-gray">Receive dosage guides, side effects, warnings, and doctor-verified content in your language.</p>
+              <h3 className="text-[20px] font-bold font-plus-jakarta text-near-black">{t('hiwStep3Title')}</h3>
+              <p className="text-[15px] text-dark-gray">{t('hiwStep3Desc')}</p>
             </div>
           </div>
         </div>
@@ -156,8 +158,8 @@ export default function Home() {
       <section className="py-20 bg-off-white">
         <div className="max-w-[1200px] mx-auto px-6 md:px-12">
           <div className="text-center mb-12">
-            <h2 className="text-[28px] font-bold leading-[1.25] font-plus-jakarta text-near-black">Everything You Need</h2>
-            <p className="text-mid-gray mt-2.5 max-w-[560px] mx-auto">Trusted features built for Sri Lankan families, doctors, and communities</p>
+            <h2 className="text-[28px] font-bold leading-[1.25] font-plus-jakarta text-near-black">{t('featTitle')}</h2>
+            <p className="text-mid-gray mt-2.5 max-w-[560px] mx-auto">{t('featSubtitle')}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
@@ -183,11 +185,11 @@ export default function Home() {
         <div className="max-w-[1200px] mx-auto px-6 md:px-12">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
             <div>
-              <h2 className="text-[28px] font-bold leading-[1.25] font-plus-jakarta text-near-black">Health Articles by Verified Doctors</h2>
-              <p className="text-[15px] text-mid-gray mt-2">Trusted medical content, written by certified healthcare professionals</p>
+              <h2 className="text-[28px] font-bold leading-[1.25] font-plus-jakarta text-near-black">{t('artTitle')}</h2>
+              <p className="text-[15px] text-mid-gray mt-2">{t('artSubtitle')}</p>
             </div>
             <Link href="/blogs" className="no-underline shrink-0">
-              <Button variant="text">View All Articles →</Button>
+              <Button variant="text">{t('viewAll')}</Button>
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -225,11 +227,11 @@ export default function Home() {
       {/* CTA Banner */}
       <div className="bg-gradient-to-br from-blue to-blue-dark py-20 text-center relative overflow-hidden before:content-[''] before:absolute before:-top-[40%] before:-right-[10%] before:w-[400px] before:h-[400px] before:bg-[radial-gradient(circle,rgba(255,255,255,0.08)_0%,transparent_70%)]">
         <div className="max-w-[1200px] mx-auto px-6 md:px-12 relative z-10">
-          <h2 className="text-[28px] font-bold leading-[1.25] font-plus-jakarta text-white mb-2">Your health information, in your language.</h2>
-          <p className="text-[17px] text-white/80">Join thousands of Sri Lankans making safer medicine decisions.</p>
+          <h2 className="text-[28px] font-bold leading-[1.25] font-plus-jakarta text-white mb-2">{t('ctaTitle')}</h2>
+          <p className="text-[17px] text-white/80">{t('ctaSubtitle')}</p>
           <div className="flex gap-3.5 justify-center flex-wrap mt-8">
-            <Button variant="white">Get Started — It&apos;s Free</Button>
-            <Button variant="outline-white">Learn More</Button>
+            <Button variant="white">{t('ctaBtn1')}</Button>
+            <Button variant="outline-white">{t('ctaBtn2')}</Button>
           </div>
         </div>
       </div>
