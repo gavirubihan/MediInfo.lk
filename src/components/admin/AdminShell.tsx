@@ -140,9 +140,6 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             </button>
 
             <Link href="/admin" className="flex items-center gap-2.5 no-underline group">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue to-teal flex items-center justify-center text-white shadow-md font-bold text-lg group-hover:scale-105 transition-transform">
-                M
-              </div>
               <div className="flex flex-col">
                 <span className="font-plus-jakarta font-bold text-[16px] sm:text-[17px] leading-tight text-near-black tracking-tight flex items-center gap-1.5">
                   MediInfo<span className="text-teal">.LK</span> <span className={`text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full border ${badgeInfo.color}`}>{badgeInfo.label}</span>
