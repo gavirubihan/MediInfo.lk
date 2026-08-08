@@ -1,7 +1,8 @@
 'use client';
 import React, { useState, useRef } from 'react';
-import { X, UploadCloud, File, CheckCircle, AlertCircle, Trash2 } from 'lucide-react';
+import { X, UploadCloud, File, CheckCircle, AlertCircle, Trash2, Scan, ChevronRight, Pill } from 'lucide-react';
 import { Button } from './Button';
+import { getStoredMedicines, MedicineRecord } from '@/data/medicinesData';
 import { useRouter } from '@/i18n/routing';
 
 interface PrescriptionUploadModalProps {
@@ -13,7 +14,8 @@ export const PrescriptionUploadModal: React.FC<PrescriptionUploadModalProps> = (
   const router = useRouter();
   const [dragActive, setDragActive] = useState(false);
   const [file, setFile] = useState<File | null>(null);
-  const [uploadState, setUploadState] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
+  const [uploadState, setUploadState] = useState<'idle' | 'uploading' | 'analyzing' | 'results' | 'success' | 'error'>('idle');
+  const [identifiedMedicines, setIdentifiedMedicines] = useState<MedicineRecord[]>([]);
   const [uploadProgress, setUploadProgress] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -72,7 +74,24 @@ export const PrescriptionUploadModal: React.FC<PrescriptionUploadModalProps> = (
       setUploadProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setUploadState('success');
+          setUploadState('analyzing');
+          
+          // Simulate AI analyzing time
+          setTimeout(() => {
+            // Get mock medicines
+            const medicines = getStoredMedicines();
+            // Pick specific distinct medicines to simulate identified medicines
+            const med1 = medicines.find(m => m.id === 'med-01') || medicines[0];
+            const med2 = medicines.find(m => m.id === 'med-02') || medicines[1];
+            
+            const results = [med1];
+            if (med2 && med2.id !== med1.id) {
+              results.push(med2);
+            }
+            setIdentifiedMedicines(results);
+            setUploadState('results');
+          }, 3000); // 3 seconds analysis time
+
           return 100;
         }
         return prev + Math.floor(Math.random() * 15) + 5; // Random progress jump
@@ -93,6 +112,7 @@ export const PrescriptionUploadModal: React.FC<PrescriptionUploadModalProps> = (
       setFile(null);
       setUploadState('idle');
       setUploadProgress(0);
+      setIdentifiedMedicines([]);
     }, 300);
     onClose();
   };
@@ -118,25 +138,75 @@ export const PrescriptionUploadModal: React.FC<PrescriptionUploadModalProps> = (
 
         {/* Content */}
         <div className="p-6">
-          {uploadState === 'success' ? (
-            <div className="py-8 flex flex-col items-center justify-center text-center animate-fade-up">
-              <div className="w-20 h-20 bg-teal/10 rounded-full flex items-center justify-center mb-5">
-                <CheckCircle size={40} className="text-teal" />
+          {uploadState === 'analyzing' ? (
+            <div className="py-12 flex flex-col items-center justify-center text-center animate-fade-up">
+              <div className="relative mb-8">
+                {/* Pulsing rings */}
+                <div className="absolute inset-0 bg-blue/20 rounded-full animate-ping opacity-75" style={{ animationDuration: '2s' }}></div>
+                <div className="absolute inset-[-15px] border-2 border-blue/30 rounded-full animate-pulse" style={{ animationDuration: '1.5s' }}></div>
+                
+                {/* Center icon */}
+                <div className="w-20 h-20 bg-blue/10 rounded-full flex items-center justify-center relative z-10">
+                  <Scan size={40} className="text-blue animate-pulse" />
+                </div>
               </div>
-              <h4 className="font-plus-jakarta font-bold text-[22px] text-near-black mb-2">Upload Successful!</h4>
-              <p className="text-[15px] text-dark-gray mb-8 max-w-[300px]">
-                Your prescription has been securely uploaded and analyzed by our AI.
+              
+              <h4 className="font-plus-jakarta font-bold text-[22px] text-near-black mb-2">Analyzing Prescription...</h4>
+              <p className="text-[15px] text-dark-gray max-w-[300px]">
+                Our AI is scanning your document to identify the medicines prescribed.
               </p>
-              <Button 
-                variant="primary" 
-                className="w-full justify-center" 
-                onClick={() => {
-                  handleClose();
-                  router.push('/search?q=Paracetamol');
-                }}
-              >
-                View Suggested Medicines
-              </Button>
+            </div>
+          ) : uploadState === 'results' ? (
+            <div className="py-4 animate-fade-up flex flex-col h-full max-h-[60vh]">
+              <div className="mb-5 text-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-teal/10 rounded-full mb-3">
+                  <CheckCircle size={24} className="text-teal" />
+                </div>
+                <h4 className="font-plus-jakarta font-bold text-[20px] text-near-black">Identified Medicines</h4>
+                <p className="text-[14px] text-dark-gray mt-1">We found {identifiedMedicines.length} medicine(s) in your prescription</p>
+              </div>
+              
+              <div className="flex-1 overflow-y-auto pr-2 space-y-3">
+                {identifiedMedicines.map((medicine) => (
+                  <div 
+                    key={medicine.id}
+                    onClick={() => {
+                      handleClose();
+                      router.push(`/medicine/${medicine.slug}`);
+                    }}
+                    className="flex items-center gap-4 p-4 bg-off-white hover:bg-blue/5 border border-light-gray hover:border-blue/30 rounded-2xl cursor-pointer transition-all duration-200 group"
+                  >
+                    <div className="w-14 h-14 bg-white rounded-xl shadow-sm border border-light-gray/50 overflow-hidden shrink-0 flex items-center justify-center">
+                      {medicine.coverImage ? (
+                        <img src={medicine.coverImage} alt={medicine.genericName} className="w-full h-full object-cover" />
+                      ) : (
+                        <Pill size={24} className="text-mid-gray" />
+                      )}
+                    </div>
+                    
+                    <div className="flex-1 min-w-0 text-left">
+                      <h5 className="font-bold text-[16px] text-near-black truncate group-hover:text-blue transition-colors">
+                        {medicine.genericName}
+                      </h5>
+                      <p className="text-[13px] text-mid-gray truncate mt-0.5">
+                        {medicine.brandNames.slice(0, 2).join(', ')} {medicine.brandNames.length > 2 && '...'}
+                      </p>
+                      <div className="flex gap-2 mt-2">
+                        <span className="text-[11px] font-semibold text-dark-gray bg-white px-2 py-0.5 rounded border border-light-gray">
+                          {medicine.category.split(' ')[0]}
+                        </span>
+                        <span className="text-[11px] font-semibold text-dark-gray bg-white px-2 py-0.5 rounded border border-light-gray">
+                          {medicine.strength.split(' / ')[0]}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="w-8 h-8 rounded-full bg-white border border-light-gray flex items-center justify-center text-mid-gray group-hover:text-blue group-hover:border-blue/30 transition-all shrink-0">
+                      <ChevronRight size={18} />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           ) : (
             <>
