@@ -2,6 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { X, UploadCloud, File, CheckCircle, AlertCircle, Trash2 } from 'lucide-react';
 import { Button } from './Button';
+import { useRouter } from '@/i18n/routing';
 
 interface PrescriptionUploadModalProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface PrescriptionUploadModalProps {
 }
 
 export const PrescriptionUploadModal: React.FC<PrescriptionUploadModalProps> = ({ isOpen, onClose }) => {
+  const router = useRouter();
   const [dragActive, setDragActive] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [uploadState, setUploadState] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
@@ -123,10 +125,17 @@ export const PrescriptionUploadModal: React.FC<PrescriptionUploadModalProps> = (
               </div>
               <h4 className="font-plus-jakarta font-bold text-[22px] text-near-black mb-2">Upload Successful!</h4>
               <p className="text-[15px] text-dark-gray mb-8 max-w-[300px]">
-                Your prescription has been securely uploaded. Our AI will now analyze it.
+                Your prescription has been securely uploaded and analyzed by our AI.
               </p>
-              <Button variant="primary" className="w-full justify-center" onClick={handleClose}>
-                Done
+              <Button 
+                variant="primary" 
+                className="w-full justify-center" 
+                onClick={() => {
+                  handleClose();
+                  router.push('/search?q=Paracetamol');
+                }}
+              >
+                View Suggested Medicines
               </Button>
             </div>
           ) : (
