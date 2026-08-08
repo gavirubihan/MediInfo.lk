@@ -1,6 +1,7 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PrescriptionUploadModal } from './PrescriptionUploadModal';
+import { useRouter } from '@/i18n/routing';
 
 interface UploadPrescriptionButtonProps {
   children: React.ReactNode;
@@ -9,10 +10,25 @@ interface UploadPrescriptionButtonProps {
 
 export const UploadPrescriptionButton: React.FC<UploadPrescriptionButtonProps> = ({ children, className }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedIn);
+  }, []);
+
+  const handleClick = () => {
+    if (isLoggedIn) {
+      setIsOpen(true);
+    } else {
+      router.push('/login');
+    }
+  };
 
   return (
     <>
-      <div onClick={() => setIsOpen(true)} className={`inline-block ${className || ''}`}>
+      <div onClick={handleClick} className={`inline-block ${className || ''}`}>
         {children}
       </div>
       <PrescriptionUploadModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
