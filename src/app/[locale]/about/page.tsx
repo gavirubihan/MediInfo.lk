@@ -364,7 +364,7 @@ export default function AboutPage() {
               contact@mediinfo.lk
             </a>
             <a
-              href="https://sab.ac.lk"
+              href="https://www.google.com/maps/search/?api=1&query=6.714826,80.787218"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2.5 bg-white border border-light-gray rounded-xl px-5 py-3.5 text-[14px] font-semibold text-near-black hover:border-blue hover:shadow-[0_4px_16px_rgba(26,111,191,0.15)] transition-all duration-200 no-underline"

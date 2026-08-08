@@ -19,6 +19,11 @@ export const Navbar = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -99,9 +104,17 @@ export const Navbar = () => {
                 </button>
               ))}
             </div>
-            <Link href="/login" className="no-underline">
-              <Button variant="login" className="rounded-full px-6 py-2 text-[14px] h-[38px] font-bold shadow-[0_4px_12px_rgba(26,111,191,0.2)]">Login</Button>
-            </Link>
+            {isLoggedIn ? (
+              <Link href="/admin" className="no-underline">
+                <div className="w-[38px] h-[38px] rounded-full bg-[#9c27b0] text-white flex items-center justify-center font-bold text-lg shadow-[0_4px_12px_rgba(156,39,176,0.3)] hover:scale-105 transition-transform cursor-pointer border-2 border-white">
+                  N
+                </div>
+              </Link>
+            ) : (
+              <Link href="/login" className="no-underline">
+                <Button variant="login" className="rounded-full px-6 py-2 text-[14px] h-[38px] font-bold shadow-[0_4px_12px_rgba(26,111,191,0.2)]">Login</Button>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -156,9 +169,20 @@ export const Navbar = () => {
                 </button>
               ))}
             </div>
-            <Link href="/login" className="no-underline block" onClick={() => setIsMobileMenuOpen(false)}>
-              <Button variant="primary" className="w-full justify-center rounded-full py-3.5 h-auto font-bold text-[15px] shadow-[0_4px_16px_rgba(26,111,191,0.25)]">Login</Button>
-            </Link>
+            {isLoggedIn ? (
+              <Link href="/admin" className="no-underline block" onClick={() => setIsMobileMenuOpen(false)}>
+                <div className="w-full flex items-center justify-center gap-3 bg-off-white hover:bg-light-gray/30 transition-colors rounded-full py-2.5 px-4 border border-light-gray/50 cursor-pointer">
+                  <div className="w-8 h-8 rounded-full bg-[#9c27b0] text-white flex items-center justify-center font-bold text-sm">
+                    N
+                  </div>
+                  <span className="font-bold text-[15px] text-near-black">My Dashboard</span>
+                </div>
+              </Link>
+            ) : (
+              <Link href="/login" className="no-underline block" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button variant="primary" className="w-full justify-center rounded-full py-3.5 h-auto font-bold text-[15px] shadow-[0_4px_16px_rgba(26,111,191,0.25)]">Login</Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
