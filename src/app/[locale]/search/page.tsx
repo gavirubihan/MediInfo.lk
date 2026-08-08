@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/Badge';
 import { Pill, Camera, Search, Filter, ChevronDown, ChevronUp, Check, ExternalLink } from 'lucide-react';
 import { sampleMedicines } from '@/data/medicinesData';
+import { UploadPrescriptionButton } from '@/components/ui/UploadPrescriptionButton';
 
 export default function SearchPage() {
   const t = useTranslations('SearchPage');
@@ -105,9 +106,11 @@ export default function SearchPage() {
               </div>
 
               <div className="flex justify-center">
-                <button type="button" className="w-full bg-blue hover:bg-blue-dark text-white py-3.5 sm:py-4 rounded-xl font-bold text-[15px] shadow-lg transition-all cursor-pointer">
-                  Upload Prescription
-                </button>
+                <UploadPrescriptionButton className="w-full">
+                  <button type="button" className="w-full bg-blue hover:bg-blue-dark text-white py-3.5 sm:py-4 rounded-xl font-bold text-[15px] shadow-lg transition-all cursor-pointer">
+                    Upload Prescription
+                  </button>
+                </UploadPrescriptionButton>
               </div>
             </div>
             
