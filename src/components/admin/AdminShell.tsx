@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAdminRole, PRESET_USERS, AdminUser } from '@/components/admin/AdminRoleContext';
 import { getStoredMedicines } from '@/data/medicinesData';
+import { getPendingStaffCount } from '@/data/staffData';
 import { 
   LayoutDashboard, 
   Pill, 
@@ -30,12 +31,14 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [roleMenuOpen, setRoleMenuOpen] = useState(false);
   const [pendingCount, setPendingCount] = useState(0);
+  const [pendingStaffCount, setPendingStaffCount] = useState(0);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const list = getStoredMedicines();
       const unverified = list.filter((m) => !m.verified || (m.verifications && m.verifications.length < 2));
       setPendingCount(unverified.length);
+      setPendingStaffCount(getPendingStaffCount());
     }
   }, [pathname]);
 
@@ -80,6 +83,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       href: '/admin/medicine/verify', 
       icon: ShieldCheck, 
       badge: pendingCount > 0 ? `${pendingCount}` : undefined 
+    });
+    navItems.push({ 
+      label: 'Staff Approvals', 
+      href: '/admin/staff/approvals', 
+      icon: UserCheck, 
+      badge: pendingStaffCount > 0 ? `${pendingStaffCount}` : undefined 
     });
     navItems.push({ label: 'Blogs', href: '/admin/blogs', icon: BookOpen });
   } else if (userRole === 'doctor') {
@@ -131,9 +140,6 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             </button>
 
             <Link href="/admin" className="flex items-center gap-2.5 no-underline group">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue to-teal flex items-center justify-center text-white shadow-md font-bold text-lg group-hover:scale-105 transition-transform">
-                M
-              </div>
               <div className="flex flex-col">
                 <span className="font-plus-jakarta font-bold text-[16px] sm:text-[17px] leading-tight text-near-black tracking-tight flex items-center gap-1.5">
                   MediInfo<span className="text-teal">.LK</span> <span className={`text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full border ${badgeInfo.color}`}>{badgeInfo.label}</span>
@@ -206,11 +212,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       {/* Main Body */}
       <div className="flex-1 flex w-full">
         {/* Desktop Sidebar */}
-        <aside className="hidden lg:block w-64 bg-transparent border-r border-light-gray shrink-0 min-h-[calc(100vh-4rem)] p-5">
-          <div className="text-[11px] font-extrabold uppercase tracking-wider text-mid-gray mb-3 px-3 flex items-center justify-between">
-            <span>
-              {userRole === 'super_admin' ? 'Super Admin Navigation' : userRole === 'doctor' ? 'Doctor Review Portal' : 'Medical Staff Panel'}
-            </span>
+        <aside className="hidden lg:block w-60 bg-transparent border-r border-light-gray shrink-0 min-h-[calc(100vh-4rem)] p-4">
+          <div className="text-[10px] font-extrabold uppercase tracking-wider text-mid-gray mb-2 px-2">
+            {userRole === 'super_admin' ? 'Super Admin' : userRole === 'doctor' ? 'Doctor Portal' : 'Medical Staff'}
           </div>
 
           <nav className="flex flex-col gap-1.5">
@@ -221,41 +225,24 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-3 px-4 py-2.5 rounded-full font-bold text-[14px] no-underline transition-all duration-300 ${
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-xl font-bold text-xs no-underline transition-all duration-200 ${
                     active
-                      ? 'bg-blue text-white shadow-[0_4px_12px_rgba(26,111,191,0.3)]'
-                      : 'text-dark-gray hover:bg-white hover:text-near-black hover:shadow-sm'
+                      ? 'bg-blue text-white shadow-sm'
+                      : 'text-dark-gray hover:bg-white hover:text-near-black'
                   }`}
                 >
-                  <Icon size={18} className={active ? 'text-white' : 'text-mid-gray'} />
+                  <Icon size={16} className={active ? 'text-white' : 'text-mid-gray'} />
                   <span>{item.label}</span>
                   {item.badge && (
-                    <span className="ml-auto bg-amber-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full animate-pulse">
+                    <span className="ml-auto bg-amber-500 text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded-full">
                       {item.badge}
                     </span>
                   )}
-                  {active && !item.badge && <ChevronRight size={14} className="ml-auto opacity-70" />}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Role specific banner */}
-          <div className="mt-8 p-4 rounded-2xl bg-gradient-to-br from-blue-light to-off-white border border-blue/15 text-dark-gray">
-            <div className="flex items-center gap-2 font-bold text-xs text-blue mb-1">
-              <ShieldCheck size={16} />
-              <span>
-                {userRole === 'doctor' ? '2-Doctor Verification' : 'Role Security Enforced'}
-              </span>
-            </div>
-            <p className="text-[11px] text-mid-gray leading-relaxed m-0">
-              {userRole === 'doctor'
-                ? 'Minimum 2 registered medical doctor approvals required for medicine verified seal.'
-                : userRole === 'super_admin'
-                ? 'Super Admin panel overview. Doctor verification workspace reserved for doctor logins.'
-                : 'Medical staff panel for medicine drafting and health blog publishing.'}
-            </p>
-          </div>
         </aside>
 
         {/* Mobile Navigation Drawer */}

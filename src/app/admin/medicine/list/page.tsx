@@ -21,46 +21,43 @@ export default function MedicineListPage() {
   );
 
   return (
-    <div className="space-y-6 animate-fade-up">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-[24px] border border-light-gray/50 shadow-[0_8px_40px_rgba(0,0,0,0.06)]">
+    <div className="space-y-5 animate-fade-up">
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl sm:text-2xl font-extrabold font-plus-jakarta text-near-black tracking-tight m-0 flex items-center gap-2.5">
-            <Pill className="text-blue" size={26} />
+          <h1 className="text-xl font-extrabold font-plus-jakarta text-near-black tracking-tight m-0 flex items-center gap-2">
+            <Pill className="text-blue" size={20} />
             <span>Medicine Catalog</span>
           </h1>
-          <p className="text-xs sm:text-sm text-mid-gray m-0 mt-0.5">
-            Manage all 3-language medicine records in your catalog
-          </p>
+          <p className="text-xs text-mid-gray m-0 mt-0.5">All 3-language medicine records</p>
         </div>
-
         <Link
           href="/admin/medicine/add"
-          className="px-5 py-2.5 bg-teal hover:bg-teal/90 text-white font-bold text-xs rounded-xl shadow-md shadow-teal/20 transition-all flex items-center gap-2 no-underline"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-teal hover:bg-teal/90 text-white font-bold text-xs rounded-xl shadow-md shadow-teal/20 transition-all no-underline"
         >
-          <PlusCircle size={16} />
+          <PlusCircle size={14} />
           <span>Add New Medicine</span>
         </Link>
       </div>
 
-      {/* Filter / Search Bar */}
-      <div className="bg-white border border-light-gray/50 rounded-full p-4 px-6 shadow-sm flex items-center gap-3">
-        <Search size={18} className="text-mid-gray shrink-0" />
+      {/* Search Bar */}
+      <div className="bg-white border border-light-gray/60 rounded-xl p-3 px-4 flex items-center gap-3">
+        <Search size={16} className="text-mid-gray shrink-0" />
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by generic name, chemical salt, brands, or category..."
-          className="w-full text-xs font-bold text-near-black outline-none bg-transparent"
+          className="w-full text-xs text-near-black outline-none bg-transparent"
         />
       </div>
 
       {/* Medicine List Table */}
-      <div className="bg-white border border-light-gray/50 rounded-[24px] shadow-[0_8px_40px_rgba(0,0,0,0.06)] overflow-hidden">
+      <div className="bg-white border border-light-gray/60 rounded-2xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs min-w-[700px]">
             <thead>
-              <tr className="bg-off-white border-b border-light-gray text-mid-gray font-bold uppercase tracking-wider">
+              <tr className="bg-off-white border-b border-light-gray/60 text-mid-gray font-bold uppercase tracking-wider text-[10px]">
                 <th className="py-3.5 px-6">Generic Name / Chemical</th>
                 <th className="py-3.5 px-4">Category</th>
                 <th className="py-3.5 px-4">Form & Strength</th>

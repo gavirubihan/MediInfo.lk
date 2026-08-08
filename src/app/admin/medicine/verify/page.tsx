@@ -123,106 +123,88 @@ export default function DoctorVerifyPage() {
         </div>
       )}
 
-      {/* Header Banner */}
-      <div className="bg-gradient-to-br from-near-black via-[#161F33] to-[#0E1525] p-6 sm:p-8 rounded-3xl text-white shadow-xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-teal/15 rounded-full blur-3xl pointer-events-none" />
-        
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-teal/20 border border-teal/30 rounded-full text-teal text-xs font-extrabold uppercase tracking-wider">
-              <Stethoscope size={14} />
-              <span>Medical Verification Workspace</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold font-plus-jakarta text-white tracking-tight m-0">
-              Medicine Details Verification Panel
-            </h1>
-            <p className="text-xs sm:text-sm text-white/70 max-w-2xl m-0 leading-relaxed">
-              Review full medical parameters, dosage schedules, side effect classifications, and 3-language translations.
-              <strong className="text-teal font-bold"> Minimum 2 registered doctor approvals</strong> are required to grant official Doctor Verified status.
-            </p>
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h1 className="text-xl font-extrabold font-plus-jakarta text-near-black tracking-tight m-0 flex items-center gap-2">
+            <ShieldCheck className="text-teal" size={20} />
+            <span>Medicine Verification</span>
+          </h1>
+          <p className="text-xs text-mid-gray m-0 mt-0.5">
+            Minimum 2 doctor approvals required for verified status
+          </p>
+        </div>
+        {/* Reviewer Badge */}
+        <div className="flex items-center gap-2.5 bg-white border border-light-gray/60 px-3.5 py-2.5 rounded-xl text-xs">
+          <div className="w-7 h-7 rounded-lg bg-teal text-near-black font-extrabold flex items-center justify-center text-[10px] shrink-0">
+            {user?.role === 'doctor' ? 'DR' : 'SA'}
           </div>
-
-          {/* Active Reviewer Doctor Profile Box */}
-          <div className="bg-white/10 backdrop-blur-md border border-white/15 p-4 rounded-2xl shrink-0 text-xs">
-            <div className="text-[10px] font-extrabold uppercase tracking-wider text-teal mb-1">
-              {user?.role === 'doctor' ? 'Active Verifying Doctor' : 'Logged-In Account'}
-            </div>
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-teal text-near-black font-extrabold flex items-center justify-center shadow">
-                {user?.role === 'doctor' ? 'DR' : 'SA'}
-              </div>
-              <div>
-                <div className="font-extrabold text-white">{user?.name || selectedDoctor.name}</div>
-                <div className="text-[11px] text-white/70 font-mono">
-                  {user?.role === 'doctor'
-                    ? `${selectedDoctor.slmcRegNo} • ${selectedDoctor.specialization}`
-                    : user?.role === 'super_admin'
-                    ? 'Super Administrator (Inspection Mode)'
-                    : 'Medical Staff (Inspection Mode)'}
-                </div>
-              </div>
+          <div>
+            <div className="font-bold text-near-black">{user?.name || selectedDoctor.name}</div>
+            <div className="text-[10px] text-mid-gray">
+              {user?.role === 'doctor' ? selectedDoctor.slmcRegNo : user?.role === 'super_admin' ? 'Inspection Mode' : 'Medical Staff'}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Verification Metrics & Filter Tabs */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {/* Verification Filter Tabs */}
+      <div className="grid grid-cols-3 gap-3">
         <button
           onClick={() => setActiveTab('pending')}
-          className={`p-4 sm:p-5 rounded-[24px] border transition-all text-left cursor-pointer flex items-center justify-between ${
+          className={`p-4 rounded-2xl border transition-all text-left cursor-pointer flex items-center justify-between ${
             activeTab === 'pending'
-              ? 'bg-amber-500/10 border-amber-500/40 shadow-sm'
-              : 'bg-white border-light-gray/50 shadow-[0_8px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)]'
+              ? 'bg-amber-50 border-amber-200'
+              : 'bg-white border-light-gray/60 hover:border-amber-200'
           }`}
         >
           <div>
-            <span className="text-xs font-bold text-mid-gray block">Details Not Verified (0/2)</span>
-            <span className="text-2xl font-extrabold text-amber-600 font-plus-jakarta">{pendingCount}</span>
+            <span className="text-[10px] font-bold text-mid-gray block uppercase tracking-wide">Not Verified</span>
+            <span className="text-xl font-extrabold text-amber-600 font-plus-jakarta">{pendingCount}</span>
           </div>
-          <AlertTriangle size={24} className="text-amber-500 opacity-80" />
+          <AlertTriangle size={18} className="text-amber-500 opacity-70" />
         </button>
 
         <button
           onClick={() => setActiveTab('partially')}
-          className={`p-4 sm:p-5 rounded-[24px] border transition-all text-left cursor-pointer flex items-center justify-between ${
+          className={`p-4 rounded-2xl border transition-all text-left cursor-pointer flex items-center justify-between ${
             activeTab === 'partially'
-              ? 'bg-blue-light border-blue/40 shadow-sm'
-              : 'bg-white border-light-gray/50 shadow-[0_8px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)]'
+              ? 'bg-blue-light border-blue/30'
+              : 'bg-white border-light-gray/60 hover:border-blue/30'
           }`}
         >
           <div>
-            <span className="text-xs font-bold text-mid-gray block">Partially Verified (1/2)</span>
-            <span className="text-2xl font-extrabold text-blue font-plus-jakarta">{partialCount}</span>
+            <span className="text-[10px] font-bold text-mid-gray block uppercase tracking-wide">Partial (1/2)</span>
+            <span className="text-xl font-extrabold text-blue font-plus-jakarta">{partialCount}</span>
           </div>
-          <Clock size={24} className="text-blue opacity-80" />
+          <Clock size={18} className="text-blue opacity-70" />
         </button>
 
         <button
           onClick={() => setActiveTab('verified')}
-          className={`p-4 sm:p-5 rounded-[24px] border transition-all text-left cursor-pointer flex items-center justify-between ${
+          className={`p-4 rounded-2xl border transition-all text-left cursor-pointer flex items-center justify-between ${
             activeTab === 'verified'
-              ? 'bg-teal/10 border-teal/40 shadow-sm'
-              : 'bg-white border-light-gray/50 shadow-[0_8px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)]'
+              ? 'bg-teal/10 border-teal/30'
+              : 'bg-white border-light-gray/60 hover:border-teal/30'
           }`}
         >
           <div>
-            <span className="text-xs font-bold text-mid-gray block">Doctor Verified (2/2)</span>
-            <span className="text-2xl font-extrabold text-teal font-plus-jakarta">{verifiedCount}</span>
+            <span className="text-[10px] font-bold text-mid-gray block uppercase tracking-wide">Verified (2/2)</span>
+            <span className="text-xl font-extrabold text-teal font-plus-jakarta">{verifiedCount}</span>
           </div>
-          <CheckCircle2 size={24} className="text-teal opacity-80" />
+          <CheckCircle2 size={18} className="text-teal opacity-70" />
         </button>
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white border border-light-gray/50 rounded-full p-4 px-6 shadow-sm flex items-center gap-3">
-        <Search size={18} className="text-mid-gray shrink-0" />
+      <div className="bg-white border border-light-gray/60 rounded-xl p-3 px-4 flex items-center gap-3">
+        <Search size={16} className="text-mid-gray shrink-0" />
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Filter medicines by generic name, chemical ingredient, or brands..."
-          className="w-full text-xs font-bold text-near-black outline-none bg-transparent"
+          className="w-full text-xs text-near-black outline-none bg-transparent"
         />
       </div>
 
