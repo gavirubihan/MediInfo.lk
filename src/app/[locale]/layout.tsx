@@ -1,4 +1,4 @@
-import type Metadata from "next";
+import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Nunito, JetBrains_Mono, Noto_Sans_Sinhala } from "next/font/google";
 import "../globals.css";
 import { Navbar } from "@/components/layout/Navbar";

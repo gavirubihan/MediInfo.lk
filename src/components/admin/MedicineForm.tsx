@@ -529,47 +529,45 @@ export function MedicineForm() {
         </div>
       )}
 
-      {/* Top Header & Actions Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-light-gray shadow-sm">
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl sm:text-2xl font-extrabold font-plus-jakarta text-near-black tracking-tight m-0 flex items-center gap-2.5">
-            <Pill className="text-blue" size={26} />
-            <span>Add New Medicine Record</span>
+          <h1 className="text-xl font-extrabold font-plus-jakarta text-near-black tracking-tight m-0 flex items-center gap-2">
+            <Pill className="text-blue" size={20} />
+            <span>Add New Medicine</span>
           </h1>
-          <p className="text-xs sm:text-sm text-mid-gray m-0 mt-0.5">
-            Fill in medical parameters, side effects, warnings, and localized content for 3 languages.
-          </p>
+          <p className="text-xs text-mid-gray m-0 mt-0.5">Enter medical details, localized content & safety information</p>
         </div>
 
-        <div className="flex items-center gap-2.5 flex-wrap">
+        <div className="flex items-center gap-2 flex-wrap">
           <button
             type="button"
             onClick={() => setIsPreviewMode(!isPreviewMode)}
-            className={`px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all ${
+            className={`px-3.5 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all border ${
               isPreviewMode
-                ? 'bg-near-black text-white shadow-md'
-                : 'bg-off-white text-dark-gray hover:bg-light-gray border border-light-gray'
+                ? 'bg-near-black text-white border-near-black'
+                : 'bg-white text-dark-gray hover:bg-off-white border-light-gray'
             }`}
           >
-            <Eye size={15} />
-            <span>{isPreviewMode ? 'Exit Live Preview' : 'Live Preview (Full Site View)'}</span>
+            <Eye size={14} />
+            <span>{isPreviewMode ? 'Exit Preview' : 'Live Preview'}</span>
           </button>
 
           <button
             type="button"
             onClick={() => setIsAiModalOpen(true)}
-            className="px-4 py-2.5 bg-gradient-to-r from-blue to-teal text-white font-bold text-xs rounded-xl shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+            className="px-3.5 py-2 bg-gradient-to-r from-blue to-teal text-white font-bold text-xs rounded-xl flex items-center gap-1.5 transition-all"
           >
-            <Sparkles size={15} className="text-amber-300" />
-            <span>AI Auto-Translate (3-Lang)</span>
+            <Sparkles size={13} className="text-amber-200" />
+            <span>AI Translate</span>
           </button>
 
           <button
             onClick={handleSave}
             type="button"
-            className="px-5 py-2.5 bg-teal hover:bg-teal/90 text-white font-bold text-xs rounded-xl shadow-md shadow-teal/20 transition-all flex items-center gap-2"
+            className="px-4 py-2 bg-teal hover:bg-teal/90 text-white font-bold text-xs rounded-xl shadow-sm shadow-teal/20 transition-all flex items-center gap-1.5"
           >
-            <Save size={15} />
+            <Save size={13} />
             <span>Save & Publish</span>
           </button>
         </div>
@@ -577,26 +575,27 @@ export function MedicineForm() {
 
       {/* Live Preview Mode (FULL PUBLIC SITE REPLICA) */}
       {isPreviewMode ? (
-        <div className="bg-white border-2 border-blue/40 rounded-3xl overflow-hidden shadow-2xl animate-fade-up">
-          {/* Control Banner */}
-          <div className="bg-gradient-to-r from-near-black to-blue-dark text-white px-6 py-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-white/10">
+        <div className="bg-white border border-light-gray rounded-2xl overflow-hidden animate-fade-up">
+          {/* Control Bar */}
+          <div className="bg-off-white border-b border-light-gray px-5 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-              <span className="text-xs font-bold uppercase tracking-wider text-teal">
-                Public Detail Page Preview ({activeLangTab.toUpperCase()})
+              <span className="w-2 h-2 rounded-full bg-teal" />
+              <span className="text-xs font-bold text-near-black">
+                Public Page Preview
               </span>
+              <span className="text-[10px] text-mid-gray">({activeLangTab.toUpperCase()})</span>
             </div>
 
             <div className="flex items-center gap-3">
-              <span className="text-xs text-white/70 font-semibold">Switch Preview Language:</span>
-              <div className="flex bg-white/10 p-1 rounded-full border border-white/15">
+              <span className="text-xs text-mid-gray">Language:</span>
+              <div className="flex bg-white p-0.5 rounded-xl border border-light-gray">
                 {(['en', 'si', 'ta'] as const).map((lang) => (
                   <button
                     key={lang}
                     type="button"
                     onClick={() => setActiveLangTab(lang)}
-                    className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                      activeLangTab === lang ? 'bg-blue text-white shadow-sm' : 'text-white/70 hover:text-white'
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                      activeLangTab === lang ? 'bg-blue text-white shadow-sm' : 'text-mid-gray hover:text-near-black'
                     }`}
                   >
                     {lang === 'en' ? 'English' : lang === 'si' ? 'සිංහල' : 'தமிழ்'}
@@ -953,14 +952,12 @@ export function MedicineForm() {
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSave} className="space-y-8">
+        <form onSubmit={handleSave} className="space-y-5">
           {/* Section 1: General Information & Metadata */}
-          <div className="bg-white border border-light-gray/50 rounded-3xl p-8 shadow-[0_8px_40px_rgba(0,0,0,0.06)] space-y-6">
+          <div className="bg-white border border-light-gray/60 rounded-2xl p-5 space-y-5">
             <div className="flex items-center gap-2 pb-3 border-b border-light-gray">
-              <Info className="text-blue" size={18} />
-              <h2 className="text-base font-bold text-near-black font-plus-jakarta m-0">
-                1. General Medicine Metadata
-              </h2>
+              <Info className="text-blue" size={16} />
+              <h2 className="text-sm font-bold text-near-black font-plus-jakarta m-0">General Medicine Metadata</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -1146,18 +1143,14 @@ export function MedicineForm() {
           </div>
 
           {/* Section 2: Multi-Language Content Tabbed Editor */}
-          <div className="bg-white border border-light-gray/50 rounded-[24px] p-8 shadow-[0_8px_40px_rgba(0,0,0,0.06)] space-y-8">
+          <div className="bg-white border border-light-gray/60 rounded-2xl p-5 space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-light-gray">
               <div>
                 <div className="flex items-center gap-2">
-                  <Languages className="text-teal" size={20} />
-                  <h2 className="text-base font-bold text-near-black font-plus-jakarta m-0">
-                    2. Multi-Language Content & Safety Editor
-                  </h2>
+                  <Languages className="text-teal" size={16} />
+                  <h2 className="text-sm font-bold text-near-black font-plus-jakarta m-0">Multi-Language Content & Safety Editor</h2>
                 </div>
-                <p className="text-xs text-mid-gray m-0 mt-0.5">
-                  Enter localized overview, side effects, warnings, and drug interactions for 3 languages.
-                </p>
+                <p className="text-xs text-mid-gray m-0 mt-0.5">Localized overview, side effects, warnings for 3 languages.</p>
               </div>
 
               {/* Language Switcher Tabs & AI Action */}
@@ -1191,16 +1184,14 @@ export function MedicineForm() {
             </div>
 
             {/* Active Language Editor Panel */}
-            <div className="space-y-8">
-              <div className="p-3.5 bg-blue-light/40 border border-blue/15 rounded-xl text-xs text-blue font-semibold flex items-center justify-between">
-                <span>Editing localized medical content for: <strong>{activeLangTab.toUpperCase()}</strong></span>
+            <div className="space-y-5">
+              <div className="p-3 bg-blue-light/40 border border-blue/15 rounded-lg text-xs text-blue font-semibold">
+                Editing: <strong>{activeLangTab === 'en' ? 'English' : activeLangTab === 'si' ? 'සිංහල' : 'தமிழ்'}</strong>
               </div>
 
               {/* A. Overview & Indications */}
-              <div className="space-y-4 p-5 bg-off-white/50 border border-light-gray/80 rounded-2xl">
-                <h3 className="text-xs font-extrabold uppercase tracking-wider text-mid-gray m-0">
-                  A. Overview & Mechanism of Action
-                </h3>
+              <div className="space-y-4 p-4 bg-off-white/60 border border-light-gray/70 rounded-xl">
+                <h3 className="text-[10px] font-extrabold uppercase tracking-wider text-mid-gray m-0">A. Overview & Mechanism of Action</h3>
 
                 <div>
                   <label className="block text-xs font-bold text-dark-gray mb-1.5">Medicine Description / Overview</label>
@@ -1266,7 +1257,7 @@ export function MedicineForm() {
               </div>
 
               {/* B. Side Effects Section (Common, Less Common, Serious) */}
-              <div className="space-y-6 p-5 bg-off-white/50 border border-light-gray/80 rounded-2xl">
+              <div className="space-y-4 p-4 bg-off-white/60 border border-light-gray/70 rounded-xl">
                 <div className="flex items-center gap-2">
                   <Activity className="text-teal" size={18} />
                   <h3 className="text-xs font-extrabold uppercase tracking-wider text-mid-gray m-0">
@@ -1393,7 +1384,7 @@ export function MedicineForm() {
               </div>
 
               {/* C. Dynamic Safety Warning Cards Builder (Various Warning Types) */}
-              <div className="space-y-4 p-5 bg-off-white/50 border border-light-gray/80 rounded-2xl">
+              <div className="space-y-4 p-4 bg-off-white/60 border border-light-gray/70 rounded-xl">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <ShieldAlert className="text-red" size={18} />
@@ -1474,7 +1465,7 @@ export function MedicineForm() {
               </div>
 
               {/* D. Drug Interactions Builder */}
-              <div className="space-y-4 p-5 bg-off-white/50 border border-light-gray/80 rounded-2xl">
+              <div className="space-y-4 p-4 bg-off-white/60 border border-light-gray/70 rounded-xl">
                 <div className="flex items-center justify-between">
                   <h3 className="text-xs font-extrabold uppercase tracking-wider text-mid-gray m-0">
                     D. Drug Interactions Builder
@@ -1521,13 +1512,11 @@ export function MedicineForm() {
           </div>
 
           {/* Section 3: Structured Dosage Table Builder */}
-          <div className="bg-white border border-light-gray/50 rounded-[24px] p-8 shadow-[0_8px_40px_rgba(0,0,0,0.06)] space-y-4">
+          <div className="bg-white border border-light-gray/60 rounded-2xl p-5 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-light-gray">
               <div className="flex items-center gap-2">
-                <Scale className="text-blue" size={20} />
-                <h2 className="text-base font-bold text-near-black font-plus-jakarta m-0">
-                  3. Recommended Dosage Table
-                </h2>
+                <Scale className="text-blue" size={16} />
+                <h2 className="text-sm font-bold text-near-black font-plus-jakarta m-0">Dosage Table</h2>
               </div>
 
               <button
@@ -1637,21 +1626,21 @@ export function MedicineForm() {
           </div>
 
           {/* Form Submit Footer */}
-          <div className="flex items-center justify-end gap-3 pt-4">
+          <div className="flex items-center justify-end gap-3 pt-2">
             <button
               type="button"
               onClick={() => setIsPreviewMode(true)}
-              className="px-5 py-3 rounded-xl text-xs font-bold bg-off-white text-dark-gray hover:bg-light-gray border border-light-gray"
+              className="px-4 py-2.5 rounded-xl text-xs font-bold bg-white text-dark-gray hover:bg-off-white border border-light-gray transition-all"
             >
-              Preview Live Page (Full View)
+              Preview Live Page
             </button>
 
             <button
               type="submit"
-              className="px-8 py-3.5 bg-teal hover:bg-teal/90 text-white font-bold text-sm rounded-2xl shadow-lg shadow-teal/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+              className="px-6 py-2.5 bg-teal hover:bg-teal/90 text-white font-bold text-xs rounded-xl shadow-sm shadow-teal/20 transition-all flex items-center gap-2"
             >
-              <Save size={18} />
-              <span>Save & Publish Medicine</span>
+              <Save size={14} />
+              <span>Save & Publish</span>
             </button>
           </div>
         </form>
