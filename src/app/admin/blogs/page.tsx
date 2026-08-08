@@ -36,31 +36,28 @@ export default function AdminBlogsPage() {
   ];
 
   return (
-    <div className="space-y-6 animate-fade-up">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-light-gray shadow-sm">
+    <div className="space-y-5 animate-fade-up">
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl sm:text-2xl font-extrabold font-plus-jakarta text-near-black tracking-tight m-0 flex items-center gap-2.5">
-            <BookOpen className="text-blue" size={26} />
-            <span>Medical Blogs & Health Articles</span>
+          <h1 className="text-xl font-extrabold font-plus-jakarta text-near-black tracking-tight m-0 flex items-center gap-2">
+            <BookOpen className="text-blue" size={20} />
+            <span>Health Articles</span>
           </h1>
-          <p className="text-xs sm:text-sm text-mid-gray m-0 mt-0.5">
-            Publish educational articles and multi-language health guides for Sri Lanka
-          </p>
+          <p className="text-xs text-mid-gray m-0 mt-0.5">Educational content & multi-language health guides</p>
         </div>
-
-        <Link href="/admin/blogs/write" className="px-5 py-2.5 bg-blue hover:bg-blue/90 text-white font-bold text-xs rounded-xl shadow-md shadow-blue/20 transition-all flex items-center gap-2 cursor-pointer no-underline">
-          <PlusCircle size={16} />
-          <span>Create New Blog Post</span>
+        <Link href="/admin/blogs/write" className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue hover:bg-blue/90 text-white font-bold text-xs rounded-xl shadow-md shadow-blue/20 transition-all no-underline">
+          <PlusCircle size={14} />
+          <span>Write New Article</span>
         </Link>
       </div>
 
       {/* Blogs Table */}
-      <div className="bg-white border border-light-gray rounded-2xl shadow-sm overflow-hidden">
+      <div className="bg-white border border-light-gray/60 rounded-2xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs min-w-[650px]">
             <thead>
-              <tr className="bg-off-white border-b border-light-gray text-mid-gray font-bold uppercase tracking-wider">
+              <tr className="bg-off-white border-b border-light-gray/60 text-mid-gray font-bold uppercase tracking-wider text-[10px]">
                 <th className="py-3.5 px-6">Article Title</th>
                 <th className="py-3.5 px-4">Category</th>
                 <th className="py-3.5 px-4">Author</th>

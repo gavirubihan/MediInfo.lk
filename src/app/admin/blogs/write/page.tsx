@@ -35,56 +35,52 @@ export default function WriteBlogPage() {
   };
 
   return (
-    <div className="space-y-6 animate-fade-up">
-      {/* Top Header & Breadcrumb */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-[24px] border border-light-gray/50 shadow-[0_8px_40px_rgba(0,0,0,0.06)]">
-        <div className="flex items-center gap-4">
+    <div className="space-y-5 animate-fade-up">
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
           <Link 
             href="/admin/blogs"
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-off-white hover:bg-light-gray text-dark-gray transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-xl bg-white hover:bg-off-white text-dark-gray border border-light-gray transition-colors"
           >
-            <ArrowLeft size={20} />
+            <ArrowLeft size={16} />
           </Link>
           <div>
-            <h1 className="text-xl sm:text-2xl font-extrabold font-plus-jakarta text-near-black tracking-tight m-0">
-              Write New Article
-            </h1>
-            <p className="text-xs sm:text-sm text-mid-gray m-0 mt-0.5">
-              Draft or publish educational health content
-            </p>
+            <h1 className="text-xl font-extrabold font-plus-jakarta text-near-black tracking-tight m-0">Write New Article</h1>
+            <p className="text-xs text-mid-gray m-0 mt-0.5">Draft or publish educational health content</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button 
             onClick={handleSaveDraft}
-            className="px-5 py-2.5 bg-off-white hover:bg-light-gray text-dark-gray font-bold text-xs rounded-xl transition-all flex items-center gap-2 border border-light-gray"
+            className="px-4 py-2 bg-white hover:bg-off-white text-dark-gray font-bold text-xs rounded-xl transition-all flex items-center gap-1.5 border border-light-gray"
           >
-            <Save size={16} />
+            <Save size={14} />
             <span>Save Draft</span>
           </button>
           <button 
             onClick={handlePublish}
-            className="px-5 py-2.5 bg-blue hover:bg-blue/90 text-white font-bold text-xs rounded-xl shadow-md shadow-blue/20 transition-all flex items-center gap-2"
+            className="px-4 py-2 bg-blue hover:bg-blue/90 text-white font-bold text-xs rounded-xl shadow-sm shadow-blue/20 transition-all flex items-center gap-1.5"
           >
-            <Send size={16} />
-            <span>Publish Article</span>
+            <Send size={14} />
+            <span>Publish</span>
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Main Editor Canvas (Left) */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white border border-light-gray/50 rounded-[24px] shadow-[0_8px_40px_rgba(0,0,0,0.06)] flex flex-col min-h-[600px]">
-            {/* Massive Title Input */}
-            <div className="p-6 sm:p-10 border-b border-light-gray/50">
+        <div className="lg:col-span-2">
+          <div className="bg-white border border-light-gray/60 rounded-2xl flex flex-col min-h-[550px]">
+            {/* Title Input */}
+            <div className="p-5 border-b border-light-gray/60">
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Article Title..."
-                className="w-full text-3xl sm:text-4xl font-extrabold font-plus-jakarta text-near-black placeholder:text-light-gray outline-none bg-transparent"
+                className="w-full text-2xl font-extrabold font-plus-jakarta text-near-black placeholder:text-light-gray outline-none bg-transparent"
               />
             </div>
             
@@ -96,9 +92,9 @@ export default function WriteBlogPage() {
         </div>
 
         {/* Metadata Sidebar (Right) */}
-        <div className="space-y-6">
-          <div className="bg-white border border-light-gray/50 rounded-[24px] shadow-[0_8px_40px_rgba(0,0,0,0.06)] p-6 space-y-5 sticky top-24">
-            <h3 className="text-sm font-bold text-near-black font-plus-jakarta m-0 border-b border-light-gray pb-3">
+        <div>
+          <div className="bg-white border border-light-gray/60 rounded-2xl p-5 space-y-4 sticky top-24">
+            <h3 className="text-xs font-bold text-near-black font-plus-jakarta m-0 border-b border-light-gray pb-3">
               Publishing Settings
             </h3>
 

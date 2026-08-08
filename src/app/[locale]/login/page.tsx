@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Mail, Lock, User, ArrowRight, HeartPulse, ShieldCheck, ChevronLeft, UploadCloud, Stethoscope, CheckCircle2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { PRESET_USERS } from '@/components/admin/AdminRoleContext';
+import { PRESET_USERS, AdminUser } from '@/components/admin/AdminRoleContext';
+import { addStaffRequest, findStaffByEmail, ProfessionType } from '@/data/staffData';
 
-type AuthView = 'login' | 'signup-select' | 'signup-normal' | 'signup-med-1' | 'signup-med-2' | 'success' | 'google-select-account';
+type AuthView = 'login' | 'signup-select' | 'signup-normal' | 'signup-med-1' | 'signup-med-2' | 'success' | 'staff-pending-success' | 'google-select-account';
 
 export default function AuthPage() {
   const router = useRouter();
@@ -18,28 +19,63 @@ export default function AuthPage() {
   const [fileName, setFileName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState('');
+
+  // Medical Signup form state
+  const [medName, setMedName] = useState('');
+  const [medEmail, setMedEmail] = useState('');
+  const [medPassword, setMedPassword] = useState('');
+  const [medProfession, setMedProfession] = useState<ProfessionType>('doctor');
+  const [medSlmcRegNo, setMedSlmcRegNo] = useState('');
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    setAuthError('');
     if (!email.trim()) return;
 
     const cleanEmail = email.trim().toLowerCase();
-    const matched = PRESET_USERS.find(
+    
+    // 1. Check preset admin accounts
+    const matchedPreset = PRESET_USERS.find(
       (u) => u.email.toLowerCase() === cleanEmail || (cleanEmail.includes('doc') && u.role === 'doctor')
     );
 
-    if (matched) {
-      // It's an admin/staff user
-      localStorage.setItem('mediinfo_admin_user', JSON.stringify(matched));
+    if (matchedPreset) {
+      localStorage.setItem('mediinfo_admin_user', JSON.stringify(matchedPreset));
       router.push('/admin');
-    } else {
-      // It's a normal user
-      setView('success');
-      // In a real app, you would set a normal user token here
-      setTimeout(() => {
-        router.push('/');
-      }, 1500);
+      return;
     }
+
+    // 2. Check submitted staff registrations
+    const staffRecord = findStaffByEmail(cleanEmail);
+    if (staffRecord) {
+      if (staffRecord.status === 'approved') {
+        const approvedUser: AdminUser = {
+          id: staffRecord.id,
+          email: staffRecord.email,
+          name: staffRecord.name,
+          role: staffRecord.profession === 'doctor' ? 'doctor' : 'other_medical',
+          slmcRegNo: staffRecord.slmcRegNo,
+          specialization: staffRecord.specialization || staffRecord.profession.toUpperCase(),
+          hospital: staffRecord.hospital || 'Registered Healthcare Staff'
+        };
+        localStorage.setItem('mediinfo_admin_user', JSON.stringify(approvedUser));
+        router.push('/admin');
+        return;
+      } else if (staffRecord.status === 'pending') {
+        setAuthError('Your registration is pending Super Admin verification. You will gain access once approved.');
+        return;
+      } else if (staffRecord.status === 'rejected') {
+        setAuthError(`Registration Declined: ${staffRecord.adminNotes || 'Contact admin for details.'}`);
+        return;
+      }
+    }
+
+    // 3. Otherwise normal user login
+    setView('success');
+    setTimeout(() => {
+      router.push('/');
+    }, 1500);
   };
 
   const handleDrag = (e: React.DragEvent) => {
@@ -259,6 +295,11 @@ export default function AuthPage() {
                       <input type="password" placeholder="••••••••" className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-blue focus:ring-4 focus:ring-blue/10 transition-all" />
                     </div>
                   </div>
+                  {authError && (
+                    <div className="p-3.5 bg-red/10 border border-red/20 rounded-xl text-xs font-bold text-red animate-fade-up">
+                      {authError}
+                    </div>
+                  )}
                   <Button variant="primary" className="w-full justify-center py-4 rounded-xl text-[15px] shadow-[0_4px_12px_rgba(26,111,191,0.2)] mt-2 font-bold group">
                     {t('createAccountBtn')} <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform" />
                   </Button>
@@ -286,21 +327,42 @@ export default function AuthPage() {
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">{t('fullNameLabel')}</label>
                     <div className="relative">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-mid-gray pointer-events-none"><User size={18} /></div>
-                      <input type="text" placeholder="Dr. Kasun Perera" required className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all" />
+                      <input 
+                        type="text" 
+                        value={medName}
+                        onChange={(e) => setMedName(e.target.value)}
+                        placeholder="Dr. Kasun Perera" 
+                        required 
+                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all" 
+                      />
                     </div>
                   </div>
                   <div>
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">{t('profEmailLabel')}</label>
                     <div className="relative">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-mid-gray pointer-events-none"><Mail size={18} /></div>
-                      <input type="email" placeholder="doctor@hospital.lk" required className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all" />
+                      <input 
+                        type="email" 
+                        value={medEmail}
+                        onChange={(e) => setMedEmail(e.target.value)}
+                        placeholder="doctor@hospital.lk" 
+                        required 
+                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all" 
+                      />
                     </div>
                   </div>
                   <div>
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">{t('passwordLabel')}</label>
                     <div className="relative">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-mid-gray pointer-events-none"><Lock size={18} /></div>
-                      <input type="password" placeholder="••••••••" required className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all" />
+                      <input 
+                        type="password" 
+                        value={medPassword}
+                        onChange={(e) => setMedPassword(e.target.value)}
+                        placeholder="••••••••" 
+                        required 
+                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all" 
+                      />
                     </div>
                   </div>
                   <Button variant="primary" style={{ backgroundColor: 'var(--color-teal)', borderColor: 'var(--color-teal)' }} className="w-full justify-center py-4 rounded-xl text-[15px] shadow-[0_4px_12px_rgba(23,169,142,0.2)] mt-2 font-bold group border hover:bg-opacity-90">
@@ -325,12 +387,28 @@ export default function AuthPage() {
                   <h2 className="text-[28px] font-extrabold font-plus-jakarta text-near-black mb-2 tracking-tight">Verification</h2>
                   <p className="text-[15px] text-mid-gray">Step 2 of 2: Required for staff access.</p>
                 </div>
-                <form className="flex flex-col gap-5" onSubmit={(e) => { e.preventDefault(); setView('success'); }}>
-                  
+                <form 
+                  className="flex flex-col gap-5" 
+                  onSubmit={(e) => { 
+                    e.preventDefault(); 
+                    addStaffRequest({
+                      name: medName || 'Medical Professional',
+                      email: medEmail || 'staff@hospital.lk',
+                      password: medPassword,
+                      profession: medProfession,
+                      slmcRegNo: medSlmcRegNo || 'SLMC-99999',
+                      proofFileName: fileName || 'Medical_License_Verification.pdf'
+                    });
+                    setView('staff-pending-success'); 
+                  }}
+                >
                   <div>
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">Position</label>
-                    <select className="w-full px-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all appearance-none cursor-pointer">
-                      <option value="" disabled selected>Select your profession</option>
+                    <select 
+                      value={medProfession}
+                      onChange={(e) => setMedProfession(e.target.value as ProfessionType)}
+                      className="w-full px-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all appearance-none cursor-pointer"
+                    >
                       <option value="doctor">Medical Doctor</option>
                       <option value="pharmacist">Pharmacist</option>
                       <option value="nurse">Registered Nurse</option>
@@ -343,7 +421,14 @@ export default function AuthPage() {
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">SLMC Registration Number</label>
                     <div className="relative">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-mid-gray pointer-events-none"><ShieldCheck size={18} /></div>
-                      <input type="text" placeholder="e.g. 12345" required className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all" />
+                      <input 
+                        type="text" 
+                        value={medSlmcRegNo}
+                        onChange={(e) => setMedSlmcRegNo(e.target.value)}
+                        placeholder="e.g. 12345" 
+                        required 
+                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all" 
+                      />
                     </div>
                   </div>
 
@@ -423,6 +508,28 @@ export default function AuthPage() {
                     To continue, Google will share your name, email address, and language preference with MediInfo.LK.
                   </p>
                 </div>
+              </div>
+            )}
+
+            {/* --- STAFF PENDING VERIFICATION SUCCESS VIEW --- */}
+            {view === 'staff-pending-success' && (
+              <div className="animate-fade-up text-center py-8">
+                <div className="w-20 h-20 bg-amber-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-amber-500/20">
+                  <Stethoscope size={40} className="text-amber-600" />
+                </div>
+                <h2 className="text-[26px] font-extrabold font-plus-jakarta text-near-black mb-3">Verification Under Review</h2>
+                <p className="text-[14px] text-dark-gray leading-relaxed mb-6">
+                  Thank you, <strong>{medName || 'Medical Professional'}</strong>! Your SLMC credentials and document proof have been submitted to our <strong>Super Administrator team</strong> for review.
+                </p>
+                <div className="p-4 bg-off-white rounded-xl border border-light-gray text-left text-xs space-y-2 mb-8 text-dark-gray">
+                  <div className="flex justify-between"><span className="text-mid-gray">Profession:</span><span className="font-bold uppercase text-near-black">{medProfession}</span></div>
+                  <div className="flex justify-between"><span className="text-mid-gray">SLMC Reg No:</span><span className="font-bold text-near-black">{medSlmcRegNo || 'SLMC-99999'}</span></div>
+                  <div className="flex justify-between"><span className="text-mid-gray">Document:</span><span className="font-bold text-teal">{fileName || 'Verification_Doc.pdf'}</span></div>
+                  <div className="flex justify-between"><span className="text-mid-gray">Status:</span><span className="font-bold text-amber-600">Pending Review (0/1)</span></div>
+                </div>
+                <Button onClick={() => setView('login')} variant="primary" className="w-full justify-center py-3.5 rounded-xl text-[14px] font-bold">
+                  Return to Login
+                </Button>
               </div>
             )}
 
