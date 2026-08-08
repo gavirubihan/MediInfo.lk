@@ -27,6 +27,52 @@ export interface LocalizedMedicineContent {
   warningCards: WarningCard[];
 }
 
+export interface DoctorVerification {
+  doctorId: string;
+  doctorName: string;
+  slmcRegNo: string;
+  specialization: string;
+  verifiedAt: string;
+  notes?: string;
+}
+
+export interface RegisteredDoctor {
+  id: string;
+  name: string;
+  email: string;
+  slmcRegNo: string;
+  specialization: string;
+  hospital: string;
+  avatarUrl?: string;
+}
+
+export const registeredDoctors: RegisteredDoctor[] = [
+  {
+    id: 'doc-01',
+    name: 'Dr. Saman Perera',
+    email: 'dr.saman@mediinfo.lk',
+    slmcRegNo: 'SLMC-45291',
+    specialization: 'Senior Clinical Pharmacologist',
+    hospital: 'National Hospital of Sri Lanka',
+  },
+  {
+    id: 'doc-02',
+    name: 'Dr. Nimali Silva',
+    email: 'nimali.silva@mediinfo.lk',
+    slmcRegNo: 'SLMC-51820',
+    specialization: 'Consultant Physician',
+    hospital: 'Asiri Surgical Hospital',
+  },
+  {
+    id: 'doc-03',
+    name: 'Dr. Arul Kumaran',
+    email: 'arul.kumaran@mediinfo.lk',
+    slmcRegNo: 'SLMC-39402',
+    specialization: 'General Practitioner',
+    hospital: 'Jaffna Teaching Hospital',
+  },
+];
+
 export interface MedicineRecord {
   id: string;
   slug: string;
@@ -40,6 +86,8 @@ export interface MedicineRecord {
   ageGroup: string;
   prescriptionRequired: boolean;
   verified: boolean;
+  verifications?: DoctorVerification[];
+  createdDate?: string;
   maxDailyDoseAdults: string;
   rating: string;
   reviewCount: string;
@@ -480,7 +528,112 @@ export const sampleMedicines: MedicineRecord[] = [
   },
 ];
 
-export function getMedicineBySlug(slug: string): MedicineRecord {
-  const found = sampleMedicines.find((m) => m.slug.toLowerCase() === slug.toLowerCase());
-  return found || sampleMedicines[0];
+export function getStoredMedicines(): MedicineRecord[] {
+  if (typeof window === 'undefined') return sampleMedicines;
+  try {
+    const data = localStorage.getItem('mediinfo_medicines');
+    if (!data) {
+      // Seed default sample medicines with 2 doctor verifications for existing verified medicines
+      const seeded = sampleMedicines.map((m) => {
+        if (m.verified && (!m.verifications || m.verifications.length < 2)) {
+          return {
+            ...m,
+            verifications: [
+              {
+                doctorId: 'doc-01',
+                doctorName: 'Dr. Saman Perera',
+                slmcRegNo: 'SLMC-45291',
+                specialization: 'Senior Clinical Pharmacologist',
+                verifiedAt: '2026-08-01',
+                notes: 'Dosage and safety information verified against NHSL guidelines.',
+              },
+              {
+                doctorId: 'doc-02',
+                doctorName: 'Dr. Nimali Silva',
+                slmcRegNo: 'SLMC-51820',
+                specialization: 'Consultant Physician',
+                verifiedAt: '2026-08-02',
+                notes: 'Drug interactions and warnings reviewed and approved.',
+              },
+            ],
+          };
+        }
+        return m;
+      });
+      localStorage.setItem('mediinfo_medicines', JSON.stringify(seeded));
+      return seeded;
+    }
+    return JSON.parse(data);
+  } catch {
+    return sampleMedicines;
+  }
 }
+
+export function saveStoredMedicines(medicines: MedicineRecord[]): void {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem('mediinfo_medicines', JSON.stringify(medicines));
+  } catch (e) {
+    console.error('Failed to save medicines to localStorage', e);
+  }
+}
+
+export function getMedicineBySlug(slug: string): MedicineRecord {
+  const list = getStoredMedicines();
+  const found = list.find((m) => m.slug.toLowerCase() === slug.toLowerCase());
+  return found || list[0];
+}
+
+export function addOrUpdateMedicine(medicine: MedicineRecord): void {
+  const list = getStoredMedicines();
+  const index = list.findIndex((m) => m.id === medicine.id || m.slug === medicine.slug);
+  let updatedList: MedicineRecord[];
+  if (index >= 0) {
+    updatedList = [...list];
+    updatedList[index] = medicine;
+  } else {
+    updatedList = [medicine, ...list];
+  }
+  saveStoredMedicines(updatedList);
+}
+
+export function approveMedicineVerification(
+  medicineId: string,
+  doctor: RegisteredDoctor,
+  notes?: string
+): { success: boolean; medicine: MedicineRecord; isFullyVerified: boolean } {
+  const list = getStoredMedicines();
+  const index = list.findIndex((m) => m.id === medicineId);
+  if (index === -1) {
+    throw new Error('Medicine not found');
+  }
+
+  const target = { ...list[index] };
+  const currentVerifications = target.verifications || [];
+
+  // Check if this doctor already verified
+  const alreadyVerified = currentVerifications.some((v) => v.doctorId === doctor.id || v.slmcRegNo === doctor.slmcRegNo);
+  
+  let newVerifications = [...currentVerifications];
+  if (!alreadyVerified) {
+    newVerifications.push({
+      doctorId: doctor.id,
+      doctorName: doctor.name,
+      slmcRegNo: doctor.slmcRegNo,
+      specialization: doctor.specialization,
+      verifiedAt: new Date().toISOString().split('T')[0],
+      notes: notes || 'Verified medicine clinical details, dosage rows, and multi-language translation.',
+    });
+  }
+
+  // Minimum 2 doctor approvals required for verified = true
+  const isFullyVerified = newVerifications.length >= 2;
+  target.verifications = newVerifications;
+  target.verified = isFullyVerified;
+
+  list[index] = target;
+  saveStoredMedicines(list);
+
+  return { success: true, medicine: target, isFullyVerified };
+}
+
