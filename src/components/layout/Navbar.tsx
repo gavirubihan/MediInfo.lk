@@ -40,7 +40,7 @@ export const Navbar = () => {
         setUserProfile({ name: 'Nirosha', email: 'nirosha@example.com' });
       }
     }
-  }, []);
+  }, [pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
@@ -238,13 +238,13 @@ export const Navbar = () => {
                 <Link href="/admin" className="no-underline block" onClick={() => setIsMobileMenuOpen(false)}>
                   <Button variant="secondary" className="w-full justify-center rounded-xl py-3 h-auto font-bold text-[14px]">Dashboard</Button>
                 </Link>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-center rounded-xl py-3 h-auto font-bold text-[14px] text-red-600 border-red-200 hover:bg-red-50"
+              <button 
+                  type="button"
+                  className="w-full flex items-center justify-center rounded-xl py-3 h-auto font-bold text-[14px] text-red-600 border-2 border-red-200 hover:bg-red-50 bg-white transition-colors cursor-pointer"
                   onClick={handleLogout}
                 >
                   Logout
-                </Button>
+                </button>
               </div>
             ) : (
               <Link href="/login" className="no-underline block" onClick={() => setIsMobileMenuOpen(false)}>
