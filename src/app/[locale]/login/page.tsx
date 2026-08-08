@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Mail, Lock, User, ArrowRight, HeartPulse, ShieldCheck, ChevronLeft, UploadCloud, Stethoscope, CheckCircle2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/routing';
+import { useSearchParams } from 'next/navigation';
 import { PRESET_USERS, AdminUser } from '@/components/admin/AdminRoleContext';
 import { addStaffRequest, findStaffByEmail, ProfessionType } from '@/data/staffData';
 
@@ -12,8 +13,15 @@ type AuthView = 'login' | 'signup-select' | 'signup-normal' | 'signup-med-1' | '
 
 export default function AuthPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const t = useTranslations('LoginPage');
   const [view, setView] = useState<AuthView>('login');
+
+  React.useEffect(() => {
+    if (searchParams.get('view') === 'signup') {
+      setView('signup-select');
+    }
+  }, [searchParams]);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState('');
