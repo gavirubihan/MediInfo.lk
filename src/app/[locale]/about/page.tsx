@@ -26,7 +26,7 @@ export default function AboutPage() {
   const teamMembers = [
     {
       initials: 'AS',
-      name: 'Gaviru Bihan',
+      name: t('teamName1'),
       role: t('teamRole1'),
       color: 'bg-blue',
       desc: t('teamDesc1'),
@@ -34,7 +34,7 @@ export default function AboutPage() {
     },
     {
       initials: 'KP',
-      name: 'Nirosha Madhumali',
+      name: t('teamName2'),
       role: t('teamRole2'),
       color: 'bg-teal',
       desc: t('teamDesc2'),
@@ -42,7 +42,7 @@ export default function AboutPage() {
     },
     {
       initials: 'NK',
-      name: 'Matheesha Induwara',
+      name: t('teamName3'),
       role: t('teamRole3'),
       color: 'bg-blue',
       desc: t('teamDesc3'),
@@ -50,7 +50,7 @@ export default function AboutPage() {
     },
     {
       initials: 'CF',
-      name: 'Poornima Prasadini',
+      name: t('teamName4'),
       role: t('teamRole4'),
       color: 'bg-teal',
       desc: t('teamDesc4'),
