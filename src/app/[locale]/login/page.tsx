@@ -19,7 +19,7 @@ export default function AuthPage() {
 
   React.useEffect(() => {
     if (searchParams.get('view') === 'signup') {
-      setView('signup-select');
+      setView('signup-normal');
     }
   }, [searchParams]);
   const [dragActive, setDragActive] = useState(false);
@@ -116,24 +116,24 @@ export default function AuthPage() {
       </div>
 
       <div className="flex gap-3">
-        <button 
+        <button
           onClick={() => {
             if (isMedical) setView('signup-med-2');
             else setView('success');
           }}
           className="flex-1 flex items-center justify-center gap-2 py-3 border border-light-gray rounded-xl hover:bg-off-white transition-colors cursor-pointer active:scale-95"
         >
-          <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" /><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" /><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" /><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" /></svg>
           <span className="text-[14px] font-bold text-dark-gray">{t('google')}</span>
         </button>
-        <button 
+        <button
           onClick={() => {
             if (isMedical) setView('signup-med-2');
             else setView('success');
           }}
           className="flex-1 flex items-center justify-center gap-2 py-3 border border-light-gray rounded-xl hover:bg-off-white transition-colors cursor-pointer active:scale-95 text-[#1877F2]"
         >
-          <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="currentColor"/></svg>
+          <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="currentColor" /></svg>
           <span className="text-[14px] font-bold text-dark-gray">{t('facebook')}</span>
         </button>
       </div>
@@ -143,13 +143,13 @@ export default function AuthPage() {
   return (
     <div className="min-h-screen bg-off-white flex flex-col">
       <div className="flex-1 flex w-full">
-        
+
         {/* Left Side: Branding / Visual (Hidden on mobile) */}
         <div className="hidden lg:flex flex-1 relative bg-blue overflow-hidden flex-col justify-between px-12 pt-32 pb-12 lg:px-20 lg:pt-40 lg:pb-20">
           <div className="absolute inset-0 bg-gradient-to-br from-blue to-blue-dark opacity-90 z-0" />
           <div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] bg-white/10 blur-[100px] rounded-full pointer-events-none" />
           <div className="absolute -bottom-[20%] -right-[10%] w-[60%] h-[60%] bg-teal/20 blur-[120px] rounded-full pointer-events-none" />
-          
+
 
           <div className="relative z-10 max-w-lg mb-10">
             <h1 className="text-white text-[42px] font-extrabold font-plus-jakarta leading-[1.1] mb-6">
@@ -174,7 +174,7 @@ export default function AuthPage() {
         {/* Right Side: Auth Forms */}
         <div className="flex-1 flex items-center justify-center p-6 pt-28 sm:p-12 sm:pt-36 overflow-y-auto">
           <div className="w-full max-w-[440px] bg-white rounded-[24px] shadow-[0_8px_40px_rgba(0,0,0,0.06)] p-8 sm:p-10 animate-fade-up border border-light-gray/50 my-auto mt-auto sm:mt-auto">
-            
+
             {/* --- LOGIN VIEW --- */}
             {view === 'login' && (
               <div className="animate-fade-up">
@@ -187,12 +187,12 @@ export default function AuthPage() {
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">{t('emailLabel')}</label>
                     <div className="relative">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-mid-gray pointer-events-none"><Mail size={18} /></div>
-                      <input 
-                        type="email" 
+                      <input
+                        type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="hello@example.com" 
-                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-blue focus:ring-4 focus:ring-blue/10 transition-all placeholder:text-mid-gray/70" 
+                        placeholder="hello@example.com"
+                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-blue focus:ring-4 focus:ring-blue/10 transition-all placeholder:text-mid-gray/70"
                       />
                     </div>
                   </div>
@@ -203,12 +203,12 @@ export default function AuthPage() {
                     </div>
                     <div className="relative">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-mid-gray pointer-events-none"><Lock size={18} /></div>
-                      <input 
-                        type="password" 
+                      <input
+                        type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="••••••••" 
-                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-blue focus:ring-4 focus:ring-blue/10 transition-all placeholder:text-mid-gray/70" 
+                        placeholder="••••••••"
+                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-blue focus:ring-4 focus:ring-blue/10 transition-all placeholder:text-mid-gray/70"
                       />
                     </div>
                   </div>
@@ -233,9 +233,9 @@ export default function AuthPage() {
                   <h2 className="text-[28px] font-extrabold font-plus-jakarta text-near-black mb-2 tracking-tight">{t('createAccountTitle')}</h2>
                   <p className="text-[15px] text-mid-gray">{t('createAccountSubtitle')}</p>
                 </div>
-                
+
                 <div className="flex flex-col gap-4">
-                  <div 
+                  <div
                     onClick={() => setView('signup-normal')}
                     className="group border-2 border-light-gray rounded-2xl p-5 cursor-pointer hover:border-blue hover:bg-blue/5 transition-all duration-300"
                   >
@@ -251,7 +251,7 @@ export default function AuthPage() {
                     </div>
                   </div>
 
-                  <div 
+                  <div
                     onClick={() => setView('signup-med-1')}
                     className="group border-2 border-light-gray rounded-2xl p-5 cursor-pointer hover:border-teal hover:bg-teal/5 transition-all duration-300"
                   >
@@ -334,13 +334,13 @@ export default function AuthPage() {
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">{t('fullNameLabel')}</label>
                     <div className="relative">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-mid-gray pointer-events-none"><User size={18} /></div>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         value={medName}
                         onChange={(e) => setMedName(e.target.value)}
-                        placeholder="Dr. Kasun Perera" 
-                        required 
-                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all" 
+                        placeholder="Dr. Kasun Perera"
+                        required
+                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all"
                       />
                     </div>
                   </div>
@@ -348,13 +348,13 @@ export default function AuthPage() {
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">{t('profEmailLabel')}</label>
                     <div className="relative">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-mid-gray pointer-events-none"><Mail size={18} /></div>
-                      <input 
-                        type="email" 
+                      <input
+                        type="email"
                         value={medEmail}
                         onChange={(e) => setMedEmail(e.target.value)}
-                        placeholder="doctor@hospital.lk" 
-                        required 
-                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all" 
+                        placeholder="doctor@hospital.lk"
+                        required
+                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all"
                       />
                     </div>
                   </div>
@@ -362,13 +362,13 @@ export default function AuthPage() {
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">{t('passwordLabel')}</label>
                     <div className="relative">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-mid-gray pointer-events-none"><Lock size={18} /></div>
-                      <input 
-                        type="password" 
+                      <input
+                        type="password"
                         value={medPassword}
                         onChange={(e) => setMedPassword(e.target.value)}
-                        placeholder="••••••••" 
-                        required 
-                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all" 
+                        placeholder="••••••••"
+                        required
+                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all"
                       />
                     </div>
                   </div>
@@ -394,10 +394,10 @@ export default function AuthPage() {
                   <h2 className="text-[28px] font-extrabold font-plus-jakarta text-near-black mb-2 tracking-tight">Verification</h2>
                   <p className="text-[15px] text-mid-gray">Step 2 of 2: Required for staff access.</p>
                 </div>
-                <form 
-                  className="flex flex-col gap-5" 
-                  onSubmit={(e) => { 
-                    e.preventDefault(); 
+                <form
+                  className="flex flex-col gap-5"
+                  onSubmit={(e) => {
+                    e.preventDefault();
                     addStaffRequest({
                       name: medName || 'Medical Professional',
                       email: medEmail || 'staff@hospital.lk',
@@ -406,12 +406,12 @@ export default function AuthPage() {
                       slmcRegNo: medSlmcRegNo || 'SLMC-99999',
                       proofFileName: fileName || 'Medical_License_Verification.pdf'
                     });
-                    setView('staff-pending-success'); 
+                    setView('staff-pending-success');
                   }}
                 >
                   <div>
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">Position</label>
-                    <select 
+                    <select
                       value={medProfession}
                       onChange={(e) => setMedProfession(e.target.value as ProfessionType)}
                       className="w-full px-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all appearance-none cursor-pointer"
@@ -428,20 +428,20 @@ export default function AuthPage() {
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">SLMC Registration Number</label>
                     <div className="relative">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-mid-gray pointer-events-none"><ShieldCheck size={18} /></div>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         value={medSlmcRegNo}
                         onChange={(e) => setMedSlmcRegNo(e.target.value)}
-                        placeholder="e.g. 12345" 
-                        required 
-                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all" 
+                        placeholder="e.g. 12345"
+                        required
+                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all"
                       />
                     </div>
                   </div>
 
                   <div>
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">Upload Proof (ID / License)</label>
-                    <div 
+                    <div
                       className={`relative border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all duration-300 ${dragActive ? 'border-teal bg-teal/5' : 'border-light-gray bg-off-white hover:border-teal hover:bg-teal/5'} ${fileName ? 'border-teal bg-teal/5 border-solid' : ''}`}
                       onDragEnter={handleDrag}
                       onDragLeave={handleDrag}
@@ -479,14 +479,14 @@ export default function AuthPage() {
             {view === 'google-select-account' && (
               <div className="animate-fade-up">
                 <div className="flex justify-center mb-6">
-                  <svg viewBox="0 0 24 24" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                  <svg viewBox="0 0 24 24" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" /><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" /><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" /><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" /></svg>
                 </div>
                 <div className="text-center mb-6">
                   <h2 className="text-[24px] font-medium text-near-black mb-1 tracking-tight">Choose an account</h2>
                   <p className="text-[15px] text-near-black">to continue to MediInfo.LK</p>
                 </div>
                 <div className="flex flex-col border border-light-gray rounded-xl overflow-hidden">
-                  <div 
+                  <div
                     onClick={() => {
                       localStorage.setItem('isLoggedIn', 'true');
                       router.push('/admin');
@@ -501,7 +501,7 @@ export default function AuthPage() {
                       <div className="text-[13px] text-mid-gray truncate">nirosha@example.com</div>
                     </div>
                   </div>
-                  <div 
+                  <div
                     className="flex items-center gap-4 p-4 hover:bg-off-white transition-colors cursor-pointer"
                   >
                     <div className="w-10 h-10 rounded-full bg-light-gray text-dark-gray flex items-center justify-center shrink-0">
