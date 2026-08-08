@@ -49,10 +49,10 @@ export default function AdminBlogsPage() {
           </p>
         </div>
 
-        <button className="px-5 py-2.5 bg-blue hover:bg-blue/90 text-white font-bold text-xs rounded-xl shadow-md shadow-blue/20 transition-all flex items-center gap-2 cursor-pointer">
+        <Link href="/admin/blogs/write" className="px-5 py-2.5 bg-blue hover:bg-blue/90 text-white font-bold text-xs rounded-xl shadow-md shadow-blue/20 transition-all flex items-center gap-2 cursor-pointer no-underline">
           <PlusCircle size={16} />
           <span>Create New Blog Post</span>
-        </button>
+        </Link>
       </div>
 
       {/* Blogs Table */}
