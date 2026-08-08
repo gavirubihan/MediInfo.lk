@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/Badge';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { Pill, Check, AlertTriangle, Globe, Stethoscope, Search, Bot, CheckCircle, FileText } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { UploadPrescriptionButton } from '@/components/ui/UploadPrescriptionButton';
 
 export default function Home() {
   const t = useTranslations('HomePage');
@@ -32,7 +33,9 @@ export default function Home() {
               <Link href="/search" className="no-underline">
                 <Button variant="primary">{t('searchBtn')}</Button>
               </Link>
-              <Button variant="secondary">{t('uploadBtn')}</Button>
+              <UploadPrescriptionButton>
+                <Button variant="secondary">{t('uploadBtn')}</Button>
+              </UploadPrescriptionButton>
             </div>
             <div className="flex gap-5 flex-wrap">
               <span className="flex items-center gap-1.5 text-[13px] font-semibold text-dark-gray"><Check size={16} className="text-teal" /> {t('verifiedDoctors')}</span>
