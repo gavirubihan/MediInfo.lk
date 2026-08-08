@@ -23,7 +23,7 @@ export default function MedicineListPage() {
   return (
     <div className="space-y-6 animate-fade-up">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-light-gray shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-[24px] border border-light-gray/50 shadow-[0_8px_40px_rgba(0,0,0,0.06)]">
         <div>
           <h1 className="text-xl sm:text-2xl font-extrabold font-plus-jakarta text-near-black tracking-tight m-0 flex items-center gap-2.5">
             <Pill className="text-blue" size={26} />
@@ -44,7 +44,7 @@ export default function MedicineListPage() {
       </div>
 
       {/* Filter / Search Bar */}
-      <div className="bg-white border border-light-gray rounded-2xl p-4 shadow-sm flex items-center gap-3">
+      <div className="bg-white border border-light-gray/50 rounded-full p-4 px-6 shadow-sm flex items-center gap-3">
         <Search size={18} className="text-mid-gray shrink-0" />
         <input
           type="text"
@@ -56,7 +56,7 @@ export default function MedicineListPage() {
       </div>
 
       {/* Medicine List Table */}
-      <div className="bg-white border border-light-gray rounded-2xl shadow-sm overflow-hidden">
+      <div className="bg-white border border-light-gray/50 rounded-[24px] shadow-[0_8px_40px_rgba(0,0,0,0.06)] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs min-w-[700px]">
             <thead>

@@ -955,7 +955,7 @@ export function MedicineForm() {
       ) : (
         <form onSubmit={handleSave} className="space-y-8">
           {/* Section 1: General Information & Metadata */}
-          <div className="bg-white border border-light-gray rounded-2xl p-6 shadow-sm space-y-6">
+          <div className="bg-white border border-light-gray/50 rounded-3xl p-8 shadow-[0_8px_40px_rgba(0,0,0,0.06)] space-y-6">
             <div className="flex items-center gap-2 pb-3 border-b border-light-gray">
               <Info className="text-blue" size={18} />
               <h2 className="text-base font-bold text-near-black font-plus-jakarta m-0">
@@ -1146,7 +1146,7 @@ export function MedicineForm() {
           </div>
 
           {/* Section 2: Multi-Language Content Tabbed Editor */}
-          <div className="bg-white border border-light-gray rounded-2xl p-6 shadow-sm space-y-8">
+          <div className="bg-white border border-light-gray/50 rounded-[24px] p-8 shadow-[0_8px_40px_rgba(0,0,0,0.06)] space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-light-gray">
               <div>
                 <div className="flex items-center gap-2">
@@ -1521,7 +1521,7 @@ export function MedicineForm() {
           </div>
 
           {/* Section 3: Structured Dosage Table Builder */}
-          <div className="bg-white border border-light-gray rounded-2xl p-6 shadow-sm space-y-4">
+          <div className="bg-white border border-light-gray/50 rounded-[24px] p-8 shadow-[0_8px_40px_rgba(0,0,0,0.06)] space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-light-gray">
               <div className="flex items-center gap-2">
                 <Scale className="text-blue" size={20} />

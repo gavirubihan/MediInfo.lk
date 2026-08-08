@@ -55,17 +55,6 @@ export default function AdminBlogsPage() {
         </button>
       </div>
 
-      {/* Info Notice */}
-      <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-light to-teal/10 border border-blue/20 flex items-center gap-3">
-        <Sparkles size={20} className="text-blue shrink-0 animate-pulse" />
-        <div className="text-xs">
-          <span className="font-bold text-blue block">Role Access Enabled</span>
-          <span className="text-mid-gray">
-            Super Admins, Registered Doctors, and Medical Staff can draft and review health educational articles.
-          </span>
-        </div>
-      </div>
-
       {/* Blogs Table */}
       <div className="bg-white border border-light-gray rounded-2xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto">

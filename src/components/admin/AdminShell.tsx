@@ -119,14 +119,14 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const badgeInfo = getRoleBadge(userRole);
 
   return (
-    <div className="min-h-screen bg-[#F4F7FA] flex flex-col font-sans">
+    <div className="min-h-screen bg-off-white flex flex-col font-sans">
       {/* Top Navigation Bar */}
-      <header className="bg-near-black text-white sticky top-0 z-40 shadow-md">
+      <header className="bg-white/95 backdrop-blur-md text-near-black sticky top-0 z-40 border-b border-light-gray shadow-sm">
         <div className="w-full px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="lg:hidden p-2 rounded-lg text-mid-gray hover:text-near-black hover:bg-light-gray/50 transition-colors cursor-pointer"
               aria-label="Toggle Navigation"
             >
               {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -137,10 +137,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 M
               </div>
               <div className="flex flex-col">
-                <span className="font-plus-jakarta font-bold text-[16px] sm:text-[17px] leading-tight text-white tracking-tight flex items-center gap-1.5">
+                <span className="font-plus-jakarta font-bold text-[16px] sm:text-[17px] leading-tight text-near-black tracking-tight flex items-center gap-1.5">
                   MediInfo<span className="text-teal">.LK</span> <span className={`text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full border ${badgeInfo.color}`}>{badgeInfo.label}</span>
                 </span>
-                <span className="text-[11px] text-white/60 hidden sm:inline">Medicine for everyone — clear, trusted, local</span>
+                <span className="text-[11px] text-mid-gray hidden sm:inline">Medicine for everyone — clear, trusted, local</span>
               </div>
             </Link>
           </div>
@@ -149,7 +149,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <Link
               href="/"
               target="_blank"
-              className="hidden md:flex items-center gap-1.5 text-xs font-bold text-white/80 hover:text-white bg-white/10 hover:bg-white/15 px-3 py-1.5 rounded-lg border border-white/10 transition-all no-underline"
+              className="hidden md:flex items-center gap-1.5 text-xs font-bold text-mid-gray hover:text-dark-gray hover:bg-off-white px-3 py-1.5 rounded-lg border border-light-gray transition-all no-underline"
             >
               <span>View Site</span>
               <ExternalLink size={13} />
@@ -159,13 +159,13 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <div className="relative">
               <button
                 onClick={() => setRoleMenuOpen(!roleMenuOpen)}
-                className="flex items-center gap-2.5 pl-3 pr-2 py-1 rounded-xl hover:bg-white/10 transition-colors cursor-pointer border border-white/10"
+                className="flex items-center gap-2.5 pl-3 pr-2 py-1 rounded-xl hover:bg-off-white transition-colors cursor-pointer border border-light-gray"
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue to-teal text-white font-bold text-xs flex items-center justify-center border border-white/20">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue to-teal text-white font-bold text-xs flex items-center justify-center shadow-sm">
                   {userRole === 'doctor' ? 'DR' : userRole === 'other_medical' ? 'ST' : 'SA'}
                 </div>
                 <div className="hidden sm:flex flex-col text-left">
-                  <span className="text-xs font-bold text-white leading-tight truncate max-w-[130px]">
+                  <span className="text-xs font-bold text-near-black leading-tight truncate max-w-[130px]">
                     {user?.name || 'Admin User'}
                   </span>
                   <span className="text-[10px] text-teal font-semibold flex items-center gap-1">
@@ -208,7 +208,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       {/* Main Body */}
       <div className="flex-1 flex w-full">
         {/* Desktop Sidebar */}
-        <aside className="hidden lg:block w-64 bg-white border-r border-light-gray shrink-0 min-h-[calc(100vh-4rem)] p-5">
+        <aside className="hidden lg:block w-64 bg-transparent border-r border-light-gray shrink-0 min-h-[calc(100vh-4rem)] p-5">
           <div className="text-[11px] font-extrabold uppercase tracking-wider text-mid-gray mb-3 px-3 flex items-center justify-between">
             <span>
               {userRole === 'super_admin' ? 'Super Admin Navigation' : userRole === 'doctor' ? 'Doctor Review Portal' : 'Medical Staff Panel'}
@@ -223,10 +223,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-[14px] no-underline transition-all duration-200 ${
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-full font-bold text-[14px] no-underline transition-all duration-300 ${
                     active
-                      ? 'bg-blue text-white shadow-sm shadow-blue/20'
-                      : 'text-dark-gray hover:bg-off-white hover:text-near-black'
+                      ? 'bg-blue text-white shadow-[0_4px_12px_rgba(26,111,191,0.3)]'
+                      : 'text-dark-gray hover:bg-white hover:text-near-black hover:shadow-sm'
                   }`}
                 >
                   <Icon size={18} className={active ? 'text-white' : 'text-mid-gray'} />

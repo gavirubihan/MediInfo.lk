@@ -65,7 +65,7 @@ export default function AdminDashboardPage() {
           return (
             <div
               key={i}
-              className="bg-white border border-light-gray rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white border border-light-gray/50 rounded-3xl p-6 shadow-[0_8px_40px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] transition-all"
             >
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs font-bold text-mid-gray uppercase tracking-wider">{stat.label}</span>
@@ -88,7 +88,7 @@ export default function AdminDashboardPage() {
       {/* Recent Catalog Table & Action Panel */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Table Panel (2 Cols) */}
-        <div className="lg:col-span-2 bg-white border border-light-gray rounded-2xl p-6 shadow-sm flex flex-col">
+        <div className="lg:col-span-2 bg-white border border-light-gray/50 rounded-[24px] p-8 shadow-[0_8px_40px_rgba(0,0,0,0.06)] flex flex-col">
           <div className="flex items-center justify-between mb-5">
             <div>
               <h2 className="text-lg font-bold text-near-black font-plus-jakarta m-0">Recent Medicines</h2>
@@ -162,7 +162,7 @@ export default function AdminDashboardPage() {
 
         {/* Quick Tools & AI Feature Box */}
         <div className="space-y-6">
-          <div className="bg-gradient-to-br from-blue-light to-white border border-blue/20 rounded-2xl p-6 shadow-sm relative overflow-hidden">
+          <div className="bg-gradient-to-br from-blue-light to-white border border-blue/20 rounded-3xl p-7 shadow-[0_8px_40px_rgba(0,0,0,0.06)] relative overflow-hidden">
             <div className="flex items-center gap-2.5 font-bold text-blue text-sm mb-3">
               <Sparkles size={18} className="text-amber-500" />
               <span>AI Auto-Translator Tool</span>
@@ -180,7 +180,7 @@ export default function AdminDashboardPage() {
             </Link>
           </div>
 
-          <div className="bg-white border border-light-gray rounded-2xl p-6 shadow-sm space-y-4">
+          <div className="bg-white border border-light-gray/50 rounded-[24px] p-7 shadow-[0_8px_40px_rgba(0,0,0,0.06)] space-y-4">
             <h3 className="text-sm font-bold text-near-black font-plus-jakarta m-0">Admin Actions</h3>
             <div className="space-y-2">
               <Link

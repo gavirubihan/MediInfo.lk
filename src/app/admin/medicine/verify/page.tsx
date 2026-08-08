@@ -170,10 +170,10 @@ export default function DoctorVerifyPage() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <button
           onClick={() => setActiveTab('pending')}
-          className={`p-4 rounded-2xl border transition-all text-left cursor-pointer flex items-center justify-between ${
+          className={`p-4 sm:p-5 rounded-[24px] border transition-all text-left cursor-pointer flex items-center justify-between ${
             activeTab === 'pending'
               ? 'bg-amber-500/10 border-amber-500/40 shadow-sm'
-              : 'bg-white border-light-gray hover:bg-off-white'
+              : 'bg-white border-light-gray/50 shadow-[0_8px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)]'
           }`}
         >
           <div>
@@ -185,10 +185,10 @@ export default function DoctorVerifyPage() {
 
         <button
           onClick={() => setActiveTab('partially')}
-          className={`p-4 rounded-2xl border transition-all text-left cursor-pointer flex items-center justify-between ${
+          className={`p-4 sm:p-5 rounded-[24px] border transition-all text-left cursor-pointer flex items-center justify-between ${
             activeTab === 'partially'
               ? 'bg-blue-light border-blue/40 shadow-sm'
-              : 'bg-white border-light-gray hover:bg-off-white'
+              : 'bg-white border-light-gray/50 shadow-[0_8px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)]'
           }`}
         >
           <div>
@@ -200,10 +200,10 @@ export default function DoctorVerifyPage() {
 
         <button
           onClick={() => setActiveTab('verified')}
-          className={`p-4 rounded-2xl border transition-all text-left cursor-pointer flex items-center justify-between ${
+          className={`p-4 sm:p-5 rounded-[24px] border transition-all text-left cursor-pointer flex items-center justify-between ${
             activeTab === 'verified'
               ? 'bg-teal/10 border-teal/40 shadow-sm'
-              : 'bg-white border-light-gray hover:bg-off-white'
+              : 'bg-white border-light-gray/50 shadow-[0_8px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)]'
           }`}
         >
           <div>
@@ -215,7 +215,7 @@ export default function DoctorVerifyPage() {
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white border border-light-gray rounded-2xl p-4 shadow-sm flex items-center gap-3">
+      <div className="bg-white border border-light-gray/50 rounded-full p-4 px-6 shadow-sm flex items-center gap-3">
         <Search size={18} className="text-mid-gray shrink-0" />
         <input
           type="text"
@@ -229,7 +229,7 @@ export default function DoctorVerifyPage() {
       {/* Medicines List */}
       <div className="space-y-4">
         {filtered.length === 0 ? (
-          <div className="bg-white rounded-2xl p-12 text-center border border-light-gray text-mid-gray space-y-3">
+          <div className="bg-white rounded-[24px] p-12 text-center border border-light-gray/50 text-mid-gray space-y-3 shadow-sm">
             <ShieldCheck size={40} className="mx-auto text-teal/50" />
             <h3 className="text-base font-bold text-near-black m-0">No medicines match this view</h3>
             <p className="text-xs m-0">Try switching tabs above or clear your search term.</p>
@@ -247,7 +247,7 @@ export default function DoctorVerifyPage() {
             return (
               <div
                 key={med.id}
-                className={`bg-white rounded-2xl border transition-all shadow-sm overflow-hidden ${
+                className={`bg-white rounded-[24px] border border-light-gray/50 transition-all shadow-[0_8px_40px_rgba(0,0,0,0.06)] overflow-hidden ${
                   isExpanded ? 'border-blue shadow-md ring-2 ring-blue/10' : 'border-light-gray hover:border-blue/30'
                 }`}
               >
