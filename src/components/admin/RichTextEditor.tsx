@@ -22,6 +22,34 @@ import {
   Redo
 } from 'lucide-react';
 
+const ToolbarButton = ({ 
+  onClick, 
+  isActive, 
+  disabled, 
+  children, 
+  title 
+}: { 
+  onClick: () => void; 
+  isActive?: boolean; 
+  disabled?: boolean; 
+  children: React.ReactNode;
+  title: string;
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    disabled={disabled}
+    title={title}
+    className={`p-2 rounded-lg flex items-center justify-center transition-all ${
+      isActive 
+        ? 'bg-blue text-white shadow-sm shadow-blue/20' 
+        : 'text-dark-gray hover:bg-off-white hover:text-near-black'
+    } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+  >
+    {children}
+  </button>
+);
+
 interface RichTextEditorProps {
   content: string;
   onChange: (html: string) => void;
@@ -68,34 +96,6 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
   if (!editor) {
     return null;
   }
-
-  const ToolbarButton = ({ 
-    onClick, 
-    isActive, 
-    disabled, 
-    children, 
-    title 
-  }: { 
-    onClick: () => void; 
-    isActive?: boolean; 
-    disabled?: boolean; 
-    children: React.ReactNode;
-    title: string;
-  }) => (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      title={title}
-      className={`p-2 rounded-lg flex items-center justify-center transition-all ${
-        isActive 
-          ? 'bg-blue text-white shadow-sm shadow-blue/20' 
-          : 'text-dark-gray hover:bg-off-white hover:text-near-black'
-      } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-    >
-      {children}
-    </button>
-  );
 
   return (
     <div className="flex flex-col h-full relative">
