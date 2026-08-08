@@ -9,7 +9,6 @@ import {
   LayoutDashboard, 
   Pill, 
   PlusCircle, 
-  FileText, 
   ShieldCheck, 
   Menu, 
   X, 
@@ -57,7 +56,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   }
 
   // Filter navigation items based on user role
-  // Super Admin: Dashboard, Add Medicine, All Medicines, Prescriptions, Blogs (No Medicine Verify)
+  // Super Admin: Dashboard, Add Medicine, All Medicines, Medicine Verify, Blogs
   // Doctor: Dashboard, Add Medicine, Medicine Verify, Blogs
   // Other Medical: Dashboard, Add Medicine, Blogs
   const userRole = user?.role || 'super_admin';
@@ -82,7 +81,6 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       icon: ShieldCheck, 
       badge: pendingCount > 0 ? `${pendingCount}` : undefined 
     });
-    navItems.push({ label: 'Prescriptions', href: '/admin/prescriptions', icon: FileText });
     navItems.push({ label: 'Blogs', href: '/admin/blogs', icon: BookOpen });
   } else if (userRole === 'doctor') {
     navItems.push({ 

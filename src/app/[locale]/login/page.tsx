@@ -12,7 +12,6 @@ type AuthView = 'login' | 'signup-select' | 'signup-normal' | 'signup-med-1' | '
 export default function AuthPage() {
   const router = useRouter();
   const t = useTranslations('LoginPage');
-  const router = useRouter();
   const [view, setView] = useState<AuthView>('login');
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
