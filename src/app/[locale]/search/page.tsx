@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { Badge } from '@/components/ui/Badge';
 import { Pill, Camera, Search, Filter, ChevronDown, ChevronUp, Check, ExternalLink } from 'lucide-react';
 import { sampleMedicines } from '@/data/medicinesData';
@@ -9,10 +10,16 @@ import { UploadPrescriptionButton } from '@/components/ui/UploadPrescriptionButt
 
 export default function SearchPage() {
   const t = useTranslations('SearchPage');
+  const searchParams = useSearchParams();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedRx, setSelectedRx] = useState<string>('All');
+
+  React.useEffect(() => {
+    const q = searchParams.get('q');
+    if (q) setSearchQuery(q);
+  }, [searchParams]);
 
   const categories = ['All', 'Painkiller & Antipyretic', 'Antibiotic (Penicillin Derivative)', 'Antidiabetic (Biguanide)', 'Antihistamine (2nd Generation)'];
 
