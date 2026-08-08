@@ -20,10 +20,37 @@ export const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState<{name: string, email: string} | null>(null);
 
   useEffect(() => {
     setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+    const adminUser = localStorage.getItem('mediinfo_admin_user');
+    if (adminUser) {
+      try {
+        const parsed = JSON.parse(adminUser);
+        setUserProfile({ name: parsed.name, email: parsed.email });
+      } catch (e) {}
+    } else {
+      const uName = localStorage.getItem('userName');
+      const uEmail = localStorage.getItem('userEmail');
+      if (uName && uEmail) {
+        setUserProfile({ name: uName, email: uEmail });
+      } else {
+        setUserProfile({ name: 'Nirosha', email: 'nirosha@example.com' });
+      }
+    }
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('mediinfo_admin_user');
+    setIsLoggedIn(false);
+    setIsProfileMenuOpen(false);
+    window.location.reload();
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -105,11 +132,39 @@ export const Navbar = () => {
               ))}
             </div>
             {isLoggedIn ? (
-              <Link href="/admin" className="no-underline">
-                <div className="w-[38px] h-[38px] rounded-full bg-[#9c27b0] text-white flex items-center justify-center font-bold text-lg shadow-[0_4px_12px_rgba(156,39,176,0.3)] hover:scale-105 transition-transform cursor-pointer border-2 border-white">
-                  N
+              <div className="relative">
+                <div 
+                  className="w-[38px] h-[38px] rounded-full bg-[#9c27b0] text-white flex items-center justify-center font-bold text-lg shadow-[0_4px_12px_rgba(156,39,176,0.3)] hover:scale-105 transition-transform cursor-pointer border-2 border-white"
+                  onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                >
+                  {userProfile?.name ? userProfile.name.charAt(0).toUpperCase() : 'N'}
                 </div>
-              </Link>
+
+                {/* Profile Popup Menu */}
+                {isProfileMenuOpen && (
+                  <div className="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-light-gray/50 overflow-hidden z-50 origin-top-right animate-in fade-in zoom-in-95 duration-200">
+                    <div className="p-4 bg-off-white border-b border-light-gray/50">
+                      <div className="font-bold text-[15px] text-near-black truncate">{userProfile?.name || 'Nirosha'}</div>
+                      <div className="text-[13px] text-mid-gray truncate mt-0.5">{userProfile?.email || 'nirosha@example.com'}</div>
+                    </div>
+                    <div className="p-2 flex flex-col gap-1">
+                      <Link 
+                        href="/admin" 
+                        className="px-3 py-2.5 hover:bg-off-white rounded-xl text-[14px] font-medium text-dark-gray transition-colors cursor-pointer no-underline flex items-center"
+                        onClick={() => setIsProfileMenuOpen(false)}
+                      >
+                        Dashboard
+                      </Link>
+                      <button 
+                        onClick={handleLogout}
+                        className="px-3 py-2.5 hover:bg-red-50 hover:text-red-600 rounded-xl text-[14px] font-medium text-dark-gray transition-colors cursor-pointer text-left border-none bg-transparent flex items-center w-full"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             ) : (
               <Link href="/login" className="no-underline">
                 <Button variant="login" className="rounded-full px-6 py-2 text-[14px] h-[38px] font-bold shadow-[0_4px_12px_rgba(26,111,191,0.2)]">Login</Button>
@@ -170,14 +225,27 @@ export const Navbar = () => {
               ))}
             </div>
             {isLoggedIn ? (
-              <Link href="/admin" className="no-underline block" onClick={() => setIsMobileMenuOpen(false)}>
-                <div className="w-full flex items-center justify-center gap-3 bg-off-white hover:bg-light-gray/30 transition-colors rounded-full py-2.5 px-4 border border-light-gray/50 cursor-pointer">
-                  <div className="w-8 h-8 rounded-full bg-[#9c27b0] text-white flex items-center justify-center font-bold text-sm">
-                    N
+              <div className="flex flex-col gap-2 mt-2 pt-2 border-t border-light-gray/50">
+                <div className="w-full flex items-center gap-3 bg-off-white rounded-2xl py-3 px-4 border border-light-gray/50">
+                  <div className="w-10 h-10 rounded-full bg-[#9c27b0] text-white flex items-center justify-center font-bold text-lg shrink-0">
+                    {userProfile?.name ? userProfile.name.charAt(0).toUpperCase() : 'N'}
                   </div>
-                  <span className="font-bold text-[15px] text-near-black">My Dashboard</span>
+                  <div className="flex flex-col overflow-hidden">
+                    <span className="font-bold text-[15px] text-near-black truncate">{userProfile?.name || 'Nirosha'}</span>
+                    <span className="text-[13px] text-mid-gray truncate">{userProfile?.email || 'nirosha@example.com'}</span>
+                  </div>
                 </div>
-              </Link>
+                <Link href="/admin" className="no-underline block" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button variant="secondary" className="w-full justify-center rounded-xl py-3 h-auto font-bold text-[14px]">Dashboard</Button>
+                </Link>
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-center rounded-xl py-3 h-auto font-bold text-[14px] text-red-600 border-red-200 hover:bg-red-50"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </div>
             ) : (
               <Link href="/login" className="no-underline block" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button variant="primary" className="w-full justify-center rounded-full py-3.5 h-auto font-bold text-[15px] shadow-[0_4px_16px_rgba(26,111,191,0.25)]">Login</Button>
