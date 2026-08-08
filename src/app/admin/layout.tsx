@@ -32,6 +32,8 @@ export const metadata: Metadata = {
   description: "Admin panel to add and manage localized medicine records.",
 };
 
+import { AdminRoleProvider } from "@/components/admin/AdminRoleContext";
+
 export default function AdminLayout({
   children,
 }: {
@@ -43,7 +45,9 @@ export default function AdminLayout({
       className={`${plusJakartaSans.variable} ${nunito.variable} ${jetBrainsMono.variable} ${notoSansSinhala.variable} antialiased scroll-smooth`}
     >
       <body className="min-h-screen bg-[#F4F7FA]">
-        <AdminShell>{children}</AdminShell>
+        <AdminRoleProvider>
+          <AdminShell>{children}</AdminShell>
+        </AdminRoleProvider>
       </body>
     </html>
   );

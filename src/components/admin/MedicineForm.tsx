@@ -22,6 +22,8 @@ import {
   Tag
 } from 'lucide-react';
 import { AITranslateModal } from './AITranslateModal';
+import { DoctorEmailModal } from './DoctorEmailModal';
+import { addOrUpdateMedicine, MedicineRecord } from '@/data/medicinesData';
 
 export interface DosageRow {
   ageGroup: string;
@@ -94,7 +96,7 @@ const initialFormState: MedicineFormData = {
   strength: '500mg / 1000mg',
   ageGroup: 'Adults & Children',
   prescriptionRequired: false,
-  verified: true,
+  verified: false,
   maxDailyDoseAdults: '4000mg',
 
   dosageRows: [
@@ -252,6 +254,8 @@ export function MedicineForm() {
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [saveToast, setSaveToast] = useState(false);
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+  const [savedMedicineForEmail, setSavedMedicineForEmail] = useState<MedicineRecord | null>(null);
   const [newBrandInput, setNewBrandInput] = useState('');
 
   const handleAddBrandName = () => {
@@ -468,7 +472,36 @@ export function MedicineForm() {
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     setSaveToast(true);
-    setTimeout(() => setSaveToast(false), 3500);
+    setTimeout(() => setSaveToast(false), 4500);
+
+    const medRecord: MedicineRecord = {
+      id: `med-${Date.now()}`,
+      slug: formData.slug || formData.genericName.toLowerCase().replace(/\s+/g, '-'),
+      genericName: formData.genericName,
+      chemicalName: formData.chemicalName,
+      brandNames: formData.brandNames,
+      category: formData.category,
+      coverImage: '/images/medicine/paracetamol-cover.png',
+      form: formData.form,
+      strength: formData.strength,
+      ageGroup: formData.ageGroup,
+      prescriptionRequired: formData.prescriptionRequired,
+      verified: false, // Default unverified until 2 doctor verifications
+      verifications: [],
+      createdDate: new Date().toISOString().split('T')[0],
+      maxDailyDoseAdults: formData.maxDailyDoseAdults,
+      rating: '4.9',
+      reviewCount: 'Pending Review',
+      dosageRows: formData.dosageRows,
+      drugInteractions: formData.drugInteractions,
+      localized: {
+        en: formData.localizedContent.en,
+        si: formData.localizedContent.si,
+        ta: formData.localizedContent.ta,
+      },
+    };
+
+    addOrUpdateMedicine(medRecord);
   };
 
   const currentLocalized = formData.localizedContent[activeLangTab];
@@ -486,12 +519,12 @@ export function MedicineForm() {
       {/* Toast Notification */}
       {saveToast && (
         <div className="fixed top-20 right-6 z-50 bg-near-black text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-teal/40 animate-fade-up">
-          <div className="w-7 h-7 rounded-full bg-teal text-white flex items-center justify-center font-bold">
-            <Check size={16} />
+          <div className="w-8 h-8 rounded-full bg-teal text-near-black flex items-center justify-center font-bold shrink-0">
+            <Check size={18} />
           </div>
           <div>
             <div className="font-bold text-sm">Medicine Saved Successfully!</div>
-            <div className="text-xs text-white/70">Published in English, Sinhala, & Tamil</div>
+            <div className="text-xs text-teal font-medium">Verification email dispatched to registered doctors. Status: Details Not Verified (0/2).</div>
           </div>
         </div>
       )}
@@ -922,7 +955,7 @@ export function MedicineForm() {
       ) : (
         <form onSubmit={handleSave} className="space-y-8">
           {/* Section 1: General Information & Metadata */}
-          <div className="bg-white border border-light-gray rounded-2xl p-6 shadow-sm space-y-6">
+          <div className="bg-white border border-light-gray/50 rounded-3xl p-8 shadow-[0_8px_40px_rgba(0,0,0,0.06)] space-y-6">
             <div className="flex items-center gap-2 pb-3 border-b border-light-gray">
               <Info className="text-blue" size={18} />
               <h2 className="text-base font-bold text-near-black font-plus-jakarta m-0">
@@ -1105,20 +1138,15 @@ export function MedicineForm() {
                 <span>Prescription Required</span>
               </label>
 
-              <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-teal">
-                <input
-                  type="checkbox"
-                  checked={formData.verified}
-                  onChange={(e) => handleGeneralChange('verified', e.target.checked)}
-                  className="w-4 h-4 rounded text-teal accent-teal cursor-pointer"
-                />
-                <span>Doctor Verified Status</span>
-              </label>
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 rounded-xl border border-amber-500/20 text-xs font-bold text-amber-800">
+                <ShieldAlert size={15} className="text-amber-600 shrink-0" />
+                <span>Verification: Requires 2 Doctor Approvals via Review Workspace</span>
+              </div>
             </div>
           </div>
 
           {/* Section 2: Multi-Language Content Tabbed Editor */}
-          <div className="bg-white border border-light-gray rounded-2xl p-6 shadow-sm space-y-8">
+          <div className="bg-white border border-light-gray/50 rounded-[24px] p-8 shadow-[0_8px_40px_rgba(0,0,0,0.06)] space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-light-gray">
               <div>
                 <div className="flex items-center gap-2">
@@ -1493,7 +1521,7 @@ export function MedicineForm() {
           </div>
 
           {/* Section 3: Structured Dosage Table Builder */}
-          <div className="bg-white border border-light-gray rounded-2xl p-6 shadow-sm space-y-4">
+          <div className="bg-white border border-light-gray/50 rounded-[24px] p-8 shadow-[0_8px_40px_rgba(0,0,0,0.06)] space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-light-gray">
               <div className="flex items-center gap-2">
                 <Scale className="text-blue" size={20} />

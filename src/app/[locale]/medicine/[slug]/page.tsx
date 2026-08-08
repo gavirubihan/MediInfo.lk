@@ -86,10 +86,14 @@ export default function MedicineDetailPage() {
 
               <div className="flex gap-2.5 flex-wrap mb-5 items-center">
                 <Badge variant="blue" className="shadow-sm">{medicine.category}</Badge>
-                {medicine.verified && (
-                  <Badge variant="teal" className="flex items-center gap-1 shadow-sm">
-                    <Check size={12} strokeWidth={3} /> {t('verified')}
-                  </Badge>
+                {medicine.verified || (medicine.verifications && medicine.verifications.length >= 2) ? (
+                  <span className="inline-flex items-center gap-1.5 bg-teal/10 text-teal border border-teal/20 text-xs font-bold px-3 py-1 rounded-md shadow-sm">
+                    <Check size={13} strokeWidth={3} /> {t('verified')} (2/2 Doctors)
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-800 border border-amber-500/20 text-xs font-bold px-3 py-1 rounded-md shadow-sm">
+                    <AlertTriangle size={13} className="text-amber-600" /> Details Not Verified ({medicine.verifications?.length || 0}/2 Doctors)
+                  </span>
                 )}
                 <span className="bg-teal/10 text-teal border border-teal/20 text-[11px] font-bold uppercase tracking-wide px-3 py-1 rounded-md shadow-sm">
                   {medicine.prescriptionRequired ? 'Prescription Required' : t('noPrescription')}

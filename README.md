@@ -137,6 +137,13 @@ MediInfo.LK/
    * **Public Website**: [http://localhost:3000/en](http://localhost:3000/en)
    * **Admin Panel**: [http://localhost:3000/admin](http://localhost:3000/admin)
 
+### 🔐 Demo Test Credentials
+Use the main public login page (`/login`) to access the system with these credentials:
+* **👑 Super Admin**: `admin@mediinfo.lk` (Password: any)
+* **🩺 Registered Doctor**: `doctor@mediinfo.lk` (Password: any)
+* **💊 Medical Staff**: `staff@mediinfo.lk` (Password: any)
+* **👤 Normal User**: Any other email (Redirects to homepage)
+
 ---
 
 ## 🧪 Verification & Production Build
