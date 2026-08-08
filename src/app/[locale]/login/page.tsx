@@ -1,10 +1,10 @@
 'use client';
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Mail, Lock, User, ArrowRight, HeartPulse, ShieldCheck, ChevronLeft, UploadCloud, Stethoscope, CheckCircle2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from '@/i18n/routing';
 import { PRESET_USERS, AdminUser } from '@/components/admin/AdminRoleContext';
 import { addStaffRequest, findStaffByEmail, ProfessionType } from '@/data/staffData';
 
@@ -34,10 +34,9 @@ export default function AuthPage() {
     if (!email.trim()) return;
 
     const cleanEmail = email.trim().toLowerCase();
-    
     // 1. Check preset admin accounts
     const matchedPreset = PRESET_USERS.find(
-      (u) => u.email.toLowerCase() === cleanEmail || (cleanEmail.includes('doc') && u.role === 'doctor')
+      (u: any) => u.email.toLowerCase() === cleanEmail || (cleanEmail.includes('doc') && u.role === 'doctor')
     );
 
     if (matchedPreset) {
