@@ -54,8 +54,9 @@ export default async function RootLayout({
     <html
       lang={locale}
       className={`${plusJakartaSans.variable} ${nunito.variable} ${jetBrainsMono.variable} ${notoSansSinhala.variable} antialiased scroll-smooth`}
+      suppressHydrationWarning
     >
-      <body className="min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <Navbar />
           <main className="flex-1">

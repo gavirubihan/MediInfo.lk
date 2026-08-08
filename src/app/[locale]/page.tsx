@@ -166,12 +166,12 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { icon: <Search size={24} className="text-blue" />, title: 'Smart Medicine Search', desc: 'Search any medicine by brand or generic name with instant results.' },
-              { icon: <Bot size={24} className="text-blue" />, title: 'AI Prescription Reading', desc: 'Upload a photo of your prescription — our AI extracts medicine details automatically.' },
-              { icon: <Globe size={24} className="text-blue" />, title: 'Multilingual Support', desc: 'Full support for Sinhala, Tamil, and English — choose your preferred language.' },
-              { icon: <Stethoscope size={24} className="text-blue" />, title: 'Verified Doctor Reviews', desc: 'Only certified healthcare professionals can contribute content to our platform.' },
-              { icon: <Pill size={24} className="text-blue" />, title: 'Medicine Safety Profiles', desc: 'Complete dosage guides, side effect lists, and safety warnings for every medicine.' },
-              { icon: <FileText size={24} className="text-blue" />, title: 'Trusted Health Blogs', desc: 'Doctor-written health articles covering medicine guides, tips, and safe practices.' }
+              { icon: <Search size={24} className="text-blue" />, title: t('feat1Title'), desc: t('feat1Desc') },
+              { icon: <Bot size={24} className="text-blue" />, title: t('feat2Title'), desc: t('feat2Desc') },
+              { icon: <Globe size={24} className="text-blue" />, title: t('feat3Title'), desc: t('feat3Desc') },
+              { icon: <Stethoscope size={24} className="text-blue" />, title: t('feat4Title'), desc: t('feat4Desc') },
+              { icon: <Pill size={24} className="text-blue" />, title: t('feat5Title'), desc: t('feat5Desc') },
+              { icon: <FileText size={24} className="text-blue" />, title: t('feat6Title'), desc: t('feat6Desc') }
             ].map((feat, i) => (
               <div key={i} className="bg-blue-light rounded-2xl p-7 flex flex-col gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
                 <div className="w-[52px] h-[52px] bg-white rounded-[14px] flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.08)]">{feat.icon}</div>

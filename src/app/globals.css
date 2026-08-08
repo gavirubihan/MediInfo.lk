@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
+@config "../../tailwind.config.js";
 
 @theme {
   --color-blue: #1A6FBF;
