@@ -74,12 +74,10 @@ export function AdminRoleProvider({ children }: { children: React.ReactNode }) {
       if (stored) {
         setUser(JSON.parse(stored));
       } else {
-        const defaultUser = PRESET_USERS[0];
-        setUser(defaultUser);
-        localStorage.setItem('mediinfo_admin_user', JSON.stringify(defaultUser));
+        setUser(null);
       }
     } catch {
-      setUser(PRESET_USERS[0]);
+      setUser(null);
     } finally {
       setIsLoading(false);
     }

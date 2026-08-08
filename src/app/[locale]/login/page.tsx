@@ -1,18 +1,46 @@
 'use client';
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Mail, Lock, User, ArrowRight, HeartPulse, ShieldCheck, ChevronLeft, UploadCloud, Stethoscope, CheckCircle2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { PRESET_USERS } from '@/components/admin/AdminRoleContext';
 
 type AuthView = 'login' | 'signup-select' | 'signup-normal' | 'signup-med-1' | 'signup-med-2' | 'success';
 
 export default function AuthPage() {
+  const router = useRouter();
   const t = useTranslations('LoginPage');
   const [view, setView] = useState<AuthView>('login');
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+
+    const cleanEmail = email.trim().toLowerCase();
+    const matched = PRESET_USERS.find(
+      (u) => u.email.toLowerCase() === cleanEmail || (cleanEmail.includes('doc') && u.role === 'doctor')
+    );
+
+    if (matched) {
+      // It's an admin/staff user
+      localStorage.setItem('mediinfo_admin_user', JSON.stringify(matched));
+      router.push('/admin');
+    } else {
+      // It's a normal user
+      setView('success');
+      // In a real app, you would set a normal user token here
+      setTimeout(() => {
+        router.push('/');
+      }, 1500);
+    }
+  };
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -111,12 +139,18 @@ export default function AuthPage() {
                   <h2 className="text-[28px] font-extrabold font-plus-jakarta text-near-black mb-2 tracking-tight">{t('signInTitle')}</h2>
                   <p className="text-[15px] text-mid-gray">{t('signInSubtitle')}</p>
                 </div>
-                <form className="flex flex-col gap-5" onSubmit={(e) => { e.preventDefault(); setView('success'); }}>
+                <form className="flex flex-col gap-5" onSubmit={handleLogin}>
                   <div>
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">{t('emailLabel')}</label>
                     <div className="relative">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-mid-gray pointer-events-none"><Mail size={18} /></div>
-                      <input type="email" placeholder="hello@example.com" className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-blue focus:ring-4 focus:ring-blue/10 transition-all placeholder:text-mid-gray/70" />
+                      <input 
+                        type="email" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="hello@example.com" 
+                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-blue focus:ring-4 focus:ring-blue/10 transition-all placeholder:text-mid-gray/70" 
+                      />
                     </div>
                   </div>
                   <div>
@@ -126,10 +160,16 @@ export default function AuthPage() {
                     </div>
                     <div className="relative">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-mid-gray pointer-events-none"><Lock size={18} /></div>
-                      <input type="password" placeholder="••••••••" className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-blue focus:ring-4 focus:ring-blue/10 transition-all placeholder:text-mid-gray/70" />
+                      <input 
+                        type="password" 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="••••••••" 
+                        className="w-full pl-11 pr-4 py-3.5 bg-off-white border border-light-gray rounded-xl text-[15px] font-medium text-near-black outline-none focus:bg-white focus:border-blue focus:ring-4 focus:ring-blue/10 transition-all placeholder:text-mid-gray/70" 
+                      />
                     </div>
                   </div>
-                  <Button variant="primary" className="w-full justify-center py-4 rounded-xl text-[15px] shadow-[0_4px_12px_rgba(26,111,191,0.2)] hover:shadow-[0_6px_20px_rgba(26,111,191,0.3)] mt-2 font-bold group">
+                  <Button type="submit" variant="primary" className="w-full justify-center py-4 rounded-xl text-[15px] shadow-[0_4px_12px_rgba(26,111,191,0.2)] hover:shadow-[0_6px_20px_rgba(26,111,191,0.3)] mt-2 font-bold group">
                     {t('signIn')} <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </form>

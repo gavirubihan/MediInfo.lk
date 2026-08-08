@@ -32,9 +32,6 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const [roleMenuOpen, setRoleMenuOpen] = useState(false);
   const [pendingCount, setPendingCount] = useState(0);
 
-  // If on login page, render full screen login without shell
-  const isLoginPage = pathname === '/admin/login' || pathname === '/admin/login/';
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const list = getStoredMedicines();
@@ -43,8 +40,20 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     }
   }, [pathname]);
 
-  if (isLoginPage) {
-    return <>{children}</>;
+  const { isLoading } = useAdminRole();
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.push('/login');
+    }
+  }, [isLoading, isAuthenticated, router]);
+
+  if (isLoading) {
+    return <div className="min-h-screen flex items-center justify-center bg-[#F4F7FA]">Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return null; // Will redirect
   }
 
   // Filter navigation items based on user role
