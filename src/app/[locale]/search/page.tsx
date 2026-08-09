@@ -193,6 +193,12 @@ export default function SearchPage() {
   React.useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      
+      // Prevent shaking from micro-scrolls or layout shifts during language change
+      if (Math.abs(currentScrollY - lastScrollY) < 10) {
+        return;
+      }
+
       if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setIsNavVisible(false);
       } else {

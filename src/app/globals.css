@@ -23,10 +23,10 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
 
-  --font-nunito: var(--font-nunito);
-  --font-plus-jakarta: var(--font-plus-jakarta);
-  --font-jetbrains: var(--font-jetbrains-mono);
-  --font-noto-sinhala: var(--font-noto-sans-sinhala);
+  --font-nunito: var(--font-nunito-next), var(--font-noto-sans-sinhala-next), sans-serif;
+  --font-plus-jakarta: var(--font-plus-jakarta-next), var(--font-noto-sans-sinhala-next), sans-serif;
+  --font-jetbrains: var(--font-jetbrains-mono-next), var(--font-noto-sans-sinhala-next), monospace;
+  --font-noto-sinhala: var(--font-noto-sans-sinhala-next), sans-serif;
 }
 
 :root {
@@ -37,12 +37,8 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-nunito), var(--font-noto-sans-sinhala), sans-serif;
+  font-family: var(--font-nunito-next), var(--font-noto-sans-sinhala-next), sans-serif;
   -webkit-font-smoothing: antialiased;
-}
-
-:lang(si) {
-  font-family: var(--font-noto-sans-sinhala), var(--font-nunito), sans-serif;
 }
 
 /* Animations */

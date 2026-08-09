@@ -9,25 +9,25 @@ import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
+  variable: "--font-plus-jakarta-next",
   subsets: ["latin"],
   weight: ["400", "600", "700", "800"],
 });
 
 const nunito = Nunito({
-  variable: "--font-nunito",
+  variable: "--font-nunito-next",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
 });
 
 const jetBrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
+  variable: "--font-jetbrains-mono-next",
   subsets: ["latin"],
   weight: ["400", "500"],
 });
 
 const notoSansSinhala = Noto_Sans_Sinhala({
-  variable: "--font-noto-sans-sinhala",
+  variable: "--font-noto-sans-sinhala-next",
   subsets: ["sinhala"],
   weight: ["400", "500", "600", "700"],
 });

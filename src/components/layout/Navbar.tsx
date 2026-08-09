@@ -59,6 +59,11 @@ export const Navbar = () => {
       // Add background shadow/blur when scrolled down
       setIsScrolled(currentScrollY > 20);
 
+      // Prevent shaking from micro-scrolls or layout shifts during language change
+      if (Math.abs(currentScrollY - lastScrollY) < 10) {
+        return;
+      }
+
       if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setIsVisible(false); // Hide when scrolling down
       } else {
