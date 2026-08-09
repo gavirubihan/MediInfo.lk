@@ -59,8 +59,11 @@ export const Navbar = () => {
       // Add background shadow/blur when scrolled down
       setIsScrolled(currentScrollY > 20);
 
-      // Removed auto-hide logic based on user request
-      setIsVisible(true);
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        setIsVisible(false); // Hide when scrolling down
+      } else {
+        setIsVisible(true); // Show when scrolling up
+      }
       
       setLastScrollY(currentScrollY);
     };
@@ -78,19 +81,19 @@ export const Navbar = () => {
 
   return (
     <div 
-      className={`fixed top-0 left-0 w-full z-50 flex justify-center pt-4 sm:pt-6 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      className={`fixed top-0 left-0 w-full z-50 flex justify-center pt-2 sm:pt-6 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         isVisible ? 'translate-y-0 opacity-100' : '-translate-y-[150%] opacity-0'
-      } px-4 md:px-8 pointer-events-none`}
+      } px-3 md:px-8 pointer-events-none`}
     >
       <nav 
         className={`w-full max-w-[1200px] transition-all duration-500 ease-out rounded-full border pointer-events-auto ${
           isScrolled 
             ? 'bg-white/85 backdrop-blur-xl border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.12)] py-1.5' 
-            : 'bg-white/95 backdrop-blur-md border-light-gray/50 shadow-[0_4px_24px_rgba(0,0,0,0.06)] py-2'
+            : 'bg-white/95 backdrop-blur-md border-light-gray/50 shadow-[0_4px_24px_rgba(0,0,0,0.06)] py-1.5 md:py-2'
         }`}
       >
-        <div className="h-[52px] px-5 md:px-7 flex items-center justify-between gap-6">
-          <Link href="/" className="font-plus-jakarta font-bold text-[20px] md:text-[22px] text-blue flex-shrink-0 no-underline tracking-tight transition-transform hover:scale-105 active:scale-95 duration-200">
+        <div className="h-[44px] md:h-[52px] px-4 md:px-7 flex items-center justify-between gap-4 md:gap-6">
+          <Link href="/" className="font-plus-jakarta font-bold text-[18px] md:text-[22px] text-blue flex-shrink-0 no-underline tracking-tight transition-transform hover:scale-105 active:scale-95 duration-200">
             MediInfo<span className="text-teal">.LK</span>
           </Link>
           
