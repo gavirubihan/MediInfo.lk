@@ -105,12 +105,12 @@ export default function BlogsPage() {
     <>
       {/* Hero Header */}
       <div className="bg-gradient-to-br from-near-black via-blue-dark to-blue pt-36 pb-12 text-white relative overflow-hidden">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-12 relative z-10 space-y-5">
-          <p className="text-[13px] text-teal uppercase tracking-[1px] font-bold">{t('tag')}</p>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-plus-jakarta text-white m-0 tracking-tight">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-12 relative z-10">
+          <p className="text-[13px] text-teal uppercase tracking-[1px] font-bold mb-3">{t('tag')}</p>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-plus-jakarta text-white tracking-tight mb-4">
             {t('title')}
           </h1>
-          <p className="text-[15px] sm:text-[17px] text-white/85 max-w-2xl leading-relaxed m-0">
+          <p className="text-[15px] sm:text-[17px] text-white/85 max-w-2xl leading-relaxed mb-8">
             {t('subtitle')}
           </p>
 
