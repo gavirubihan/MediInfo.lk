@@ -13,7 +13,7 @@ export default function Home() {
     <>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-white pt-36 pb-20 before:content-[''] before:absolute before:-top-20 before:-right-30 before:w-[600px] before:h-[600px] before:bg-[radial-gradient(ellipse,rgba(232,243,252,0.9)_0%,transparent_70%)] before:pointer-events-none after:content-[''] after:absolute after:-bottom-10 after:-left-20 after:w-[400px] after:h-[400px] after:bg-[radial-gradient(ellipse,rgba(23,169,142,0.06)_0%,transparent_70%)] after:pointer-events-none">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           <div>
             <div className="mb-5">
