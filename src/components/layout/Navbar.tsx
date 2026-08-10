@@ -21,7 +21,7 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [userProfile, setUserProfile] = useState<{name: string, email: string} | null>(null);
+  const [userProfile, setUserProfile] = useState<{name: string, email: string, isAdmin: boolean} | null>(null);
 
   useEffect(() => {
     setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
@@ -29,15 +29,15 @@ export const Navbar = () => {
     if (adminUser) {
       try {
         const parsed = JSON.parse(adminUser);
-        setUserProfile({ name: parsed.name, email: parsed.email });
+        setUserProfile({ name: parsed.name, email: parsed.email, isAdmin: true });
       } catch (e) {}
     } else {
       const uName = localStorage.getItem('userName');
       const uEmail = localStorage.getItem('userEmail');
       if (uName && uEmail) {
-        setUserProfile({ name: uName, email: uEmail });
+        setUserProfile({ name: uName, email: uEmail, isAdmin: false });
       } else {
-        setUserProfile({ name: 'Nirosha', email: 'nirosha@example.com' });
+        setUserProfile({ name: 'Nirosha', email: 'nirosha@example.com', isAdmin: false });
       }
     }
   }, [pathname]);
@@ -156,13 +156,15 @@ export const Navbar = () => {
                       <div className="text-[13px] text-mid-gray truncate mt-0.5">{userProfile?.email || 'nirosha@example.com'}</div>
                     </div>
                     <div className="p-2 flex flex-col gap-1">
-                      <a 
-                        href="/admin" 
-                        className="px-3 py-2.5 hover:bg-off-white rounded-xl text-[14px] font-medium text-dark-gray transition-colors cursor-pointer no-underline flex items-center"
-                        onClick={() => setIsProfileMenuOpen(false)}
-                      >
-                        Dashboard
-                      </a>
+                      {userProfile?.isAdmin && (
+                        <a 
+                          href="/admin" 
+                          className="px-3 py-2.5 hover:bg-off-white rounded-xl text-[14px] font-medium text-dark-gray transition-colors cursor-pointer no-underline flex items-center"
+                          onClick={() => setIsProfileMenuOpen(false)}
+                        >
+                          Dashboard
+                        </a>
+                      )}
                       <button 
                         onClick={handleLogout}
                         className="px-3 py-2.5 hover:bg-red-50 hover:text-red-600 rounded-xl text-[14px] font-medium text-dark-gray transition-colors cursor-pointer text-left border-none bg-transparent flex items-center w-full"
@@ -243,9 +245,11 @@ export const Navbar = () => {
                     <span className="text-[13px] text-mid-gray truncate">{userProfile?.email || 'nirosha@example.com'}</span>
                   </div>
                 </div>
-                <a href="/admin" className="no-underline block" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button variant="secondary" className="w-full justify-center rounded-xl py-3 h-auto font-bold text-[14px]">Dashboard</Button>
-                </a>
+                {userProfile?.isAdmin && (
+                  <a href="/admin" className="no-underline block" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button variant="secondary" className="w-full justify-center rounded-xl py-3 h-auto font-bold text-[14px]">Dashboard</Button>
+                  </a>
+                )}
               <button 
                   type="button"
                   className="w-full flex items-center justify-center rounded-xl py-3 h-auto font-bold text-[14px] text-red-600 border-2 border-red-200 hover:bg-red-50 bg-white transition-colors cursor-pointer"
