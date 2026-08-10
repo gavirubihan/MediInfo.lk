@@ -15,11 +15,11 @@ export async function GET(req: Request) {
 
     const result = await getStaffAccountByFirebaseUid({ firebaseUid: uid });
     
-    if (!result.data || !result.data.staffAccounts || result.data.staffAccounts.length === 0) {
+    if (!result || !result.staffAccounts || result.staffAccounts.length === 0) {
       return NextResponse.json({ role: 'normal_user', status: null });
     }
 
-    const staffAccount = result.data.staffAccounts[0];
+    const staffAccount = result.staffAccounts[0];
     
     // Map profession to app roles
     let role = 'other_medical';

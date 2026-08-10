@@ -11,7 +11,7 @@ import { addStaffRequest, findStaffByEmail, ProfessionType } from '@/data/staffD
 import { auth } from '@/lib/firebase/client';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-type AuthView = 'login' | 'signup-select' | 'signup-normal' | 'signup-med-1' | 'signup-med-2' | 'success' | 'success-admin' | 'staff-pending-success' | 'google-select-account';
+type AuthView = 'login' | 'signup-select' | 'signup-normal' | 'signup-med-1' | 'signup-med-2' | 'success' | 'success-admin' | 'staff-pending-success' | 'pending-login' | 'google-select-account';
 
 export default function AuthPage() {
   const router = useRouter();
@@ -39,6 +39,7 @@ export default function AuthPage() {
   const [medPassword, setMedPassword] = useState('');
   const [medProfession, setMedProfession] = useState<ProfessionType>('doctor');
   const [medSlmcRegNo, setMedSlmcRegNo] = useState('');
+  const [pendingStaffDetails, setPendingStaffDetails] = useState<{name: string, profession: string, slmcRegNo: string} | null>(null);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,9 +50,29 @@ export default function AuthPage() {
     }
 
     try {
+      setIsLoading(true);
       const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password);
+      const uid = userCredential.user.uid;
+
+      // Check if the user is a pending medical staff member
+      const roleRes = await fetch(`/api/user-role?uid=${uid}`);
+      if (roleRes.ok) {
+        const roleData = await roleRes.json();
+        if (roleData.status === 'pending') {
+          // Sign them out immediately — they cannot access the dashboard
+          const { signOut } = await import('firebase/auth');
+          await signOut(auth);
+          setPendingStaffDetails({
+            name: roleData.staffDetails?.name || 'Medical Professional',
+            profession: roleData.staffDetails?.profession || '',
+            slmcRegNo: roleData.staffDetails?.slmcRegNo || '',
+          });
+          setView('pending-login');
+          return;
+        }
+      }
+
       const idToken = await userCredential.user.getIdToken();
-      
       const res = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -66,6 +87,8 @@ export default function AuthPage() {
       }
     } catch (error: any) {
       setAuthError(error.message || 'Login failed. Please check your credentials.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -626,6 +649,42 @@ export default function AuthPage() {
                 </div>
                 <Button onClick={() => setView('login')} variant="primary" className="w-full justify-center py-3.5 rounded-xl text-[14px] font-bold">
                   Return to Login
+                </Button>
+              </div>
+            )}
+
+            {/* --- PENDING LOGIN VIEW (for existing pending staff trying to log in) --- */}
+            {view === 'pending-login' && (
+              <div className="animate-fade-up text-center py-8">
+                <div className="w-20 h-20 bg-amber-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-amber-500/30">
+                  <AlertOctagon size={40} className="text-amber-500" />
+                </div>
+                <h2 className="text-[26px] font-extrabold font-plus-jakarta text-near-black mb-3">Account Pending Approval</h2>
+                <p className="text-[14px] text-dark-gray leading-relaxed mb-6">
+                  Hello, <strong>{pendingStaffDetails?.name || 'Medical Professional'}</strong>! Your account is currently awaiting review by our Super Administrator team. You will be able to log in once your account has been approved.
+                </p>
+                <div className="p-4 bg-amber-50 rounded-xl border border-amber-200 text-left text-xs space-y-2 mb-8">
+                  <div className="flex justify-between">
+                    <span className="text-mid-gray">Profession:</span>
+                    <span className="font-bold uppercase text-near-black">{pendingStaffDetails?.profession || '—'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-mid-gray">SLMC Reg No:</span>
+                    <span className="font-bold text-near-black">{pendingStaffDetails?.slmcRegNo || '—'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-mid-gray">Account Status:</span>
+                    <span className="font-bold text-amber-600 flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse inline-block" />
+                      Pending Review
+                    </span>
+                  </div>
+                </div>
+                <p className="text-[12px] text-mid-gray mb-6">
+                  You will receive a notification once your account is approved. Please check back later.
+                </p>
+                <Button onClick={() => setView('login')} variant="primary" className="w-full justify-center py-3.5 rounded-xl text-[14px] font-bold">
+                  Back to Login
                 </Button>
               </div>
             )}

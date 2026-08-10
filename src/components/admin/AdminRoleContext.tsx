@@ -104,9 +104,8 @@ export function AdminRoleProvider({ children }: { children: React.ReactNode }) {
             if (res.ok) {
               const data = await res.json();
               if (data.status === 'pending') {
-                // If pending, they can't access admin
+                // Pending staff cannot access admin — login page handles the UI
                 setUser(null);
-                window.location.href = '/en/login?view=staff-pending-success';
               } else if (data.role === 'normal_user') {
                 // Normal users have no access to admin
                 setUser(null);

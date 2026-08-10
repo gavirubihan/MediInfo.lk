@@ -357,3 +357,77 @@ I0810 23:35:20.370633   10948 dev.go:101] Listening on address (HTTP + gRPC): 12
 [debug] [2026-08-10T18:05:20.992Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=1000
 [debug] [2026-08-10T18:05:22.261Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
 [debug] [2026-08-10T18:05:22.262Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[debug] [2026-08-10T18:19:50.362Z] I0810 23:49:50.362474   10948 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0810 23:49:50.362474   10948 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-08-10T18:19:50.374Z] W0810 23:49:50.374120   10948 control.go:74] [projects/emulator/locations/emulator/services/mediinfo-lk-service 497d] connector "default" has errors: connector\queries.gql:124:26: Unknown argument "reason" on directive "@auth".
+connector\queries.gql:140:60: Unknown argument "reason" on directive "@auth".
+
+sources: connector\queries.gql [2604B] connector\mutations.gql [4787B] 
+I0810 23:49:50.374683   10948 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-lk-service 497d] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2123B] 
+Connector "default": sources: connector\mutations.gql [4787B] connector\queries.gql [2604B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0810 23:49:50.374120   10948 control.go:74] [projects/emulator/locations/emulator/services/mediinfo-lk-service 497d] connector \"default\" has errors: connector\\queries.gql:124:26: Unknown argument \"reason\" on directive \"@auth\".\nconnector\\queries.gql:140:60: Unknown argument \"reason\" on directive \"@auth\".\n\nsources: connector\\queries.gql [2604B] connector\\mutations.gql [4787B] \nI0810 23:49:50.374683   10948 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-lk-service 497d] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2123B] \nConnector \"default\": sources: connector\\mutations.gql [4787B] connector\\queries.gql [2604B] \n"}}
+[debug] [2026-08-10T18:19:50.376Z] E0810 23:49:50.376416   10948 load.go:73] Could not load sources: 
+Errors: connector\queries.gql:124:26: Unknown argument "reason" on directive "@auth".
+connector\queries.gql:140:60: Unknown argument "reason" on directive "@auth".
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0810 23:49:50.376416   10948 load.go:73] Could not load sources: \nErrors: connector\\queries.gql:124:26: Unknown argument \"reason\" on directive \"@auth\".\nconnector\\queries.gql:140:60: Unknown argument \"reason\" on directive \"@auth\".\n"}}
+[debug] [2026-08-10T18:19:50.377Z] I0810 23:49:50.377999   10948 collector.go:107] schema extensions wrote into "d:\\Projects\\MediInfo.LK\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [84995B] main\implicit.gql [1522B] main\input.gql [68237B] main\relation.gql [28461B] main\query.gql [9457B] main\mutation.gql [25970B] 
+I0810 23:49:50.377999   10948 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0810 23:49:50.377999   10948 collector.go:107] schema extensions wrote into \"d:\\\\Projects\\\\MediInfo.LK\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [84995B] main\\implicit.gql [1522B] main\\input.gql [68237B] main\\relation.gql [28461B] main\\query.gql [9457B] main\\mutation.gql [25970B] \nI0810 23:49:50.377999   10948 load.go:74] Finished reloading\n"}}
+[debug] [2026-08-10T18:20:00.365Z] I0810 23:50:00.362016   10948 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0810 23:50:00.362016   10948 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-08-10T18:20:00.371Z] W0810 23:50:00.371787   10948 control.go:74] [projects/emulator/locations/emulator/services/mediinfo-lk-service b908] connector "default" has errors: connector\mutations.gql:99:4: Unknown argument "reason" on directive "@auth".
+connector\mutations.gql:119:4: Unknown argument "reason" on directive "@auth".
+connector\queries.gql:124:26: Unknown argument "reason" on directive "@auth".
+connector\queries.gql:140:60: Unknown argument "reason" on directive "@auth".
+
+sources: connector\mutations.gql [4960B] connector\queries.gql [2604B] 
+I0810 23:50:00.371787   10948 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-lk-service b908] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2123B] 
+Connector "default": sources: connector\mutations.gql [4960B] connector\queries.gql [2604B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0810 23:50:00.371787   10948 control.go:74] [projects/emulator/locations/emulator/services/mediinfo-lk-service b908] connector \"default\" has errors: connector\\mutations.gql:99:4: Unknown argument \"reason\" on directive \"@auth\".\nconnector\\mutations.gql:119:4: Unknown argument \"reason\" on directive \"@auth\".\nconnector\\queries.gql:124:26: Unknown argument \"reason\" on directive \"@auth\".\nconnector\\queries.gql:140:60: Unknown argument \"reason\" on directive \"@auth\".\n\nsources: connector\\mutations.gql [4960B] connector\\queries.gql [2604B] \nI0810 23:50:00.371787   10948 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-lk-service b908] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2123B] \nConnector \"default\": sources: connector\\mutations.gql [4960B] connector\\queries.gql [2604B] \n"}}
+[debug] [2026-08-10T18:20:00.372Z] E0810 23:50:00.372809   10948 load.go:73] Could not load sources: 
+Errors: connector\mutations.gql:99:4: Unknown argument "reason" on directive "@auth".
+connector\mutations.gql:119:4: Unknown argument "reason" on directive "@auth".
+connector\queries.gql:124:26: Unknown argument "reason" on directive "@auth".
+connector\queries.gql:140:60: Unknown argument "reason" on directive "@auth".
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0810 23:50:00.372809   10948 load.go:73] Could not load sources: \nErrors: connector\\mutations.gql:99:4: Unknown argument \"reason\" on directive \"@auth\".\nconnector\\mutations.gql:119:4: Unknown argument \"reason\" on directive \"@auth\".\nconnector\\queries.gql:124:26: Unknown argument \"reason\" on directive \"@auth\".\nconnector\\queries.gql:140:60: Unknown argument \"reason\" on directive \"@auth\".\n"}}
+[debug] [2026-08-10T18:20:00.375Z] I0810 23:50:00.375724   10948 collector.go:107] schema extensions wrote into "d:\\Projects\\MediInfo.LK\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\input.gql [68237B] prelude.gql [84995B] main\relation.gql [28461B] main\query.gql [9457B] main\mutation.gql [25970B] main\implicit.gql [1522B] 
+I0810 23:50:00.375724   10948 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0810 23:50:00.375724   10948 collector.go:107] schema extensions wrote into \"d:\\\\Projects\\\\MediInfo.LK\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\input.gql [68237B] prelude.gql [84995B] main\\relation.gql [28461B] main\\query.gql [9457B] main\\mutation.gql [25970B] main\\implicit.gql [1522B] \nI0810 23:50:00.375724   10948 load.go:74] Finished reloading\n"}}
+[debug] [2026-08-10T18:23:00.363Z] I0810 23:53:00.362597   10948 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0810 23:53:00.362597   10948 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-08-10T18:23:00.375Z] W0810 23:53:00.375553   10948 control.go:74] [projects/emulator/locations/emulator/services/mediinfo-lk-service b9b1] connector "default" has errors: connector\mutations.gql:99:4: Unknown argument "reason" on directive "@auth".
+connector\mutations.gql:119:4: Unknown argument "reason" on directive "@auth".
+
+sources: connector\mutations.gql [4960B] connector\queries.gql [2450B] 
+I0810 23:53:00.375553   10948 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-lk-service b9b1] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2123B] 
+Connector "default": sources: connector\mutations.gql [4960B] connector\queries.gql [2450B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0810 23:53:00.375553   10948 control.go:74] [projects/emulator/locations/emulator/services/mediinfo-lk-service b9b1] connector \"default\" has errors: connector\\mutations.gql:99:4: Unknown argument \"reason\" on directive \"@auth\".\nconnector\\mutations.gql:119:4: Unknown argument \"reason\" on directive \"@auth\".\n\nsources: connector\\mutations.gql [4960B] connector\\queries.gql [2450B] \nI0810 23:53:00.375553   10948 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-lk-service b9b1] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2123B] \nConnector \"default\": sources: connector\\mutations.gql [4960B] connector\\queries.gql [2450B] \n"}}
+[debug] [2026-08-10T18:23:00.376Z] E0810 23:53:00.376075   10948 load.go:73] Could not load sources: 
+Errors: connector\mutations.gql:99:4: Unknown argument "reason" on directive "@auth".
+connector\mutations.gql:119:4: Unknown argument "reason" on directive "@auth".
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0810 23:53:00.376075   10948 load.go:73] Could not load sources: \nErrors: connector\\mutations.gql:99:4: Unknown argument \"reason\" on directive \"@auth\".\nconnector\\mutations.gql:119:4: Unknown argument \"reason\" on directive \"@auth\".\n"}}
+[debug] [2026-08-10T18:23:00.378Z] I0810 23:53:00.378328   10948 collector.go:107] schema extensions wrote into "d:\\Projects\\MediInfo.LK\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\mutation.gql [25970B] prelude.gql [84995B] main\implicit.gql [1522B] main\input.gql [68237B] main\relation.gql [28461B] main\query.gql [9457B] 
+I0810 23:53:00.378328   10948 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0810 23:53:00.378328   10948 collector.go:107] schema extensions wrote into \"d:\\\\Projects\\\\MediInfo.LK\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\mutation.gql [25970B] prelude.gql [84995B] main\\implicit.gql [1522B] main\\input.gql [68237B] main\\relation.gql [28461B] main\\query.gql [9457B] \nI0810 23:53:00.378328   10948 load.go:74] Finished reloading\n"}}
+[debug] [2026-08-10T18:23:10.362Z] I0810 23:53:10.363120   10948 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0810 23:53:10.363120   10948 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-08-10T18:23:10.371Z] I0810 23:53:10.371922   10948 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-lk-service 6aae] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2123B] 
+Connector "default": sources: connector\mutations.gql [4787B] connector\queries.gql [2450B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0810 23:53:10.371922   10948 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-lk-service 6aae] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2123B] \nConnector \"default\": sources: connector\\mutations.gql [4787B] connector\\queries.gql [2450B] \n"}}
+[debug] [2026-08-10T18:23:10.387Z] I0810 23:53:10.387760   10948 codegen.go:101] [connector "default" javascriptSdk] Generating sources into "d:\\Projects\\MediInfo.LK\\src\\lib\\firebase\\dataconnect"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0810 23:53:10.387760   10948 codegen.go:101] [connector \"default\" javascriptSdk] Generating sources into \"d:\\\\Projects\\\\MediInfo.LK\\\\src\\\\lib\\\\firebase\\\\dataconnect\"\n"}}
+[debug] [2026-08-10T18:23:10.397Z] I0810 23:53:10.397334   10948 collector.go:107] schema extensions wrote into "d:\\Projects\\MediInfo.LK\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [84995B] main\implicit.gql [1522B] main\input.gql [68237B] main\relation.gql [28461B] main\query.gql [9457B] main\mutation.gql [25970B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0810 23:53:10.397334   10948 collector.go:107] schema extensions wrote into \"d:\\\\Projects\\\\MediInfo.LK\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [84995B] main\\implicit.gql [1522B] main\\input.gql [68237B] main\\relation.gql [28461B] main\\query.gql [9457B] main\\mutation.gql [25970B] \n"}}
+[debug] [2026-08-10T18:23:10.399Z] I0810 23:53:10.398341   10948 collector.go:107] connector "default" javascriptSdk wrote into "d:\\Projects\\MediInfo.LK\\src\\lib\\firebase\\dataconnect"
+Generated sources: index.cjs.js [10158B] package.json [623B] .guides/setup.md [592B] .guides/config.json [236B] index.d.ts [20017B] esm\index.esm.js [8968B] esm\package.json [17B] README.md [83617B] .guides/usage.md [2572B] 
+I0810 23:53:10.399341   10948 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0810 23:53:10.399341   10948 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0810 23:53:10.398341   10948 collector.go:107] connector \"default\" javascriptSdk wrote into \"d:\\\\Projects\\\\MediInfo.LK\\\\src\\\\lib\\\\firebase\\\\dataconnect\"\nGenerated sources: index.cjs.js [10158B] package.json [623B] .guides/setup.md [592B] .guides/config.json [236B] index.d.ts [20017B] esm\\index.esm.js [8968B] esm\\package.json [17B] README.md [83617B] .guides/usage.md [2572B] \nI0810 23:53:10.399341   10948 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0810 23:53:10.399341   10948 load.go:109] Finished reloading\n"}}

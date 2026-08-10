@@ -22,22 +22,31 @@ import {
   Users,
   Filter
 } from 'lucide-react';
-import { 
-  getStaffRequests, 
-  approveStaffRequest, 
-  rejectStaffRequest, 
-  MedicalStaffRequest, 
-  StaffRequestStatus,
-  ProfessionType 
-} from '@/data/staffData';
 import { useAdminRole } from '@/components/admin/AdminRoleContext';
+
+interface StaffAccount {
+  id: string;
+  firebaseUid: string;
+  email: string;
+  name: string;
+  profession: string;
+  slmcRegNo: string;
+  proofUrl: string;
+  status: string;
+  hospital?: string;
+  specialization?: string;
+  createdAt: string;
+}
+
+type StaffRequestStatus = 'pending' | 'approved' | 'rejected';
+type ProfessionType = 'doctor' | 'pharmacist' | 'nurse' | 'student' | 'other';
 
 export default function StaffApprovalsPage() {
   const { user } = useAdminRole();
-  const [requests, setRequests] = useState<MedicalStaffRequest[]>([]);
+  const [requests, setRequests] = useState<StaffAccount[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState<StaffRequestStatus | 'all'>('pending');
-  const [selectedRequest, setSelectedRequest] = useState<MedicalStaffRequest | null>(null);
+  const [selectedRequest, setSelectedRequest] = useState<StaffAccount | null>(null);
   const [adminNotes, setAdminNotes] = useState('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -251,7 +260,7 @@ export default function StaffApprovalsPage() {
                   <h3 className="text-lg font-extrabold text-near-black font-plus-jakarta m-0">
                     {req.name}
                   </h3>
-                  {getProfessionBadge(req.profession)}
+                  {getProfessionBadge(req.profession as ProfessionType)}
                   
                   {req.status === 'pending' && (
                     <span className="bg-amber-500/10 text-amber-600 border border-amber-500/20 px-2.5 py-0.5 rounded-md text-[11px] font-bold flex items-center gap-1">
@@ -273,7 +282,7 @@ export default function StaffApprovalsPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-y-1 gap-x-6 text-xs text-mid-gray">
                   <div><strong className="text-dark-gray">Email:</strong> {req.email}</div>
                   <div><strong className="text-dark-gray">SLMC Reg No:</strong> <span className="font-mono text-blue font-bold">{req.slmcRegNo}</span></div>
-                  <div><strong className="text-dark-gray">Submitted:</strong> {new Date(req.submittedAt).toLocaleDateString()}</div>
+                  <div><strong className="text-dark-gray">Submitted:</strong> {new Date(req.createdAt).toLocaleDateString()}</div>
                 </div>
 
                 {req.hospital && (
@@ -283,12 +292,7 @@ export default function StaffApprovalsPage() {
                   </div>
                 )}
 
-                {req.adminNotes && (
-                  <div className="p-3 bg-off-white rounded-xl border border-light-gray text-xs text-dark-gray mt-2">
-                    <strong className="text-mid-gray uppercase text-[10px] block mb-0.5">Super Admin Review Note:</strong>
-                    {req.adminNotes}
-                  </div>
-                )}
+              
               </div>
 
               {/* Action & Proof Column */}
@@ -297,12 +301,12 @@ export default function StaffApprovalsPage() {
                   type="button"
                   onClick={() => {
                     setSelectedRequest(req);
-                    setAdminNotes(req.adminNotes || '');
+                    setAdminNotes('');
                   }}
                   className="px-4 py-2.5 rounded-xl border border-light-gray hover:border-blue bg-off-white hover:bg-blue-light text-dark-gray hover:text-blue font-bold text-xs flex items-center gap-2 transition-all cursor-pointer"
                 >
                   <FileText size={15} />
-                  <span>Inspect Proof ({req.proofFileName})</span>
+                  <span>Inspect Proof</span>
                 </button>
 
                 {req.status === 'pending' && (
@@ -379,14 +383,14 @@ export default function StaffApprovalsPage() {
                       <FileText size={24} />
                     </div>
                     <div>
-                      <div className="text-xs font-bold text-near-black">{selectedRequest.proofFileName}</div>
+                      <div className="text-xs font-bold text-near-black truncate max-w-[200px]">{selectedRequest.proofUrl}</div>
                       <div className="text-[11px] text-mid-gray">Uploaded document proof • PDF / Image format</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
-                      onClick={() => alert(`Opening simulated viewer for ${selectedRequest.proofFileName}`)}
+                      onClick={() => window.open(selectedRequest.proofUrl, '_blank')}
                       className="px-3.5 py-2 rounded-xl bg-white border border-light-gray text-xs font-bold text-dark-gray hover:text-blue hover:border-blue transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
                     >
                       <Eye size={14} />
