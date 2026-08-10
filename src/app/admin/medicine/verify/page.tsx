@@ -234,52 +234,52 @@ export default function DoctorVerifyPage() {
                 }`}
               >
                 {/* Medicine Header Row */}
-                <div className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-light/60 border border-blue/20 flex items-center justify-center text-blue font-bold shrink-0">
-                      <Pill size={24} />
+                <div className="p-4 sm:px-5 sm:py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white">
+                  <div className="flex items-start sm:items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-blue-light/60 border border-blue/20 flex items-center justify-center text-blue font-bold shrink-0">
+                      <Pill size={20} />
                     </div>
                     <div>
                       <div className="flex items-center gap-2 flex-wrap">
-                        <h3 className="text-lg font-extrabold text-near-black font-plus-jakarta m-0">
+                        <h3 className="text-[15px] font-extrabold text-near-black font-plus-jakarta m-0">
                           {med.genericName}
                         </h3>
-                        <span className="text-xs font-semibold text-mid-gray">({med.chemicalName})</span>
+                        <span className="text-[11px] font-semibold text-mid-gray">({med.chemicalName})</span>
                       </div>
 
-                      <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                        <span className="text-[11px] font-bold text-dark-gray bg-off-white px-2.5 py-0.5 rounded-md border border-light-gray">
+                      <div className="flex items-center gap-2 mt-1 flex-wrap">
+                        <span className="text-[10px] font-bold text-dark-gray bg-off-white px-2 py-0.5 rounded border border-light-gray">
                           {med.category}
                         </span>
-                        <span className="text-[11px] font-mono text-mid-gray">
+                        <span className="text-[10px] font-mono text-mid-gray">
                           {med.strength}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2.5">
                     {/* Status Badge */}
                     {count >= 2 ? (
-                      <span className="inline-flex items-center gap-1.5 bg-teal/10 text-teal border border-teal/30 text-xs font-extrabold px-3 py-1.5 rounded-xl shadow-sm">
-                        <CheckCircle2 size={15} /> Doctor Verified (2/2)
+                      <span className="inline-flex items-center gap-1 bg-teal/10 text-teal border border-teal/30 text-[11px] font-extrabold px-2.5 py-1 rounded-lg shadow-sm">
+                        <CheckCircle2 size={14} /> Doctor Verified (2/2)
                       </span>
                     ) : count === 1 ? (
-                      <span className="inline-flex items-center gap-1.5 bg-blue-light text-blue border border-blue/30 text-xs font-extrabold px-3 py-1.5 rounded-xl shadow-sm">
-                        <Clock size={15} /> Partially Verified (1/2)
+                      <span className="inline-flex items-center gap-1 bg-blue-light text-blue border border-blue/30 text-[11px] font-extrabold px-2.5 py-1 rounded-lg shadow-sm">
+                        <Clock size={14} /> Partially Verified (1/2)
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-800 border border-amber-500/30 text-xs font-extrabold px-3 py-1.5 rounded-xl shadow-sm">
-                        <AlertTriangle size={15} className="text-amber-600" /> Details Not Verified (0/2)
+                      <span className="inline-flex items-center gap-1 bg-amber-500/10 text-amber-800 border border-amber-500/30 text-[11px] font-extrabold px-2.5 py-1 rounded-lg shadow-sm">
+                        <AlertTriangle size={14} className="text-amber-600" /> Details Not Verified (0/2)
                       </span>
                     )}
 
                     <button
                       onClick={() => setExpandedId(isExpanded ? null : med.id)}
-                      className="px-4 py-2 bg-off-white hover:bg-light-gray text-dark-gray text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
+                      className="px-3 py-1.5 bg-off-white hover:bg-light-gray text-dark-gray text-[11px] font-bold rounded-lg transition-all flex items-center gap-1 cursor-pointer border border-light-gray/50"
                     >
                       <span>{isExpanded ? 'Hide Details' : 'Review Full Details'}</span>
-                      {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                      {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                     </button>
                   </div>
                 </div>
