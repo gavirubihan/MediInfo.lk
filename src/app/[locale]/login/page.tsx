@@ -9,7 +9,7 @@ import { useSearchParams } from 'next/navigation';
 import { PRESET_USERS, AdminUser } from '@/components/admin/AdminRoleContext';
 import { addStaffRequest, findStaffByEmail, ProfessionType } from '@/data/staffData';
 
-type AuthView = 'login' | 'signup-select' | 'signup-normal' | 'signup-med-1' | 'signup-med-2' | 'success' | 'staff-pending-success' | 'google-select-account';
+type AuthView = 'login' | 'signup-select' | 'signup-normal' | 'signup-med-1' | 'signup-med-2' | 'success' | 'success-admin' | 'staff-pending-success' | 'google-select-account';
 
 export default function AuthPage() {
   const router = useRouter();
@@ -49,7 +49,7 @@ export default function AuthPage() {
 
     if (matchedPreset) {
       localStorage.setItem('mediinfo_admin_user', JSON.stringify(matchedPreset));
-      window.location.href = '/admin';
+      setView('success-admin');
       return;
     }
 
@@ -67,7 +67,7 @@ export default function AuthPage() {
           hospital: staffRecord.hospital || 'Registered Healthcare Staff'
         };
         localStorage.setItem('mediinfo_admin_user', JSON.stringify(approvedUser));
-        window.location.href = '/admin';
+        setView('success-admin');
         return;
       } else if (staffRecord.status === 'pending') {
         setAuthError('Your registration is pending Super Admin verification. You will gain access once approved.');
@@ -80,9 +80,6 @@ export default function AuthPage() {
 
     // 3. Otherwise normal user login
     setView('success');
-    setTimeout(() => {
-      router.push('/');
-    }, 1500);
   };
 
   const handleDrag = (e: React.DragEvent) => {
@@ -489,7 +486,7 @@ export default function AuthPage() {
                   <div
                     onClick={() => {
                       localStorage.setItem('isLoggedIn', 'true');
-                      window.location.href = '/admin';
+                      setView('success-admin');
                     }}
                     className="flex items-center gap-4 p-4 hover:bg-off-white transition-colors cursor-pointer border-b border-light-gray"
                   >
@@ -537,6 +534,22 @@ export default function AuthPage() {
                 <Button onClick={() => setView('login')} variant="primary" className="w-full justify-center py-3.5 rounded-xl text-[14px] font-bold">
                   Return to Login
                 </Button>
+              </div>
+            )}
+
+            {/* --- ADMIN SUCCESS VIEW --- */}
+            {view === 'success-admin' && (
+              <div className="animate-fade-up text-center py-10">
+                <div className="w-20 h-20 bg-blue/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <ShieldCheck size={40} className="text-blue" />
+                </div>
+                <h2 className="text-[28px] font-extrabold font-plus-jakarta text-near-black mb-3">Welcome Admin!</h2>
+                <p className="text-[15px] text-dark-gray mb-8">You have been logged in successfully.</p>
+                <Link href="/admin" className="no-underline">
+                  <Button variant="primary" className="w-full justify-center py-4 rounded-xl text-[15px] font-bold">
+                    Go to Dashboard
+                  </Button>
+                </Link>
               </div>
             )}
 

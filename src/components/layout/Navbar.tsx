@@ -142,10 +142,10 @@ export const Navbar = () => {
             {isLoggedIn ? (
               <div className="relative">
                 <div 
-                  className="w-[38px] h-[38px] rounded-full bg-[#9c27b0] text-white flex items-center justify-center font-bold text-lg shadow-[0_4px_12px_rgba(156,39,176,0.3)] hover:scale-105 transition-transform cursor-pointer border-2 border-white"
+                  className="w-[38px] h-[38px] rounded-full bg-blue-50 flex items-center justify-center shadow-[0_4px_12px_rgba(26,111,191,0.2)] hover:scale-105 transition-transform cursor-pointer border-2 border-white overflow-hidden"
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
                 >
-                  {userProfile?.name ? userProfile.name.charAt(0).toUpperCase() : 'N'}
+                  <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${userProfile?.name || 'User'}&backgroundColor=e8f3fc`} alt="Profile" className="w-full h-full object-cover" />
                 </div>
 
                 {/* Profile Popup Menu */}
@@ -235,8 +235,8 @@ export const Navbar = () => {
             {isLoggedIn ? (
               <div className="flex flex-col gap-2 mt-2 pt-2 border-t border-light-gray/50">
                 <div className="w-full flex items-center gap-3 bg-off-white rounded-2xl py-3 px-4 border border-light-gray/50">
-                  <div className="w-10 h-10 rounded-full bg-[#9c27b0] text-white flex items-center justify-center font-bold text-lg shrink-0">
-                    {userProfile?.name ? userProfile.name.charAt(0).toUpperCase() : 'N'}
+                  <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0 border-2 border-white overflow-hidden shadow-sm">
+                    <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${userProfile?.name || 'User'}&backgroundColor=e8f3fc`} alt="Profile" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex flex-col overflow-hidden">
                     <span className="font-bold text-[15px] text-near-black truncate">{userProfile?.name || 'Nirosha'}</span>
