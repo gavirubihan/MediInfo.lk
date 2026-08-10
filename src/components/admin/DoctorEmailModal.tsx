@@ -4,12 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { Mail, CheckCircle2, ShieldCheck, ArrowRight, X, ExternalLink, Stethoscope, Sparkles } from 'lucide-react';
-import { registeredDoctors, MedicineRecord } from '@/data/medicinesData';
 
 interface DoctorEmailModalProps {
   isOpen: boolean;
   onClose: () => void;
-  medicine: MedicineRecord | null;
+  medicine: any;
 }
 
 export function DoctorEmailModal({ isOpen, onClose, medicine }: DoctorEmailModalProps) {
@@ -75,7 +74,7 @@ export function DoctorEmailModal({ isOpen, onClose, medicine }: DoctorEmailModal
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-mid-gray uppercase tracking-wider w-16">To:</span>
                 <span className="font-bold text-teal font-mono truncate">
-                  {registeredDoctors.map((d) => d.email).join(', ')}
+                  dr.saman@mediinfo.lk, nimali.silva@mediinfo.lk, arul.kumaran@mediinfo.lk
                 </span>
               </div>
               <div className="flex items-center gap-2 pt-1 border-t border-light-gray/60">

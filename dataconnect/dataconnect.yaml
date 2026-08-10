@@ -1,0 +1,11 @@
+specVersion: "v1alpha"
+serviceId: "mediinfo-lk-service"
+location: "us-east4"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "mediinfo_sqldb"
+      cloudSql:
+        instanceId: "mediinfo-lk-instance"
+connectorDirs: ["./connector"]

@@ -2,12 +2,14 @@
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
-import { Mail, Lock, User, ArrowRight, HeartPulse, ShieldCheck, ChevronLeft, UploadCloud, Stethoscope, CheckCircle2 } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, HeartPulse, ShieldCheck, ChevronLeft, UploadCloud, Stethoscope, CheckCircle2, AlertOctagon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/routing';
 import { useSearchParams } from 'next/navigation';
-import { PRESET_USERS, AdminUser } from '@/components/admin/AdminRoleContext';
+
 import { addStaffRequest, findStaffByEmail, ProfessionType } from '@/data/staffData';
+import { auth } from '@/lib/firebase/client';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 type AuthView = 'login' | 'signup-select' | 'signup-normal' | 'signup-med-1' | 'signup-med-2' | 'success' | 'success-admin' | 'staff-pending-success' | 'google-select-account';
 
@@ -36,50 +38,33 @@ export default function AuthPage() {
   const [medProfession, setMedProfession] = useState<ProfessionType>('doctor');
   const [medSlmcRegNo, setMedSlmcRegNo] = useState('');
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError('');
-    if (!email.trim()) return;
-
-    const cleanEmail = email.trim().toLowerCase();
-    // 1. Check preset admin accounts
-    const matchedPreset = PRESET_USERS.find(
-      (u: any) => u.email.toLowerCase() === cleanEmail || (cleanEmail.includes('doc') && u.role === 'doctor')
-    );
-
-    if (matchedPreset) {
-      localStorage.setItem('mediinfo_admin_user', JSON.stringify(matchedPreset));
-      setView('success-admin');
+    if (!email.trim() || !password.trim()) {
+      setAuthError('Please enter email and password');
       return;
     }
 
-    // 2. Check submitted staff registrations
-    const staffRecord = findStaffByEmail(cleanEmail);
-    if (staffRecord) {
-      if (staffRecord.status === 'approved') {
-        const approvedUser: AdminUser = {
-          id: staffRecord.id,
-          email: staffRecord.email,
-          name: staffRecord.name,
-          role: staffRecord.profession === 'doctor' ? 'doctor' : 'other_medical',
-          slmcRegNo: staffRecord.slmcRegNo,
-          specialization: staffRecord.specialization || staffRecord.profession.toUpperCase(),
-          hospital: staffRecord.hospital || 'Registered Healthcare Staff'
-        };
-        localStorage.setItem('mediinfo_admin_user', JSON.stringify(approvedUser));
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password);
+      const idToken = await userCredential.user.getIdToken();
+      
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken })
+      });
+      
+      if (res.ok) {
         setView('success-admin');
-        return;
-      } else if (staffRecord.status === 'pending') {
-        setAuthError('Your registration is pending Super Admin verification. You will gain access once approved.');
-        return;
-      } else if (staffRecord.status === 'rejected') {
-        setAuthError(`Registration Declined: ${staffRecord.adminNotes || 'Contact admin for details.'}`);
-        return;
+        setTimeout(() => { window.location.href = '/admin'; }, 1500);
+      } else {
+        setAuthError('Failed to establish secure session.');
       }
+    } catch (error: any) {
+      setAuthError(error.message || 'Login failed. Please check your credentials.');
     }
-
-    // 3. Otherwise normal user login
-    setView('success');
   };
 
   const handleDrag = (e: React.DragEvent) => {
@@ -180,6 +165,12 @@ export default function AuthPage() {
                   <p className="text-[15px] text-mid-gray">{t('signInSubtitle')}</p>
                 </div>
                 <form className="flex flex-col gap-5" onSubmit={handleLogin}>
+                  {authError && (
+                    <div className="bg-red-50 text-red-500 text-sm p-3 rounded-xl border border-red-100 flex items-center gap-2 font-medium">
+                      <AlertOctagon size={16} />
+                      {authError}
+                    </div>
+                  )}
                   <div>
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">{t('emailLabel')}</label>
                     <div className="relative">

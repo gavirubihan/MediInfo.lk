@@ -1,0 +1,185 @@
+I0810 14:52:29.029882   11684 load.go:31] Reloading schema and connectors...
+W0810 14:52:29.037484   11684 control.go:74] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 6262] connector "default" has errors: connector\queries.gql:12:3: Unknown argument "slug" on field "Query.medicine".
+
+sources: connector\mutations.gql [2291B] connector\queries.gql [991B] 
+I0810 14:52:29.037484   11684 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 6262] UpdateResources(): done
+Main schema: sources: schema\schema.gql [1528B] 
+Connector "default": sources: connector\mutations.gql [2291B] connector\queries.gql [991B] 
+E0810 14:52:29.038010   11684 load.go:73] Could not load sources: 
+Errors: connector\queries.gql:12:3: Unknown argument "slug" on field "Query.medicine".
+I0810 14:52:29.039059   11684 collector.go:107] schema extensions wrote into "D:\\Projects\\MediInfo.LK\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [84995B] main\mutation.gql [18390B] main\implicit.gql [1213B] main\input.gql [48153B] main\relation.gql [19819B] main\query.gql [6713B] 
+I0810 14:52:29.039059   11684 load.go:74] Finished reloading
+I0810 14:52:29.040094   11684 dev.go:103] Listening on address (HTTP + gRPC): 127.0.0.1:9399
+I0810 14:52:29.040094   11684 dev.go:103] Listening on address (HTTP + gRPC): [::1]:9399
+I0810 14:52:31.828369   11684 migrate.go:24] Running migration SQL:
+Step 1: CREATE EXTENSION IF NOT EXISTS "uuid-ossp"
+Step 2: CREATE TABLE "public"."medicine" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "age_group" text NOT NULL, "brand_names" text[] NOT NULL, "category" text NOT NULL, "chemical_name" text NOT NULL, "form" text[] NOT NULL, "generic_name" text NOT NULL, "max_daily_dose_adults" text NOT NULL, "prescription_required" boolean NOT NULL, "safety_breastfeeding" text NOT NULL, "safety_children" text NOT NULL, "safety_elderly" text NOT NULL, "safety_pregnancy" text NOT NULL, "slug" text NOT NULL, "strength" text NOT NULL, "verified" boolean NOT NULL, PRIMARY KEY ("id"))
+Step 3: CREATE UNIQUE INDEX "medicine_slug_uidx" ON "public"."medicine" ("slug")
+Step 4: CREATE TABLE "public"."dosage_row" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "medicine_id" uuid NOT NULL, "age_group" text NOT NULL, "dose" text NOT NULL, "frequency" text NOT NULL, "max_per_day" text NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "dosage_row_medicine_id_fkey" FOREIGN KEY ("medicine_id") REFERENCES "public"."medicine" ("id") ON DELETE CASCADE)
+Step 5: CREATE INDEX "dosage_row_medicineId_idx" ON "public"."dosage_row" ("medicine_id")
+Step 6: CREATE TABLE "public"."drug_interaction" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "medicine_id" uuid NOT NULL, "drug" text NOT NULL, "note" text NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "drug_interaction_medicine_id_fkey" FOREIGN KEY ("medicine_id") REFERENCES "public"."medicine" ("id") ON DELETE CASCADE)
+Step 7: CREATE INDEX "drug_interaction_medicineId_idx" ON "public"."drug_interaction" ("medicine_id")
+Step 8: CREATE TABLE "public"."medicine_localized_content" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "medicine_id" uuid NOT NULL, "description" text NOT NULL, "dosage_notes" text NOT NULL, "how_it_works" text NOT NULL, "language" text NOT NULL, "side_effects_common" text[] NOT NULL, "side_effects_less_common" text[] NOT NULL, "side_effects_serious" text[] NOT NULL, "used_for" text[] NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "medicine_localized_content_medicine_id_fkey" FOREIGN KEY ("medicine_id") REFERENCES "public"."medicine" ("id") ON DELETE CASCADE)
+Step 9: CREATE INDEX "medicine_localized_content_medicineId_idx" ON "public"."medicine_localized_content" ("medicine_id")
+Step 10: CREATE TABLE "public"."warning_card" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "localized_content_id" uuid NOT NULL, "severity" text NOT NULL, "text" text NOT NULL, "title" text NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "warning_card_localized_content_id_fkey" FOREIGN KEY ("localized_content_id") REFERENCES "public"."medicine_localized_content" ("id") ON DELETE CASCADE)
+Step 11: CREATE INDEX "warning_card_localizedContentId_idx" ON "public"."warning_card" ("localized_content_id")
+W0810 14:52:31.889774   11684 control.go:74] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 583f] connector "default" has errors: connector\queries.gql:12:3: Unknown argument "slug" on field "Query.medicine".
+
+sources: connector\mutations.gql [2291B] connector\queries.gql [991B] 
+I0810 14:52:31.889774   11684 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 583f] UpdateResources(): done
+Main schema: sources: schema\schema.gql [1528B] 
+Connector "default": sources: connector\mutations.gql [2291B] connector\queries.gql [991B] 
+I0810 14:52:31.889774   11684 service.go:200] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 583f] while configuring to server.Settings{ConnectionString:"dbname='mediinfo_sqldb' host='127.0.0.1' port='5432' sslmode='disable' dbname='mediinfo_sqldb'", MaxOpenConnection:0, UseDummy:false, EnableGoogleMLIntegration:false, SchemaSettings:esql.Settings{SchemaValidationMode:"", SchemaName:""}}, failed to reload last live sources: 
+Errors: connector\queries.gql:12:3: Unknown argument "slug" on field "Query.medicine".
+I0810 14:52:31.890831   11684 configure_emulator.go:21] ConfigureEmulator successed
+Request: service_id:  "mediinfo-dataconnect"
+connection_string:  "postgres://127.0.0.1:5432/mediinfo_sqldb?sslmode=disable"
+database:  "mediinfo_sqldb"
+
+Response: 
+I0810 15:33:19.040687   11684 load.go:31] Reloading schema and connectors...
+I0810 15:33:19.089220   11684 migrate.go:24] Running migration SQL:
+Step 1: ALTER TABLE "public"."medicine" ADD COLUMN "created_date" text NOT NULL
+W0810 15:33:19.128431   11684 control.go:74] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] connector "default" has errors: connector\queries.gql:12:3: Unknown argument "slug" on field "Query.medicine".
+
+sources: connector\mutations.gql [2291B] connector\queries.gql [991B] 
+I0810 15:33:19.128431   11684 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] UpdateResources(): done
+Main schema: sources: schema\schema.gql [1551B] 
+Connector "default": sources: connector\mutations.gql [2291B] connector\queries.gql [991B] 
+E0810 15:33:19.129556   11684 load.go:73] Could not load sources: 
+Errors: connector\queries.gql:12:3: Unknown argument "slug" on field "Query.medicine".
+I0810 15:33:19.514897   11684 collector.go:107] schema extensions wrote into "D:\\Projects\\MediInfo.LK\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\input.gql [48910B] main\relation.gql [20206B] main\query.gql [6713B] main\mutation.gql [18390B] main\implicit.gql [1213B] prelude.gql [84995B] 
+I0810 15:33:19.514897   11684 load.go:74] Finished reloading
+I0810 19:19:30.669590   11684 execute.go:57] Database ping is quick (likely cached), took 1.058ms
+I0810 19:19:30.674426   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+I0810 19:19:30.704208   11684 execute.go:57] Database ping is quick (likely cached), took 788.7µs
+I0810 19:19:30.705746   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+I0810 19:19:30.724864   11684 execute.go:57] Database ping is quick (likely cached), took 505.5µs
+I0810 19:19:30.726399   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+I0810 19:19:32.677917   11684 execute.go:57] Database ping is quick (likely cached), took 1.0892ms
+I0810 19:19:32.679252   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+I0810 19:19:33.780377   11684 execute.go:57] Database ping is quick (likely cached), took 562.3µs
+I0810 19:19:33.782246   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+I0810 19:21:40.200180   11684 execute.go:57] Database ping is quick (likely cached), took 533.7µs
+I0810 19:21:40.200781   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+W0810 19:21:50.734736   11684 execute.go:51] Database ping is slow 378.3616ms
+stats before: sql.DBStats{MaxOpenConnections:0, OpenConnections:1, InUse:0, Idle:1, WaitCount:0, WaitDuration:0, MaxIdleClosed:0, MaxIdleTimeClosed:0, MaxLifetimeClosed:0}
+stats After: sql.DBStats{MaxOpenConnections:0, OpenConnections:1, InUse:0, Idle:1, WaitCount:0, WaitDuration:0, MaxIdleClosed:0, MaxIdleTimeClosed:0, MaxLifetimeClosed:0}
+I0810 19:21:50.737780   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+I0810 19:21:50.757434   11684 execute.go:57] Database ping is quick (likely cached), took 944.3µs
+I0810 19:21:50.758963   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+I0810 19:21:55.870717   11684 execute.go:57] Database ping is quick (likely cached), took 611.5µs
+I0810 19:21:55.871956   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+I0810 19:21:55.900292   11684 execute.go:57] Database ping is quick (likely cached), took 1.1663ms
+I0810 19:21:55.902068   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+I0810 19:22:40.854298   11684 execute.go:57] Database ping is quick (likely cached), took 1.0204ms
+I0810 19:22:40.854816   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+I0810 19:25:58.570617   11684 execute.go:57] Database ping is quick (likely cached), took 560.6µs
+I0810 19:25:58.576535   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql mutation : succeeded. 
+I0810 19:25:58.579672   11684 engine.go:211] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql mutation : invalid request. 
+Auth: admin
+
+Variables Set: [ageGroup dose frequency maxPerDay medicineId]
+Errors: [message:"$medicineId is invalid UUID: unexpected value: map[id:735695a7fcbf469d93876313f02ad98d] with type: map[string]interface {}"  extensions:{code:INVALID_ARGUMENT}]
+sources: input [276B] 
+I0810 19:25:58.595109   11684 execute.go:57] Database ping is quick (likely cached), took 591.4µs
+I0810 19:25:58.597212   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql mutation : succeeded. 
+I0810 19:25:58.598756   11684 engine.go:211] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql mutation : invalid request. 
+Auth: admin
+
+Variables Set: [ageGroup dose frequency maxPerDay medicineId]
+Errors: [message:"$medicineId is invalid UUID: unexpected value: map[id:7fd625d66be446ed9da8fa9352001677] with type: map[string]interface {}"  extensions:{code:INVALID_ARGUMENT}]
+sources: input [276B] 
+I0810 19:25:58.612400   11684 execute.go:57] Database ping is quick (likely cached), took 0s
+I0810 19:25:58.613977   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql mutation : succeeded. 
+I0810 19:25:58.616053   11684 engine.go:211] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql mutation : invalid request. 
+Auth: admin
+
+Variables Set: [ageGroup dose frequency maxPerDay medicineId]
+Errors: [message:"$medicineId is invalid UUID: unexpected value: map[id:a671c5c395cb416d9cafff666e63f6d8] with type: map[string]interface {}"  extensions:{code:INVALID_ARGUMENT}]
+sources: input [276B] 
+I0810 19:25:58.629319   11684 execute.go:57] Database ping is quick (likely cached), took 529.3µs
+I0810 19:25:58.631038   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql mutation : succeeded. 
+I0810 19:25:58.632510   11684 engine.go:211] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql mutation : invalid request. 
+Auth: admin
+
+Variables Set: [ageGroup dose frequency maxPerDay medicineId]
+Errors: [message:"$medicineId is invalid UUID: unexpected value: map[id:16cf3c4c83df4e72a70fc3d9b370b2e0] with type: map[string]interface {}"  extensions:{code:INVALID_ARGUMENT}]
+sources: input [276B] 
+I0810 19:27:12.512821   11684 execute.go:57] Database ping is quick (likely cached), took 517.4µs
+W0810 19:27:12.520173   11684 engine.go:213] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql mutation : failed. 
+Auth: admin
+
+Variables Set: [ageGroup brandNames category chemicalName createdDate form genericName maxDailyDoseAdults prescriptionRequired safetyBreastfeeding safetyChildren safetyElderly safetyPregnancy slug strength verified]
+Errors: [message:"violates SQL unique constraint: medicine_slug_uidx"  path:{values:{string_value:"medicine_insert"}}  extensions:{code:ALREADY_EXISTS  debug_details:"PostgreSQL runtime error (err_code: 23505): pq: duplicate key value violates unique constraint \"medicine_slug_uidx\"\nWITH \"medicine_insert_temp\" AS (INSERT INTO \"public\".\"medicine\" (\"age_group\",\"brand_names\",\"category\",\"chemical_name\",\"created_date\",\"form\",\"generic_name\",\"max_daily_dose_adults\",\"prescription_required\",\"safety_breastfeeding\",\"safety_children\",\"safety_elderly\",\"safety_pregnancy\",\"slug\",\"strength\",\"verified\",\"id\") VALUES ( $1 ::text, $2 ::text[], $3 ::text, $4 ::text, $5 ::text, $6 ::text[], $7 ::text, $8 ::text, $9 ::boolean, $10 ::text, $11 ::text, $12 ::text, $13 ::text, $14 ::text, $15 ::text, $16 ::boolean,uuid_generate_v4()) RETURNING jsonb_build_object('id', REPLACE(CAST((\"id\") AS text), '-', '')) AS j) SELECT * FROM \"medicine_insert_temp\"\nParams: [Adults & Children {[Panadol Calpol Disprol Febrex P-500 Crocin Metacin SPC Paracetamol]} Painkiller & Antipyretic Acetaminophen (Paracetamol) 2026-08-10T13:57:12.467Z {[Tablet Syrup Suppository]} Paracetamol 4000mg false     paracetamol 500mg / 1000mg / 120mg/5ml true]"}]
+Data Fields: [medicine_insert]
+sources: input [1014B] 
+I0810 19:27:12.537677   11684 execute.go:57] Database ping is quick (likely cached), took 0s
+W0810 19:27:12.539657   11684 engine.go:213] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql mutation : failed. 
+Auth: admin
+
+Variables Set: [ageGroup brandNames category chemicalName createdDate form genericName maxDailyDoseAdults prescriptionRequired safetyBreastfeeding safetyChildren safetyElderly safetyPregnancy slug strength verified]
+Errors: [message:"violates SQL unique constraint: medicine_slug_uidx"  path:{values:{string_value:"medicine_insert"}}  extensions:{code:ALREADY_EXISTS  debug_details:"PostgreSQL runtime error (err_code: 23505): pq: duplicate key value violates unique constraint \"medicine_slug_uidx\"\nWITH \"medicine_insert_temp\" AS (INSERT INTO \"public\".\"medicine\" (\"age_group\",\"brand_names\",\"category\",\"chemical_name\",\"created_date\",\"form\",\"generic_name\",\"max_daily_dose_adults\",\"prescription_required\",\"safety_breastfeeding\",\"safety_children\",\"safety_elderly\",\"safety_pregnancy\",\"slug\",\"strength\",\"verified\",\"id\") VALUES ( $1 ::text, $2 ::text[], $3 ::text, $4 ::text, $5 ::text, $6 ::text[], $7 ::text, $8 ::text, $9 ::boolean, $10 ::text, $11 ::text, $12 ::text, $13 ::text, $14 ::text, $15 ::text, $16 ::boolean,uuid_generate_v4()) RETURNING jsonb_build_object('id', REPLACE(CAST((\"id\") AS text), '-', '')) AS j) SELECT * FROM \"medicine_insert_temp\"\nParams: [Adults & Children {[Amoxil Augmentin Mox Curam Ospamox SPC Amoxicillin]} Antibiotic (Penicillin Derivative) Amoxicillin Trihydrate 2026-08-10T13:57:12.526Z {[Capsule Syrup Dispersible Tablet]} Amoxicillin 3000mg true     amoxicillin 250mg / 500mg / 125mg/5ml true]"}]
+Data Fields: [medicine_insert]
+sources: input [1014B] 
+I0810 19:27:12.551941   11684 execute.go:57] Database ping is quick (likely cached), took 568.9µs
+W0810 19:27:12.553881   11684 engine.go:213] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql mutation : failed. 
+Auth: admin
+
+Variables Set: [ageGroup brandNames category chemicalName createdDate form genericName maxDailyDoseAdults prescriptionRequired safetyBreastfeeding safetyChildren safetyElderly safetyPregnancy slug strength verified]
+Errors: [message:"violates SQL unique constraint: medicine_slug_uidx"  path:{values:{string_value:"medicine_insert"}}  extensions:{code:ALREADY_EXISTS  debug_details:"PostgreSQL runtime error (err_code: 23505): pq: duplicate key value violates unique constraint \"medicine_slug_uidx\"\nWITH \"medicine_insert_temp\" AS (INSERT INTO \"public\".\"medicine\" (\"age_group\",\"brand_names\",\"category\",\"chemical_name\",\"created_date\",\"form\",\"generic_name\",\"max_daily_dose_adults\",\"prescription_required\",\"safety_breastfeeding\",\"safety_children\",\"safety_elderly\",\"safety_pregnancy\",\"slug\",\"strength\",\"verified\",\"id\") VALUES ( $1 ::text, $2 ::text[], $3 ::text, $4 ::text, $5 ::text, $6 ::text[], $7 ::text, $8 ::text, $9 ::boolean, $10 ::text, $11 ::text, $12 ::text, $13 ::text, $14 ::text, $15 ::text, $16 ::boolean,uuid_generate_v4()) RETURNING jsonb_build_object('id', REPLACE(CAST((\"id\") AS text), '-', '')) AS j) SELECT * FROM \"medicine_insert_temp\"\nParams: [Adults (≥10 yrs) {[Glucophage Glycomet Metfor Formin Metfor-XR SPC Metformin]} Antidiabetic (Biguanide) Metformin Hydrochloride 2026-08-10T13:57:12.541Z {[Tablet Extended Release (XR) Tablet]} Metformin 2550mg true     metformin 500mg / 850mg / 1000mg true]"}]
+Data Fields: [medicine_insert]
+sources: input [1014B] 
+I0810 19:27:12.567209   11684 execute.go:57] Database ping is quick (likely cached), took 521.6µs
+W0810 19:27:12.569072   11684 engine.go:213] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql mutation : failed. 
+Auth: admin
+
+Variables Set: [ageGroup brandNames category chemicalName createdDate form genericName maxDailyDoseAdults prescriptionRequired safetyBreastfeeding safetyChildren safetyElderly safetyPregnancy slug strength verified]
+Errors: [message:"violates SQL unique constraint: medicine_slug_uidx"  path:{values:{string_value:"medicine_insert"}}  extensions:{code:ALREADY_EXISTS  debug_details:"PostgreSQL runtime error (err_code: 23505): pq: duplicate key value violates unique constraint \"medicine_slug_uidx\"\nWITH \"medicine_insert_temp\" AS (INSERT INTO \"public\".\"medicine\" (\"age_group\",\"brand_names\",\"category\",\"chemical_name\",\"created_date\",\"form\",\"generic_name\",\"max_daily_dose_adults\",\"prescription_required\",\"safety_breastfeeding\",\"safety_children\",\"safety_elderly\",\"safety_pregnancy\",\"slug\",\"strength\",\"verified\",\"id\") VALUES ( $1 ::text, $2 ::text[], $3 ::text, $4 ::text, $5 ::text, $6 ::text[], $7 ::text, $8 ::text, $9 ::boolean, $10 ::text, $11 ::text, $12 ::text, $13 ::text, $14 ::text, $15 ::text, $16 ::boolean,uuid_generate_v4()) RETURNING jsonb_build_object('id', REPLACE(CAST((\"id\") AS text), '-', '')) AS j) SELECT * FROM \"medicine_insert_temp\"\nParams: [Adults & Children (≥2 yrs) {[Zyrtec Cetriz Alerid Histazine Cetzine SPC Cetirizine]} Antihistamine (2nd Generation) Cetirizine Dihydrochloride 2026-08-10T13:57:12.556Z {[Tablet Syrup]} Cetirizine 10mg false     cetirizine 10mg / 5mg/5ml true]"}]
+Data Fields: [medicine_insert]
+sources: input [1014B] 
+I0810 19:27:44.995833   11684 execute.go:57] Database ping is quick (likely cached), took 528.9µs
+I0810 19:27:44.996863   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+I0810 19:32:48.468124   11684 execute.go:57] Database ping is quick (likely cached), took 585µs
+I0810 19:32:48.469779   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+I0810 19:32:48.488016   11684 execute.go:57] Database ping is quick (likely cached), took 1.0648ms
+I0810 19:32:48.489083   11684 engine.go:209] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 5131] ExecuteGraphql query : succeeded. 
+I0810 19:34:00.558968   11684 load.go:31] Reloading schema and connectors...
+W0810 19:34:00.622754   11684 control.go:74] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 1f66] connector "default" has errors: connector\mutations.gql:9:3: medicine_insert (data: Medicine_Data): column createdDate is required but is missing in data
+
+sources: connector\mutations.gql [2291B] connector\queries.gql [1007B] 
+I0810 19:34:00.622754   11684 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 1f66] UpdateResources(): done
+Main schema: sources: schema\schema.gql [1551B] 
+Connector "default": sources: connector\mutations.gql [2291B] connector\queries.gql [1007B] 
+E0810 19:34:00.623276   11684 load.go:73] Could not load sources: 
+Errors: connector\mutations.gql:9:3: medicine_insert (data: Medicine_Data): column createdDate is required but is missing in data
+I0810 19:34:00.920693   11684 collector.go:107] schema extensions wrote into "D:\\Projects\\MediInfo.LK\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [84995B] main\relation.gql [20206B] main\query.gql [6713B] main\mutation.gql [18390B] main\implicit.gql [1213B] main\input.gql [48910B] 
+I0810 19:34:00.920693   11684 load.go:74] Finished reloading
+I0810 19:35:10.559601   11684 load.go:31] Reloading schema and connectors...
+I0810 19:35:10.661395   11684 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 0b5c] UpdateResources(): done
+Main schema: sources: schema\schema.gql [1551B] 
+Connector "default": sources: connector\mutations.gql [2345B] connector\queries.gql [1007B] 
+I0810 19:35:10.799033   11684 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-dataconnect 9f1c] UpdateResources(): done
+Main schema: sources: schema\schema.gql [1551B] 
+Connector "default": sources: connector\mutations.gql [2345B] connector\queries.gql [1007B] 
+I0810 19:35:10.818380   11684 codegen.go:101] [connector "default" javascriptSdk] Generating sources into "D:\\Projects\\MediInfo.LK\\src\\lib\\firebase\\dataconnect"
+I0810 19:35:11.006063   11684 collector.go:107] schema extensions wrote into "D:\\Projects\\MediInfo.LK\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\implicit.gql [1213B] main\input.gql [48910B] main\relation.gql [20206B] prelude.gql [84995B] main\query.gql [6713B] main\mutation.gql [18390B] 
+I0810 19:35:11.008133   11684 collector.go:107] connector "default" javascriptSdk wrote into "D:\\Projects\\MediInfo.LK\\src\\lib\\firebase\\dataconnect"
+Generated sources: esm\package.json [17B] .guides/usage.md [1781B] .guides/config.json [236B] index.cjs.js [4825B] package.json [623B] README.md [40937B] .guides/setup.md [592B] index.d.ts [9312B] esm\index.esm.js [4277B] 
+I0810 19:35:11.008133   11684 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0810 19:35:11.008648   11684 load.go:109] Finished reloading
+I0810 19:40:10.560145   11684 load.go:31] Reloading schema and connectors...
+I0810 19:40:10.570042   11684 control.go:100] [projects/emulator/locations/emulator/services/mediinfo-lk-service 81d2] UpdateResources(): done
+Main schema: sources: schema\schema.gql [1551B] 
+Connector "default": sources: connector\mutations.gql [2345B] connector\queries.gql [1007B] 
+I0810 19:40:10.577445   11684 codegen.go:101] [connector "default" javascriptSdk] Generating sources into "D:\\Projects\\MediInfo.LK\\src\\lib\\firebase\\dataconnect"
+I0810 19:40:10.911191   11684 collector.go:107] schema extensions wrote into "D:\\Projects\\MediInfo.LK\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [84995B] main\implicit.gql [1213B] main\input.gql [48910B] main\relation.gql [20206B] main\query.gql [6713B] main\mutation.gql [18390B] 
+I0810 19:40:10.912810   11684 collector.go:107] connector "default" javascriptSdk wrote into "D:\\Projects\\MediInfo.LK\\src\\lib\\firebase\\dataconnect"
+Generated sources: .guides/config.json [236B] index.d.ts [9312B] esm\package.json [17B] README.md [40937B] esm\index.esm.js [4273B] index.cjs.js [4821B] package.json [623B] .guides/usage.md [1781B] .guides/setup.md [592B] 
+I0810 19:40:10.912810   11684 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0810 19:40:10.912810   11684 load.go:109] Finished reloading

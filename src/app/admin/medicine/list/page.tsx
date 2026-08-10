@@ -3,14 +3,36 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Pill, PlusCircle, Search, Languages, CheckCircle2, Edit3, ExternalLink, AlertTriangle, Clock } from 'lucide-react';
-import { getStoredMedicines, MedicineRecord } from '@/data/medicinesData';
+
+interface MedicineListItem {
+  id: string;
+  slug: string;
+  genericName: string;
+  chemicalName: string;
+  category: string;
+  brandNames: string[];
+  form: string[];
+  strength: string;
+  verified: boolean;
+  prescriptionRequired: boolean;
+  createdDate: string;
+}
 
 export default function MedicineListPage() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [medicines, setMedicines] = useState<MedicineRecord[]>([]);
+  const [medicines, setMedicines] = useState<MedicineListItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    setMedicines(getStoredMedicines());
+    fetch('/api/medicine')
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) throw new Error(data.error);
+        setMedicines(data.medicines ?? []);
+      })
+      .catch(err => setError(err.message))
+      .finally(() => setIsLoading(false));
   }, []);
 
   const filtered = medicines.filter((m) =>
@@ -68,7 +90,7 @@ export default function MedicineListPage() {
             </thead>
             <tbody className="divide-y divide-light-gray/60">
               {filtered.map((med) => {
-                const count = med.verifications?.length || (med.verified ? 2 : 0);
+                const count = med.verified ? 2 : 0;
 
                 return (
                   <tr key={med.id} className="hover:bg-off-white/60 transition-colors">
@@ -89,13 +111,9 @@ export default function MedicineListPage() {
                       </div>
                     </td>
                     <td className="py-4 px-4">
-                      {count >= 2 ? (
+                      {med.verified ? (
                         <span className="inline-flex items-center gap-1 bg-teal/10 text-teal border border-teal/20 text-[11px] font-bold px-2.5 py-1 rounded-md">
                           <CheckCircle2 size={12} /> Doctor Verified (2/2)
-                        </span>
-                      ) : count === 1 ? (
-                        <span className="inline-flex items-center gap-1 bg-blue-light text-blue border border-blue/20 text-[11px] font-bold px-2.5 py-1 rounded-md">
-                          <Clock size={12} /> Partially Verified (1/2)
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 bg-amber-500/10 text-amber-800 border border-amber-500/20 text-[11px] font-bold px-2.5 py-1 rounded-md">
@@ -114,7 +132,7 @@ export default function MedicineListPage() {
                           <span>View Page</span>
                         </Link>
                         <Link
-                          href="/admin/medicine/add"
+                          href={`/admin/medicine/edit/${med.slug}`}
                           className="px-3 py-1.5 bg-off-white text-dark-gray hover:bg-light-gray text-xs font-bold rounded-lg border border-light-gray transition-colors flex items-center gap-1 no-underline"
                         >
                           <Edit3 size={13} />

@@ -17,7 +17,6 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { Button } from './Button';
-import { getStoredMedicines, MedicineRecord } from '@/data/medicinesData';
 import { useRouter } from '@/i18n/routing';
 
 interface PrescriptionUploadModalProps {
@@ -44,7 +43,7 @@ export const PrescriptionUploadModal: React.FC<PrescriptionUploadModalProps> = (
   const [file, setFile] = useState<File | null>(null);
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
   const [uploadState, setUploadState] = useState<'idle' | 'scanning' | 'results'>('idle');
-  const [identifiedMedicines, setIdentifiedMedicines] = useState<MedicineRecord[]>([]);
+  const [identifiedMedicines, setIdentifiedMedicines] = useState<any[]>([]);
   const [scanProgress, setScanProgress] = useState(0);
   const [scanStepIndex, setScanStepIndex] = useState(0);
   const [uploadMode, setUploadMode] = useState<'file' | 'camera'>('file');
@@ -140,12 +139,25 @@ export const PrescriptionUploadModal: React.FC<PrescriptionUploadModalProps> = (
           setTimeout(() => setScanStepIndex(1), 700);
           setTimeout(() => setScanStepIndex(2), 1800);
           setTimeout(() => {
-            const medicines = getStoredMedicines();
-            const med1 = medicines.find(m => m.id === 'med-01') || medicines[0];
-            const med2 = medicines.find(m => m.id === 'med-02') || medicines[1];
-            const results = med2 && med2.id !== med1.id ? [med1, med2] : [med1];
-            setIdentifiedMedicines(results);
-            setUploadState('results');
+            fetch('/api/medicine')
+              .then(res => res.json())
+              .then(data => {
+                const medicines = data.medicines ?? [];
+                if (medicines.length === 0) {
+                  setIdentifiedMedicines([]);
+                } else {
+                  const med1 = medicines[0];
+                  const med2 = medicines.length > 1 ? medicines[1] : null;
+                  const results = med2 ? [med1, med2] : [med1];
+                  setIdentifiedMedicines(results);
+                }
+                setUploadState('results');
+              })
+              .catch(err => {
+                console.error(err);
+                setIdentifiedMedicines([]);
+                setUploadState('results');
+              });
           }, 2800);
           return 100;
         }

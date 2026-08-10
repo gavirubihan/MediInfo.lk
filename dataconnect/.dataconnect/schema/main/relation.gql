@@ -1,0 +1,623 @@
+extend type DosageRow {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "DosageRow", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `DosageRow` table.
+  """
+  _count: Int! @fdc_generated(from: "DosageRow.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DosageRow` table where the `ageGroup` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  ageGroup_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DosageRow.ageGroup", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DosageRow` table where the `dose` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  dose_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DosageRow.dose", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DosageRow` table where the `frequency` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  frequency_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DosageRow.frequency", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DosageRow` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DosageRow.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DosageRow` table where the `maxPerDay` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  maxPerDay_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DosageRow.maxPerDay", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DosageRow` table where the `medicineId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  medicineId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DosageRow.medicineId", purpose: QUERY_COUNT)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "DosageRow.id", purpose: ENTITY_ID)
+}
+extend type DrugInteraction {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "DrugInteraction", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `DrugInteraction` table.
+  """
+  _count: Int! @fdc_generated(from: "DrugInteraction.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DrugInteraction` table where the `drug` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  drug_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DrugInteraction.drug", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DrugInteraction` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DrugInteraction.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DrugInteraction` table where the `medicineId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  medicineId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DrugInteraction.medicineId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DrugInteraction` table where the `note` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  note_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DrugInteraction.note", purpose: QUERY_COUNT)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "DrugInteraction.id", purpose: ENTITY_ID)
+}
+extend type Medicine {
+  """
+  ✨ List `DosageRow` objects in a one-to-many relationship (where `DosageRow`.`medicine` is this object).
+  """
+  dosageRows_on_medicine(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: DosageRow_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [DosageRow_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: DosageRow_Having
+  ): [DosageRow!]! @fdc_generated(from: "DosageRow.medicine", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `DrugInteraction` objects in a one-to-many relationship (where `DrugInteraction`.`medicine` is this object).
+  """
+  drugInteractions_on_medicine(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: DrugInteraction_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [DrugInteraction_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: DrugInteraction_Having
+  ): [DrugInteraction!]! @fdc_generated(from: "DrugInteraction.medicine", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `MedicineLocalizedContent` objects in a one-to-many relationship (where `MedicineLocalizedContent`.`medicine` is this object).
+  """
+  medicineLocalizedContents_on_medicine(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: MedicineLocalizedContent_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [MedicineLocalizedContent_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: MedicineLocalizedContent_Having
+  ): [MedicineLocalizedContent!]! @fdc_generated(from: "MedicineLocalizedContent.medicine", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `MedicineVerification` objects in a one-to-many relationship (where `MedicineVerification`.`medicine` is this object).
+  """
+  medicineVerifications_on_medicine(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: MedicineVerification_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [MedicineVerification_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: MedicineVerification_Having
+  ): [MedicineVerification!]! @fdc_generated(from: "MedicineVerification.medicine", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "Medicine", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `Medicine` table.
+  """
+  _count: Int! @fdc_generated(from: "Medicine.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `ageGroup` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  ageGroup_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.ageGroup", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `category` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  category_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.category", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `chemicalName` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  chemicalName_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.chemicalName", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `createdDate` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdDate_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.createdDate", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `genericName` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  genericName_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.genericName", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `maxDailyDoseAdults` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  maxDailyDoseAdults_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.maxDailyDoseAdults", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `prescriptionRequired` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  prescriptionRequired_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.prescriptionRequired", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `safetyBreastfeeding` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  safetyBreastfeeding_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.safetyBreastfeeding", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `safetyChildren` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  safetyChildren_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.safetyChildren", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `safetyElderly` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  safetyElderly_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.safetyElderly", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `safetyPregnancy` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  safetyPregnancy_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.safetyPregnancy", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `slug` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  slug_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.slug", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `strength` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  strength_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.strength", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medicine` table where the `verified` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  verified_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine.verified", purpose: QUERY_COUNT)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "Medicine.id", purpose: ENTITY_ID)
+}
+extend type MedicineLocalizedContent {
+  """
+  ✨ List `WarningCard` objects in a one-to-many relationship (where `WarningCard`.`localizedContent` is this object).
+  """
+  warningCards_on_localizedContent(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: WarningCard_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [WarningCard_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: WarningCard_Having
+  ): [WarningCard!]! @fdc_generated(from: "WarningCard.localizedContent", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "MedicineLocalizedContent", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `MedicineLocalizedContent` table.
+  """
+  _count: Int! @fdc_generated(from: "MedicineLocalizedContent.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `MedicineLocalizedContent` table where the `description` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  description_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "MedicineLocalizedContent.description", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `MedicineLocalizedContent` table where the `dosageNotes` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  dosageNotes_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "MedicineLocalizedContent.dosageNotes", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `MedicineLocalizedContent` table where the `howItWorks` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  howItWorks_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "MedicineLocalizedContent.howItWorks", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `MedicineLocalizedContent` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "MedicineLocalizedContent.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `MedicineLocalizedContent` table where the `language` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  language_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "MedicineLocalizedContent.language", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `MedicineLocalizedContent` table where the `medicineId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  medicineId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "MedicineLocalizedContent.medicineId", purpose: QUERY_COUNT)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "MedicineLocalizedContent.id", purpose: ENTITY_ID)
+}
+extend type MedicineVerification {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "MedicineVerification", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `MedicineVerification` table.
+  """
+  _count: Int! @fdc_generated(from: "MedicineVerification.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `MedicineVerification` table where the `doctorId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  doctorId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "MedicineVerification.doctorId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `MedicineVerification` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "MedicineVerification.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `MedicineVerification` table where the `medicineId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  medicineId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "MedicineVerification.medicineId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `MedicineVerification` table where the `slmcRegNo` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  slmcRegNo_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "MedicineVerification.slmcRegNo", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `MedicineVerification` table where the `verifiedAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  verifiedAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "MedicineVerification.verifiedAt", purpose: QUERY_COUNT)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "MedicineVerification.id", purpose: ENTITY_ID)
+}
+extend type WarningCard {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "WarningCard", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `WarningCard` table.
+  """
+  _count: Int! @fdc_generated(from: "WarningCard.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `WarningCard` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "WarningCard.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `WarningCard` table where the `localizedContentId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  localizedContentId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "WarningCard.localizedContentId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `WarningCard` table where the `severity` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  severity_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "WarningCard.severity", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `WarningCard` table where the `text` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  text_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "WarningCard.text", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `WarningCard` table where the `title` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  title_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "WarningCard.title", purpose: QUERY_COUNT)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "WarningCard.id", purpose: ENTITY_ID)
+}

@@ -1,0 +1,121 @@
+query ListMedicines @auth(level: PUBLIC) {
+  medicines {
+    id
+    slug
+    genericName
+    chemicalName
+    category
+    strength
+    ageGroup
+    prescriptionRequired
+    verified
+    maxDailyDoseAdults
+    safetyPregnancy
+    safetyBreastfeeding
+    safetyElderly
+    safetyChildren
+    brandNames
+    form
+    createdDate
+    
+    dosageRows_on_medicine {
+      id
+      ageGroup
+      dose
+      frequency
+      maxPerDay
+    }
+    
+    drugInteractions_on_medicine {
+      id
+      drug
+      note
+    }
+
+    medicineVerifications_on_medicine {
+      id
+      doctorId
+      slmcRegNo
+      verifiedAt
+    }
+    
+    medicineLocalizedContents_on_medicine {
+      id
+      language
+      description
+      howItWorks
+      dosageNotes
+      usedFor
+      sideEffectsCommon
+      sideEffectsLessCommon
+      sideEffectsSerious
+      
+      warningCards_on_localizedContent {
+        id
+        title
+        severity
+        text
+      }
+    }
+  }
+}
+query GetMedicineBySlug($slug: String!) @auth(level: PUBLIC) {
+  medicines(where: {slug: {eq: $slug}}) {
+    id
+    slug
+    genericName
+    chemicalName
+    category
+    strength
+    ageGroup
+    prescriptionRequired
+    verified
+    maxDailyDoseAdults
+    safetyPregnancy
+    safetyBreastfeeding
+    safetyElderly
+    safetyChildren
+    brandNames
+    form
+    
+    dosageRows_on_medicine {
+      id
+      ageGroup
+      dose
+      frequency
+      maxPerDay
+    }
+    
+    drugInteractions_on_medicine {
+      id
+      drug
+      note
+    }
+
+    medicineVerifications_on_medicine {
+      id
+      doctorId
+      slmcRegNo
+      verifiedAt
+    }
+    
+    medicineLocalizedContents_on_medicine {
+      id
+      language
+      description
+      howItWorks
+      dosageNotes
+      usedFor
+      sideEffectsCommon
+      sideEffectsLessCommon
+      sideEffectsSerious
+      
+      warningCards_on_localizedContent {
+        id
+        title
+        severity
+        text
+      }
+    }
+  }
+}

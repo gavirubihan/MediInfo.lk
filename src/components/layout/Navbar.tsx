@@ -4,6 +4,9 @@ import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { useLocale } from 'next-intl';
 import { Button } from '../ui/Button';
 import { Menu, X } from 'lucide-react';
+import { auth } from '@/lib/firebase/client';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { PRESET_USERS } from '@/components/admin/AdminRoleContext';
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -23,33 +26,32 @@ export const Navbar = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [userProfile, setUserProfile] = useState<{name: string, email: string, isAdmin: boolean} | null>(null);
 
+  // Listen to Firebase Auth state
   useEffect(() => {
-    setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
-    const adminUser = localStorage.getItem('mediinfo_admin_user');
-    if (adminUser) {
-      try {
-        const parsed = JSON.parse(adminUser);
-        setUserProfile({ name: parsed.name, email: parsed.email, isAdmin: true });
-      } catch (e) {}
-    } else {
-      const uName = localStorage.getItem('userName');
-      const uEmail = localStorage.getItem('userEmail');
-      if (uName && uEmail) {
-        setUserProfile({ name: uName, email: uEmail, isAdmin: false });
+    const unsubscribe = onAuthStateChanged(auth, (fbUser: User | null) => {
+      if (fbUser) {
+        const email = fbUser.email?.toLowerCase() || '';
+        const preset = PRESET_USERS.find(u => u.email.toLowerCase() === email);
+        setIsLoggedIn(true);
+        setUserProfile({
+          name: preset?.name || fbUser.displayName || fbUser.email || 'Admin User',
+          email: fbUser.email || '',
+          isAdmin: true, // All Firebase users in this app are admins
+        });
       } else {
-        setUserProfile({ name: 'Nirosha', email: 'nirosha@example.com', isAdmin: false });
+        setIsLoggedIn(false);
+        setUserProfile(null);
       }
-    }
-  }, [pathname]);
+    });
+    return () => unsubscribe();
+  }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userEmail');
-    localStorage.removeItem('mediinfo_admin_user');
+  const handleLogout = async () => {
+    await signOut(auth);
+    await fetch('/api/logout', { method: 'POST' });
     setIsLoggedIn(false);
     setIsProfileMenuOpen(false);
-    window.location.reload();
+    window.location.href = '/en/login';
   };
 
   useEffect(() => {

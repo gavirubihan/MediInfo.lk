@@ -1,0 +1,1762 @@
+"""
+✨ `DosageRow_KeyOutput` returns the primary key fields of table type `DosageRow`.
+
+It has the same format as `DosageRow_Key`, but is only used as mutation return value.
+"""
+scalar DosageRow_KeyOutput
+"""
+✨ `DrugInteraction_KeyOutput` returns the primary key fields of table type `DrugInteraction`.
+
+It has the same format as `DrugInteraction_Key`, but is only used as mutation return value.
+"""
+scalar DrugInteraction_KeyOutput
+"""
+✨ `Medicine_KeyOutput` returns the primary key fields of table type `Medicine`.
+
+It has the same format as `Medicine_Key`, but is only used as mutation return value.
+"""
+scalar Medicine_KeyOutput
+"""
+✨ `MedicineLocalizedContent_KeyOutput` returns the primary key fields of table type `MedicineLocalizedContent`.
+
+It has the same format as `MedicineLocalizedContent_Key`, but is only used as mutation return value.
+"""
+scalar MedicineLocalizedContent_KeyOutput
+"""
+✨ `MedicineVerification_KeyOutput` returns the primary key fields of table type `MedicineVerification`.
+
+It has the same format as `MedicineVerification_Key`, but is only used as mutation return value.
+"""
+scalar MedicineVerification_KeyOutput
+"""
+✨ `WarningCard_KeyOutput` returns the primary key fields of table type `WarningCard`.
+
+It has the same format as `WarningCard_Key`, but is only used as mutation return value.
+"""
+scalar WarningCard_KeyOutput
+"""
+✨ Generated data input type for table 'DosageRow'. It includes all necessary fields for creating or upserting rows into table.
+"""
+input DosageRow_Data {
+  """
+  ✨ Generated from Field `DosageRow`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `DosageRow`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `DosageRow`.`medicineId` of type `UUID!`
+  """
+  medicineId: UUID
+  """
+  ✨ `_expr` server value variant of `medicineId` (✨ Generated from Field `DosageRow`.`medicineId` of type `UUID!`)
+  """
+  medicineId_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `DosageRow`.`medicine` of type `Medicine!`
+  """
+  medicine: Medicine_Key @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `DosageRow`.`ageGroup` of type `String!`
+  """
+  ageGroup: String
+  """
+  ✨ `_expr` server value variant of `ageGroup` (✨ Generated from Field `DosageRow`.`ageGroup` of type `String!`)
+  """
+  ageGroup_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `DosageRow`.`dose` of type `String!`
+  """
+  dose: String
+  """
+  ✨ `_expr` server value variant of `dose` (✨ Generated from Field `DosageRow`.`dose` of type `String!`)
+  """
+  dose_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `DosageRow`.`frequency` of type `String!`
+  """
+  frequency: String
+  """
+  ✨ `_expr` server value variant of `frequency` (✨ Generated from Field `DosageRow`.`frequency` of type `String!`)
+  """
+  frequency_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `DosageRow`.`maxPerDay` of type `String!`
+  """
+  maxPerDay: String
+  """
+  ✨ `_expr` server value variant of `maxPerDay` (✨ Generated from Field `DosageRow`.`maxPerDay` of type `String!`)
+  """
+  maxPerDay_expr: String_Expr @fdc_forbiddenInVariables
+}
+"""
+✨ Generated filter input type for table 'DosageRow'. This input allows filtering objects using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input DosageRow_Filter {
+  """
+  Apply multiple filter conditions using `AND` logic.
+  """
+  _and: [DosageRow_Filter!]
+  """
+  Negate the result of the provided filter condition.
+  """
+  _not: DosageRow_Filter
+  """
+  Apply multiple filter conditions using `OR` logic.
+  """
+  _or: [DosageRow_Filter!]
+  """
+  ✨ Generated from Field `DosageRow`.`id` of type `UUID!`
+  """
+  id: UUID_Filter
+  """
+  ✨ Generated from Field `DosageRow`.`medicineId` of type `UUID!`
+  """
+  medicineId: UUID_Filter
+  """
+  ✨ Generated from Field `DosageRow`.`medicine` of type `Medicine!`
+  """
+  medicine: Medicine_Filter
+  """
+  ✨ Generated from Field `DosageRow`.`ageGroup` of type `String!`
+  """
+  ageGroup: String_Filter
+  """
+  ✨ Generated from Field `DosageRow`.`dose` of type `String!`
+  """
+  dose: String_Filter
+  """
+  ✨ Generated from Field `DosageRow`.`frequency` of type `String!`
+  """
+  frequency: String_Filter
+  """
+  ✨ Generated from Field `DosageRow`.`maxPerDay` of type `String!`
+  """
+  maxPerDay: String_Filter
+}
+"""
+✨ Generated first-row input type for table 'DosageRow'. This input selects the first row matching the filter criteria, ordered according to the specified conditions.
+"""
+input DosageRow_FirstRow {
+  """
+  Order the result by the specified fields.
+  """
+  orderBy: [DosageRow_Order!]
+  """
+  Filters rows based on the specified conditions.
+  """
+  where: DosageRow_Filter
+}
+"""
+✨ Generated having input type for table 'DosageRow'. This input allows you to filter groups during aggregate queries using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input DosageRow_Having {
+  """
+  Apply multiple Having conditions using `AND` logic.
+  """
+  _and: [DosageRow_Having!]
+  """
+  Whether to apply DISTINCT to the aggregate function.
+  """
+  _distinct: Boolean
+  """
+  Negate the result of the provided Having condition.
+  """
+  _not: DosageRow_Having
+  """
+  Apply multiple Having conditions using `OR` logic.
+  """
+  _or: [DosageRow_Having!]
+  """
+  ✨ Generated from Field `DosageRow`.`_count` of type `Int!`
+  """
+  _count: Int_Filter
+  """
+  ✨ Generated from Field `DosageRow`.`ageGroup_count` of type `Int!`
+  """
+  ageGroup_count: Int_Filter
+  """
+  ✨ Generated from Field `DosageRow`.`dose_count` of type `Int!`
+  """
+  dose_count: Int_Filter
+  """
+  ✨ Generated from Field `DosageRow`.`frequency_count` of type `Int!`
+  """
+  frequency_count: Int_Filter
+  """
+  ✨ Generated from Field `DosageRow`.`id_count` of type `Int!`
+  """
+  id_count: Int_Filter
+  """
+  ✨ Generated from Field `DosageRow`.`maxPerDay_count` of type `Int!`
+  """
+  maxPerDay_count: Int_Filter
+  """
+  ✨ Generated from Field `DosageRow`.`medicineId_count` of type `Int!`
+  """
+  medicineId_count: Int_Filter
+}
+"""
+✨ Generated key input type for table 'DosageRow'. It represents the primary key fields used to uniquely identify a row in the table.
+"""
+input DosageRow_Key {
+  """
+  ✨ Generated from Field `DosageRow`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `DosageRow`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+}
+"""
+✨ Generated list filter input type for table 'DosageRow'. This input applies filtering logic based on the count or existence of related objects that matches certain criteria.
+"""
+input DosageRow_ListFilter {
+  """
+  The desired number of objects that match the condition (defaults to at least one).
+  """
+  count: Int_Filter = {gt:0}
+  """
+  Condition of the related objects to filter for.
+  """
+  exist: DosageRow_Filter
+}
+"""
+✨ Generated order input type for table 'DosageRow'. This input defines the sorting order of rows in query results based on one or more fields.
+"""
+input DosageRow_Order {
+  """
+  ✨ Generated from Field `DosageRow`.`id` of type `UUID!`
+  """
+  id: OrderDirection
+  """
+  ✨ Generated from Field `DosageRow`.`medicineId` of type `UUID!`
+  """
+  medicineId: OrderDirection
+  """
+  ✨ Generated from Field `DosageRow`.`medicine` of type `Medicine!`
+  """
+  medicine: Medicine_Order
+  """
+  ✨ Generated from Field `DosageRow`.`ageGroup` of type `String!`
+  """
+  ageGroup: OrderDirection
+  """
+  ✨ Generated from Field `DosageRow`.`dose` of type `String!`
+  """
+  dose: OrderDirection
+  """
+  ✨ Generated from Field `DosageRow`.`frequency` of type `String!`
+  """
+  frequency: OrderDirection
+  """
+  ✨ Generated from Field `DosageRow`.`maxPerDay` of type `String!`
+  """
+  maxPerDay: OrderDirection
+  """
+  ✨ Generated from Field `DosageRow`.`_count` of type `Int!`
+  """
+  _count: OrderDirection
+  """
+  ✨ Generated from Field `DosageRow`.`ageGroup_count` of type `Int!`
+  """
+  ageGroup_count: OrderDirection
+  """
+  ✨ Generated from Field `DosageRow`.`dose_count` of type `Int!`
+  """
+  dose_count: OrderDirection
+  """
+  ✨ Generated from Field `DosageRow`.`frequency_count` of type `Int!`
+  """
+  frequency_count: OrderDirection
+  """
+  ✨ Generated from Field `DosageRow`.`id_count` of type `Int!`
+  """
+  id_count: OrderDirection
+  """
+  ✨ Generated from Field `DosageRow`.`maxPerDay_count` of type `Int!`
+  """
+  maxPerDay_count: OrderDirection
+  """
+  ✨ Generated from Field `DosageRow`.`medicineId_count` of type `Int!`
+  """
+  medicineId_count: OrderDirection
+}
+"""
+✨ Generated data input type for table 'DrugInteraction'. It includes all necessary fields for creating or upserting rows into table.
+"""
+input DrugInteraction_Data {
+  """
+  ✨ Generated from Field `DrugInteraction`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `DrugInteraction`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `DrugInteraction`.`medicineId` of type `UUID!`
+  """
+  medicineId: UUID
+  """
+  ✨ `_expr` server value variant of `medicineId` (✨ Generated from Field `DrugInteraction`.`medicineId` of type `UUID!`)
+  """
+  medicineId_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `DrugInteraction`.`medicine` of type `Medicine!`
+  """
+  medicine: Medicine_Key @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `DrugInteraction`.`drug` of type `String!`
+  """
+  drug: String
+  """
+  ✨ `_expr` server value variant of `drug` (✨ Generated from Field `DrugInteraction`.`drug` of type `String!`)
+  """
+  drug_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `DrugInteraction`.`note` of type `String!`
+  """
+  note: String
+  """
+  ✨ `_expr` server value variant of `note` (✨ Generated from Field `DrugInteraction`.`note` of type `String!`)
+  """
+  note_expr: String_Expr @fdc_forbiddenInVariables
+}
+"""
+✨ Generated filter input type for table 'DrugInteraction'. This input allows filtering objects using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input DrugInteraction_Filter {
+  """
+  Apply multiple filter conditions using `AND` logic.
+  """
+  _and: [DrugInteraction_Filter!]
+  """
+  Negate the result of the provided filter condition.
+  """
+  _not: DrugInteraction_Filter
+  """
+  Apply multiple filter conditions using `OR` logic.
+  """
+  _or: [DrugInteraction_Filter!]
+  """
+  ✨ Generated from Field `DrugInteraction`.`id` of type `UUID!`
+  """
+  id: UUID_Filter
+  """
+  ✨ Generated from Field `DrugInteraction`.`medicineId` of type `UUID!`
+  """
+  medicineId: UUID_Filter
+  """
+  ✨ Generated from Field `DrugInteraction`.`medicine` of type `Medicine!`
+  """
+  medicine: Medicine_Filter
+  """
+  ✨ Generated from Field `DrugInteraction`.`drug` of type `String!`
+  """
+  drug: String_Filter
+  """
+  ✨ Generated from Field `DrugInteraction`.`note` of type `String!`
+  """
+  note: String_Filter
+}
+"""
+✨ Generated first-row input type for table 'DrugInteraction'. This input selects the first row matching the filter criteria, ordered according to the specified conditions.
+"""
+input DrugInteraction_FirstRow {
+  """
+  Order the result by the specified fields.
+  """
+  orderBy: [DrugInteraction_Order!]
+  """
+  Filters rows based on the specified conditions.
+  """
+  where: DrugInteraction_Filter
+}
+"""
+✨ Generated having input type for table 'DrugInteraction'. This input allows you to filter groups during aggregate queries using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input DrugInteraction_Having {
+  """
+  Apply multiple Having conditions using `AND` logic.
+  """
+  _and: [DrugInteraction_Having!]
+  """
+  Whether to apply DISTINCT to the aggregate function.
+  """
+  _distinct: Boolean
+  """
+  Negate the result of the provided Having condition.
+  """
+  _not: DrugInteraction_Having
+  """
+  Apply multiple Having conditions using `OR` logic.
+  """
+  _or: [DrugInteraction_Having!]
+  """
+  ✨ Generated from Field `DrugInteraction`.`_count` of type `Int!`
+  """
+  _count: Int_Filter
+  """
+  ✨ Generated from Field `DrugInteraction`.`drug_count` of type `Int!`
+  """
+  drug_count: Int_Filter
+  """
+  ✨ Generated from Field `DrugInteraction`.`id_count` of type `Int!`
+  """
+  id_count: Int_Filter
+  """
+  ✨ Generated from Field `DrugInteraction`.`medicineId_count` of type `Int!`
+  """
+  medicineId_count: Int_Filter
+  """
+  ✨ Generated from Field `DrugInteraction`.`note_count` of type `Int!`
+  """
+  note_count: Int_Filter
+}
+"""
+✨ Generated key input type for table 'DrugInteraction'. It represents the primary key fields used to uniquely identify a row in the table.
+"""
+input DrugInteraction_Key {
+  """
+  ✨ Generated from Field `DrugInteraction`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `DrugInteraction`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+}
+"""
+✨ Generated list filter input type for table 'DrugInteraction'. This input applies filtering logic based on the count or existence of related objects that matches certain criteria.
+"""
+input DrugInteraction_ListFilter {
+  """
+  The desired number of objects that match the condition (defaults to at least one).
+  """
+  count: Int_Filter = {gt:0}
+  """
+  Condition of the related objects to filter for.
+  """
+  exist: DrugInteraction_Filter
+}
+"""
+✨ Generated order input type for table 'DrugInteraction'. This input defines the sorting order of rows in query results based on one or more fields.
+"""
+input DrugInteraction_Order {
+  """
+  ✨ Generated from Field `DrugInteraction`.`id` of type `UUID!`
+  """
+  id: OrderDirection
+  """
+  ✨ Generated from Field `DrugInteraction`.`medicineId` of type `UUID!`
+  """
+  medicineId: OrderDirection
+  """
+  ✨ Generated from Field `DrugInteraction`.`medicine` of type `Medicine!`
+  """
+  medicine: Medicine_Order
+  """
+  ✨ Generated from Field `DrugInteraction`.`drug` of type `String!`
+  """
+  drug: OrderDirection
+  """
+  ✨ Generated from Field `DrugInteraction`.`note` of type `String!`
+  """
+  note: OrderDirection
+  """
+  ✨ Generated from Field `DrugInteraction`.`_count` of type `Int!`
+  """
+  _count: OrderDirection
+  """
+  ✨ Generated from Field `DrugInteraction`.`drug_count` of type `Int!`
+  """
+  drug_count: OrderDirection
+  """
+  ✨ Generated from Field `DrugInteraction`.`id_count` of type `Int!`
+  """
+  id_count: OrderDirection
+  """
+  ✨ Generated from Field `DrugInteraction`.`medicineId_count` of type `Int!`
+  """
+  medicineId_count: OrderDirection
+  """
+  ✨ Generated from Field `DrugInteraction`.`note_count` of type `Int!`
+  """
+  note_count: OrderDirection
+}
+"""
+✨ Generated data input type for table 'Medicine'. It includes all necessary fields for creating or upserting rows into table.
+"""
+input Medicine_Data {
+  """
+  ✨ Generated from Field `Medicine`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `Medicine`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`ageGroup` of type `String!`
+  """
+  ageGroup: String
+  """
+  ✨ `_expr` server value variant of `ageGroup` (✨ Generated from Field `Medicine`.`ageGroup` of type `String!`)
+  """
+  ageGroup_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`brandNames` of type `[String!]!`
+  """
+  brandNames: [String!]
+  """
+  ✨ `_update` server value variant of `brandNames` (✨ Generated from Field `Medicine`.`brandNames` of type `[String!]!`)
+  """
+  brandNames_update: [String_ListUpdate!] @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`category` of type `String!`
+  """
+  category: String
+  """
+  ✨ `_expr` server value variant of `category` (✨ Generated from Field `Medicine`.`category` of type `String!`)
+  """
+  category_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`chemicalName` of type `String!`
+  """
+  chemicalName: String
+  """
+  ✨ `_expr` server value variant of `chemicalName` (✨ Generated from Field `Medicine`.`chemicalName` of type `String!`)
+  """
+  chemicalName_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`createdDate` of type `String!`
+  """
+  createdDate: String
+  """
+  ✨ `_expr` server value variant of `createdDate` (✨ Generated from Field `Medicine`.`createdDate` of type `String!`)
+  """
+  createdDate_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`form` of type `[String!]!`
+  """
+  form: [String!]
+  """
+  ✨ `_update` server value variant of `form` (✨ Generated from Field `Medicine`.`form` of type `[String!]!`)
+  """
+  form_update: [String_ListUpdate!] @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`genericName` of type `String!`
+  """
+  genericName: String
+  """
+  ✨ `_expr` server value variant of `genericName` (✨ Generated from Field `Medicine`.`genericName` of type `String!`)
+  """
+  genericName_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`maxDailyDoseAdults` of type `String!`
+  """
+  maxDailyDoseAdults: String
+  """
+  ✨ `_expr` server value variant of `maxDailyDoseAdults` (✨ Generated from Field `Medicine`.`maxDailyDoseAdults` of type `String!`)
+  """
+  maxDailyDoseAdults_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`prescriptionRequired` of type `Boolean!`
+  """
+  prescriptionRequired: Boolean
+  """
+  ✨ `_expr` server value variant of `prescriptionRequired` (✨ Generated from Field `Medicine`.`prescriptionRequired` of type `Boolean!`)
+  """
+  prescriptionRequired_expr: Boolean_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`safetyBreastfeeding` of type `String!`
+  """
+  safetyBreastfeeding: String
+  """
+  ✨ `_expr` server value variant of `safetyBreastfeeding` (✨ Generated from Field `Medicine`.`safetyBreastfeeding` of type `String!`)
+  """
+  safetyBreastfeeding_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`safetyChildren` of type `String!`
+  """
+  safetyChildren: String
+  """
+  ✨ `_expr` server value variant of `safetyChildren` (✨ Generated from Field `Medicine`.`safetyChildren` of type `String!`)
+  """
+  safetyChildren_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`safetyElderly` of type `String!`
+  """
+  safetyElderly: String
+  """
+  ✨ `_expr` server value variant of `safetyElderly` (✨ Generated from Field `Medicine`.`safetyElderly` of type `String!`)
+  """
+  safetyElderly_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`safetyPregnancy` of type `String!`
+  """
+  safetyPregnancy: String
+  """
+  ✨ `_expr` server value variant of `safetyPregnancy` (✨ Generated from Field `Medicine`.`safetyPregnancy` of type `String!`)
+  """
+  safetyPregnancy_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`slug` of type `String!`
+  """
+  slug: String
+  """
+  ✨ `_expr` server value variant of `slug` (✨ Generated from Field `Medicine`.`slug` of type `String!`)
+  """
+  slug_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`strength` of type `String!`
+  """
+  strength: String
+  """
+  ✨ `_expr` server value variant of `strength` (✨ Generated from Field `Medicine`.`strength` of type `String!`)
+  """
+  strength_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`verified` of type `Boolean!`
+  """
+  verified: Boolean
+  """
+  ✨ `_expr` server value variant of `verified` (✨ Generated from Field `Medicine`.`verified` of type `Boolean!`)
+  """
+  verified_expr: Boolean_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Medicine`.`dosageRows_on_medicine` of type `[DosageRow!]!`
+  """
+  dosageRows_on_medicine: [DosageRow_Data!]
+  """
+  ✨ Generated from Field `Medicine`.`drugInteractions_on_medicine` of type `[DrugInteraction!]!`
+  """
+  drugInteractions_on_medicine: [DrugInteraction_Data!]
+  """
+  ✨ Generated from Field `Medicine`.`medicineLocalizedContents_on_medicine` of type `[MedicineLocalizedContent!]!`
+  """
+  medicineLocalizedContents_on_medicine: [MedicineLocalizedContent_Data!]
+  """
+  ✨ Generated from Field `Medicine`.`medicineVerifications_on_medicine` of type `[MedicineVerification!]!`
+  """
+  medicineVerifications_on_medicine: [MedicineVerification_Data!]
+}
+"""
+✨ Generated filter input type for table 'Medicine'. This input allows filtering objects using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input Medicine_Filter {
+  """
+  Apply multiple filter conditions using `AND` logic.
+  """
+  _and: [Medicine_Filter!]
+  """
+  Negate the result of the provided filter condition.
+  """
+  _not: Medicine_Filter
+  """
+  Apply multiple filter conditions using `OR` logic.
+  """
+  _or: [Medicine_Filter!]
+  """
+  ✨ Generated from Field `Medicine`.`id` of type `UUID!`
+  """
+  id: UUID_Filter
+  """
+  ✨ Generated from Field `Medicine`.`ageGroup` of type `String!`
+  """
+  ageGroup: String_Filter
+  """
+  ✨ Generated from Field `Medicine`.`brandNames` of type `[String!]!`
+  """
+  brandNames: String_ListFilter
+  """
+  ✨ Generated from Field `Medicine`.`category` of type `String!`
+  """
+  category: String_Filter
+  """
+  ✨ Generated from Field `Medicine`.`chemicalName` of type `String!`
+  """
+  chemicalName: String_Filter
+  """
+  ✨ Generated from Field `Medicine`.`createdDate` of type `String!`
+  """
+  createdDate: String_Filter
+  """
+  ✨ Generated from Field `Medicine`.`form` of type `[String!]!`
+  """
+  form: String_ListFilter
+  """
+  ✨ Generated from Field `Medicine`.`genericName` of type `String!`
+  """
+  genericName: String_Filter
+  """
+  ✨ Generated from Field `Medicine`.`maxDailyDoseAdults` of type `String!`
+  """
+  maxDailyDoseAdults: String_Filter
+  """
+  ✨ Generated from Field `Medicine`.`prescriptionRequired` of type `Boolean!`
+  """
+  prescriptionRequired: Boolean_Filter
+  """
+  ✨ Generated from Field `Medicine`.`safetyBreastfeeding` of type `String!`
+  """
+  safetyBreastfeeding: String_Filter
+  """
+  ✨ Generated from Field `Medicine`.`safetyChildren` of type `String!`
+  """
+  safetyChildren: String_Filter
+  """
+  ✨ Generated from Field `Medicine`.`safetyElderly` of type `String!`
+  """
+  safetyElderly: String_Filter
+  """
+  ✨ Generated from Field `Medicine`.`safetyPregnancy` of type `String!`
+  """
+  safetyPregnancy: String_Filter
+  """
+  ✨ Generated from Field `Medicine`.`slug` of type `String!`
+  """
+  slug: String_Filter
+  """
+  ✨ Generated from Field `Medicine`.`strength` of type `String!`
+  """
+  strength: String_Filter
+  """
+  ✨ Generated from Field `Medicine`.`verified` of type `Boolean!`
+  """
+  verified: Boolean_Filter
+  """
+  ✨ Generated from Field `Medicine`.`dosageRows_on_medicine` of type `[DosageRow!]!`
+  """
+  dosageRows_on_medicine: DosageRow_ListFilter
+  """
+  ✨ Generated from Field `Medicine`.`drugInteractions_on_medicine` of type `[DrugInteraction!]!`
+  """
+  drugInteractions_on_medicine: DrugInteraction_ListFilter
+  """
+  ✨ Generated from Field `Medicine`.`medicineLocalizedContents_on_medicine` of type `[MedicineLocalizedContent!]!`
+  """
+  medicineLocalizedContents_on_medicine: MedicineLocalizedContent_ListFilter
+  """
+  ✨ Generated from Field `Medicine`.`medicineVerifications_on_medicine` of type `[MedicineVerification!]!`
+  """
+  medicineVerifications_on_medicine: MedicineVerification_ListFilter
+}
+"""
+✨ Generated first-row input type for table 'Medicine'. This input selects the first row matching the filter criteria, ordered according to the specified conditions.
+"""
+input Medicine_FirstRow {
+  """
+  Order the result by the specified fields.
+  """
+  orderBy: [Medicine_Order!]
+  """
+  Filters rows based on the specified conditions.
+  """
+  where: Medicine_Filter
+}
+"""
+✨ Generated having input type for table 'Medicine'. This input allows you to filter groups during aggregate queries using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input Medicine_Having {
+  """
+  Apply multiple Having conditions using `AND` logic.
+  """
+  _and: [Medicine_Having!]
+  """
+  Whether to apply DISTINCT to the aggregate function.
+  """
+  _distinct: Boolean
+  """
+  Negate the result of the provided Having condition.
+  """
+  _not: Medicine_Having
+  """
+  Apply multiple Having conditions using `OR` logic.
+  """
+  _or: [Medicine_Having!]
+  """
+  ✨ Generated from Field `Medicine`.`_count` of type `Int!`
+  """
+  _count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`ageGroup_count` of type `Int!`
+  """
+  ageGroup_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`category_count` of type `Int!`
+  """
+  category_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`chemicalName_count` of type `Int!`
+  """
+  chemicalName_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`createdDate_count` of type `Int!`
+  """
+  createdDate_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`genericName_count` of type `Int!`
+  """
+  genericName_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`id_count` of type `Int!`
+  """
+  id_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`maxDailyDoseAdults_count` of type `Int!`
+  """
+  maxDailyDoseAdults_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`prescriptionRequired_count` of type `Int!`
+  """
+  prescriptionRequired_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`safetyBreastfeeding_count` of type `Int!`
+  """
+  safetyBreastfeeding_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`safetyChildren_count` of type `Int!`
+  """
+  safetyChildren_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`safetyElderly_count` of type `Int!`
+  """
+  safetyElderly_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`safetyPregnancy_count` of type `Int!`
+  """
+  safetyPregnancy_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`slug_count` of type `Int!`
+  """
+  slug_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`strength_count` of type `Int!`
+  """
+  strength_count: Int_Filter
+  """
+  ✨ Generated from Field `Medicine`.`verified_count` of type `Int!`
+  """
+  verified_count: Int_Filter
+}
+"""
+✨ Generated key input type for table 'Medicine'. It represents the primary key fields used to uniquely identify a row in the table.
+"""
+input Medicine_Key {
+  """
+  ✨ Generated from Field `Medicine`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `Medicine`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+}
+"""
+✨ Generated list filter input type for table 'Medicine'. This input applies filtering logic based on the count or existence of related objects that matches certain criteria.
+"""
+input Medicine_ListFilter {
+  """
+  The desired number of objects that match the condition (defaults to at least one).
+  """
+  count: Int_Filter = {gt:0}
+  """
+  Condition of the related objects to filter for.
+  """
+  exist: Medicine_Filter
+}
+"""
+✨ Generated order input type for table 'Medicine'. This input defines the sorting order of rows in query results based on one or more fields.
+"""
+input Medicine_Order {
+  """
+  ✨ Generated from Field `Medicine`.`id` of type `UUID!`
+  """
+  id: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`ageGroup` of type `String!`
+  """
+  ageGroup: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`category` of type `String!`
+  """
+  category: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`chemicalName` of type `String!`
+  """
+  chemicalName: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`createdDate` of type `String!`
+  """
+  createdDate: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`genericName` of type `String!`
+  """
+  genericName: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`maxDailyDoseAdults` of type `String!`
+  """
+  maxDailyDoseAdults: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`prescriptionRequired` of type `Boolean!`
+  """
+  prescriptionRequired: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`safetyBreastfeeding` of type `String!`
+  """
+  safetyBreastfeeding: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`safetyChildren` of type `String!`
+  """
+  safetyChildren: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`safetyElderly` of type `String!`
+  """
+  safetyElderly: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`safetyPregnancy` of type `String!`
+  """
+  safetyPregnancy: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`slug` of type `String!`
+  """
+  slug: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`strength` of type `String!`
+  """
+  strength: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`verified` of type `Boolean!`
+  """
+  verified: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`_count` of type `Int!`
+  """
+  _count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`ageGroup_count` of type `Int!`
+  """
+  ageGroup_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`category_count` of type `Int!`
+  """
+  category_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`chemicalName_count` of type `Int!`
+  """
+  chemicalName_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`createdDate_count` of type `Int!`
+  """
+  createdDate_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`genericName_count` of type `Int!`
+  """
+  genericName_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`id_count` of type `Int!`
+  """
+  id_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`maxDailyDoseAdults_count` of type `Int!`
+  """
+  maxDailyDoseAdults_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`prescriptionRequired_count` of type `Int!`
+  """
+  prescriptionRequired_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`safetyBreastfeeding_count` of type `Int!`
+  """
+  safetyBreastfeeding_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`safetyChildren_count` of type `Int!`
+  """
+  safetyChildren_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`safetyElderly_count` of type `Int!`
+  """
+  safetyElderly_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`safetyPregnancy_count` of type `Int!`
+  """
+  safetyPregnancy_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`slug_count` of type `Int!`
+  """
+  slug_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`strength_count` of type `Int!`
+  """
+  strength_count: OrderDirection
+  """
+  ✨ Generated from Field `Medicine`.`verified_count` of type `Int!`
+  """
+  verified_count: OrderDirection
+}
+"""
+✨ Generated data input type for table 'MedicineLocalizedContent'. It includes all necessary fields for creating or upserting rows into table.
+"""
+input MedicineLocalizedContent_Data {
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `MedicineLocalizedContent`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`medicineId` of type `UUID!`
+  """
+  medicineId: UUID
+  """
+  ✨ `_expr` server value variant of `medicineId` (✨ Generated from Field `MedicineLocalizedContent`.`medicineId` of type `UUID!`)
+  """
+  medicineId_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`medicine` of type `Medicine!`
+  """
+  medicine: Medicine_Key @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`description` of type `String!`
+  """
+  description: String
+  """
+  ✨ `_expr` server value variant of `description` (✨ Generated from Field `MedicineLocalizedContent`.`description` of type `String!`)
+  """
+  description_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`dosageNotes` of type `String!`
+  """
+  dosageNotes: String
+  """
+  ✨ `_expr` server value variant of `dosageNotes` (✨ Generated from Field `MedicineLocalizedContent`.`dosageNotes` of type `String!`)
+  """
+  dosageNotes_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`howItWorks` of type `String!`
+  """
+  howItWorks: String
+  """
+  ✨ `_expr` server value variant of `howItWorks` (✨ Generated from Field `MedicineLocalizedContent`.`howItWorks` of type `String!`)
+  """
+  howItWorks_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`language` of type `String!`
+  """
+  language: String
+  """
+  ✨ `_expr` server value variant of `language` (✨ Generated from Field `MedicineLocalizedContent`.`language` of type `String!`)
+  """
+  language_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`sideEffectsCommon` of type `[String!]!`
+  """
+  sideEffectsCommon: [String!]
+  """
+  ✨ `_update` server value variant of `sideEffectsCommon` (✨ Generated from Field `MedicineLocalizedContent`.`sideEffectsCommon` of type `[String!]!`)
+  """
+  sideEffectsCommon_update: [String_ListUpdate!] @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`sideEffectsLessCommon` of type `[String!]!`
+  """
+  sideEffectsLessCommon: [String!]
+  """
+  ✨ `_update` server value variant of `sideEffectsLessCommon` (✨ Generated from Field `MedicineLocalizedContent`.`sideEffectsLessCommon` of type `[String!]!`)
+  """
+  sideEffectsLessCommon_update: [String_ListUpdate!] @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`sideEffectsSerious` of type `[String!]!`
+  """
+  sideEffectsSerious: [String!]
+  """
+  ✨ `_update` server value variant of `sideEffectsSerious` (✨ Generated from Field `MedicineLocalizedContent`.`sideEffectsSerious` of type `[String!]!`)
+  """
+  sideEffectsSerious_update: [String_ListUpdate!] @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`usedFor` of type `[String!]!`
+  """
+  usedFor: [String!]
+  """
+  ✨ `_update` server value variant of `usedFor` (✨ Generated from Field `MedicineLocalizedContent`.`usedFor` of type `[String!]!`)
+  """
+  usedFor_update: [String_ListUpdate!] @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`warningCards_on_localizedContent` of type `[WarningCard!]!`
+  """
+  warningCards_on_localizedContent: [WarningCard_Data!]
+}
+"""
+✨ Generated filter input type for table 'MedicineLocalizedContent'. This input allows filtering objects using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input MedicineLocalizedContent_Filter {
+  """
+  Apply multiple filter conditions using `AND` logic.
+  """
+  _and: [MedicineLocalizedContent_Filter!]
+  """
+  Negate the result of the provided filter condition.
+  """
+  _not: MedicineLocalizedContent_Filter
+  """
+  Apply multiple filter conditions using `OR` logic.
+  """
+  _or: [MedicineLocalizedContent_Filter!]
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`id` of type `UUID!`
+  """
+  id: UUID_Filter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`medicineId` of type `UUID!`
+  """
+  medicineId: UUID_Filter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`medicine` of type `Medicine!`
+  """
+  medicine: Medicine_Filter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`description` of type `String!`
+  """
+  description: String_Filter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`dosageNotes` of type `String!`
+  """
+  dosageNotes: String_Filter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`howItWorks` of type `String!`
+  """
+  howItWorks: String_Filter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`language` of type `String!`
+  """
+  language: String_Filter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`sideEffectsCommon` of type `[String!]!`
+  """
+  sideEffectsCommon: String_ListFilter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`sideEffectsLessCommon` of type `[String!]!`
+  """
+  sideEffectsLessCommon: String_ListFilter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`sideEffectsSerious` of type `[String!]!`
+  """
+  sideEffectsSerious: String_ListFilter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`usedFor` of type `[String!]!`
+  """
+  usedFor: String_ListFilter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`warningCards_on_localizedContent` of type `[WarningCard!]!`
+  """
+  warningCards_on_localizedContent: WarningCard_ListFilter
+}
+"""
+✨ Generated first-row input type for table 'MedicineLocalizedContent'. This input selects the first row matching the filter criteria, ordered according to the specified conditions.
+"""
+input MedicineLocalizedContent_FirstRow {
+  """
+  Order the result by the specified fields.
+  """
+  orderBy: [MedicineLocalizedContent_Order!]
+  """
+  Filters rows based on the specified conditions.
+  """
+  where: MedicineLocalizedContent_Filter
+}
+"""
+✨ Generated having input type for table 'MedicineLocalizedContent'. This input allows you to filter groups during aggregate queries using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input MedicineLocalizedContent_Having {
+  """
+  Apply multiple Having conditions using `AND` logic.
+  """
+  _and: [MedicineLocalizedContent_Having!]
+  """
+  Whether to apply DISTINCT to the aggregate function.
+  """
+  _distinct: Boolean
+  """
+  Negate the result of the provided Having condition.
+  """
+  _not: MedicineLocalizedContent_Having
+  """
+  Apply multiple Having conditions using `OR` logic.
+  """
+  _or: [MedicineLocalizedContent_Having!]
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`_count` of type `Int!`
+  """
+  _count: Int_Filter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`description_count` of type `Int!`
+  """
+  description_count: Int_Filter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`dosageNotes_count` of type `Int!`
+  """
+  dosageNotes_count: Int_Filter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`howItWorks_count` of type `Int!`
+  """
+  howItWorks_count: Int_Filter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`id_count` of type `Int!`
+  """
+  id_count: Int_Filter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`language_count` of type `Int!`
+  """
+  language_count: Int_Filter
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`medicineId_count` of type `Int!`
+  """
+  medicineId_count: Int_Filter
+}
+"""
+✨ Generated key input type for table 'MedicineLocalizedContent'. It represents the primary key fields used to uniquely identify a row in the table.
+"""
+input MedicineLocalizedContent_Key {
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `MedicineLocalizedContent`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+}
+"""
+✨ Generated list filter input type for table 'MedicineLocalizedContent'. This input applies filtering logic based on the count or existence of related objects that matches certain criteria.
+"""
+input MedicineLocalizedContent_ListFilter {
+  """
+  The desired number of objects that match the condition (defaults to at least one).
+  """
+  count: Int_Filter = {gt:0}
+  """
+  Condition of the related objects to filter for.
+  """
+  exist: MedicineLocalizedContent_Filter
+}
+"""
+✨ Generated order input type for table 'MedicineLocalizedContent'. This input defines the sorting order of rows in query results based on one or more fields.
+"""
+input MedicineLocalizedContent_Order {
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`id` of type `UUID!`
+  """
+  id: OrderDirection
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`medicineId` of type `UUID!`
+  """
+  medicineId: OrderDirection
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`medicine` of type `Medicine!`
+  """
+  medicine: Medicine_Order
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`description` of type `String!`
+  """
+  description: OrderDirection
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`dosageNotes` of type `String!`
+  """
+  dosageNotes: OrderDirection
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`howItWorks` of type `String!`
+  """
+  howItWorks: OrderDirection
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`language` of type `String!`
+  """
+  language: OrderDirection
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`_count` of type `Int!`
+  """
+  _count: OrderDirection
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`description_count` of type `Int!`
+  """
+  description_count: OrderDirection
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`dosageNotes_count` of type `Int!`
+  """
+  dosageNotes_count: OrderDirection
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`howItWorks_count` of type `Int!`
+  """
+  howItWorks_count: OrderDirection
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`id_count` of type `Int!`
+  """
+  id_count: OrderDirection
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`language_count` of type `Int!`
+  """
+  language_count: OrderDirection
+  """
+  ✨ Generated from Field `MedicineLocalizedContent`.`medicineId_count` of type `Int!`
+  """
+  medicineId_count: OrderDirection
+}
+"""
+✨ Generated data input type for table 'MedicineVerification'. It includes all necessary fields for creating or upserting rows into table.
+"""
+input MedicineVerification_Data {
+  """
+  ✨ Generated from Field `MedicineVerification`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `MedicineVerification`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineVerification`.`medicineId` of type `UUID!`
+  """
+  medicineId: UUID
+  """
+  ✨ `_expr` server value variant of `medicineId` (✨ Generated from Field `MedicineVerification`.`medicineId` of type `UUID!`)
+  """
+  medicineId_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineVerification`.`medicine` of type `Medicine!`
+  """
+  medicine: Medicine_Key @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineVerification`.`doctorId` of type `String!`
+  """
+  doctorId: String
+  """
+  ✨ `_expr` server value variant of `doctorId` (✨ Generated from Field `MedicineVerification`.`doctorId` of type `String!`)
+  """
+  doctorId_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineVerification`.`slmcRegNo` of type `String!`
+  """
+  slmcRegNo: String
+  """
+  ✨ `_expr` server value variant of `slmcRegNo` (✨ Generated from Field `MedicineVerification`.`slmcRegNo` of type `String!`)
+  """
+  slmcRegNo_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `MedicineVerification`.`verifiedAt` of type `String!`
+  """
+  verifiedAt: String
+  """
+  ✨ `_expr` server value variant of `verifiedAt` (✨ Generated from Field `MedicineVerification`.`verifiedAt` of type `String!`)
+  """
+  verifiedAt_expr: String_Expr @fdc_forbiddenInVariables
+}
+"""
+✨ Generated filter input type for table 'MedicineVerification'. This input allows filtering objects using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input MedicineVerification_Filter {
+  """
+  Apply multiple filter conditions using `AND` logic.
+  """
+  _and: [MedicineVerification_Filter!]
+  """
+  Negate the result of the provided filter condition.
+  """
+  _not: MedicineVerification_Filter
+  """
+  Apply multiple filter conditions using `OR` logic.
+  """
+  _or: [MedicineVerification_Filter!]
+  """
+  ✨ Generated from Field `MedicineVerification`.`id` of type `UUID!`
+  """
+  id: UUID_Filter
+  """
+  ✨ Generated from Field `MedicineVerification`.`medicineId` of type `UUID!`
+  """
+  medicineId: UUID_Filter
+  """
+  ✨ Generated from Field `MedicineVerification`.`medicine` of type `Medicine!`
+  """
+  medicine: Medicine_Filter
+  """
+  ✨ Generated from Field `MedicineVerification`.`doctorId` of type `String!`
+  """
+  doctorId: String_Filter
+  """
+  ✨ Generated from Field `MedicineVerification`.`slmcRegNo` of type `String!`
+  """
+  slmcRegNo: String_Filter
+  """
+  ✨ Generated from Field `MedicineVerification`.`verifiedAt` of type `String!`
+  """
+  verifiedAt: String_Filter
+}
+"""
+✨ Generated first-row input type for table 'MedicineVerification'. This input selects the first row matching the filter criteria, ordered according to the specified conditions.
+"""
+input MedicineVerification_FirstRow {
+  """
+  Order the result by the specified fields.
+  """
+  orderBy: [MedicineVerification_Order!]
+  """
+  Filters rows based on the specified conditions.
+  """
+  where: MedicineVerification_Filter
+}
+"""
+✨ Generated having input type for table 'MedicineVerification'. This input allows you to filter groups during aggregate queries using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input MedicineVerification_Having {
+  """
+  Apply multiple Having conditions using `AND` logic.
+  """
+  _and: [MedicineVerification_Having!]
+  """
+  Whether to apply DISTINCT to the aggregate function.
+  """
+  _distinct: Boolean
+  """
+  Negate the result of the provided Having condition.
+  """
+  _not: MedicineVerification_Having
+  """
+  Apply multiple Having conditions using `OR` logic.
+  """
+  _or: [MedicineVerification_Having!]
+  """
+  ✨ Generated from Field `MedicineVerification`.`_count` of type `Int!`
+  """
+  _count: Int_Filter
+  """
+  ✨ Generated from Field `MedicineVerification`.`doctorId_count` of type `Int!`
+  """
+  doctorId_count: Int_Filter
+  """
+  ✨ Generated from Field `MedicineVerification`.`id_count` of type `Int!`
+  """
+  id_count: Int_Filter
+  """
+  ✨ Generated from Field `MedicineVerification`.`medicineId_count` of type `Int!`
+  """
+  medicineId_count: Int_Filter
+  """
+  ✨ Generated from Field `MedicineVerification`.`slmcRegNo_count` of type `Int!`
+  """
+  slmcRegNo_count: Int_Filter
+  """
+  ✨ Generated from Field `MedicineVerification`.`verifiedAt_count` of type `Int!`
+  """
+  verifiedAt_count: Int_Filter
+}
+"""
+✨ Generated key input type for table 'MedicineVerification'. It represents the primary key fields used to uniquely identify a row in the table.
+"""
+input MedicineVerification_Key {
+  """
+  ✨ Generated from Field `MedicineVerification`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `MedicineVerification`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+}
+"""
+✨ Generated list filter input type for table 'MedicineVerification'. This input applies filtering logic based on the count or existence of related objects that matches certain criteria.
+"""
+input MedicineVerification_ListFilter {
+  """
+  The desired number of objects that match the condition (defaults to at least one).
+  """
+  count: Int_Filter = {gt:0}
+  """
+  Condition of the related objects to filter for.
+  """
+  exist: MedicineVerification_Filter
+}
+"""
+✨ Generated order input type for table 'MedicineVerification'. This input defines the sorting order of rows in query results based on one or more fields.
+"""
+input MedicineVerification_Order {
+  """
+  ✨ Generated from Field `MedicineVerification`.`id` of type `UUID!`
+  """
+  id: OrderDirection
+  """
+  ✨ Generated from Field `MedicineVerification`.`medicineId` of type `UUID!`
+  """
+  medicineId: OrderDirection
+  """
+  ✨ Generated from Field `MedicineVerification`.`medicine` of type `Medicine!`
+  """
+  medicine: Medicine_Order
+  """
+  ✨ Generated from Field `MedicineVerification`.`doctorId` of type `String!`
+  """
+  doctorId: OrderDirection
+  """
+  ✨ Generated from Field `MedicineVerification`.`slmcRegNo` of type `String!`
+  """
+  slmcRegNo: OrderDirection
+  """
+  ✨ Generated from Field `MedicineVerification`.`verifiedAt` of type `String!`
+  """
+  verifiedAt: OrderDirection
+  """
+  ✨ Generated from Field `MedicineVerification`.`_count` of type `Int!`
+  """
+  _count: OrderDirection
+  """
+  ✨ Generated from Field `MedicineVerification`.`doctorId_count` of type `Int!`
+  """
+  doctorId_count: OrderDirection
+  """
+  ✨ Generated from Field `MedicineVerification`.`id_count` of type `Int!`
+  """
+  id_count: OrderDirection
+  """
+  ✨ Generated from Field `MedicineVerification`.`medicineId_count` of type `Int!`
+  """
+  medicineId_count: OrderDirection
+  """
+  ✨ Generated from Field `MedicineVerification`.`slmcRegNo_count` of type `Int!`
+  """
+  slmcRegNo_count: OrderDirection
+  """
+  ✨ Generated from Field `MedicineVerification`.`verifiedAt_count` of type `Int!`
+  """
+  verifiedAt_count: OrderDirection
+}
+"""
+✨ Generated data input type for table 'WarningCard'. It includes all necessary fields for creating or upserting rows into table.
+"""
+input WarningCard_Data {
+  """
+  ✨ Generated from Field `WarningCard`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `WarningCard`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `WarningCard`.`localizedContentId` of type `UUID!`
+  """
+  localizedContentId: UUID
+  """
+  ✨ `_expr` server value variant of `localizedContentId` (✨ Generated from Field `WarningCard`.`localizedContentId` of type `UUID!`)
+  """
+  localizedContentId_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `WarningCard`.`localizedContent` of type `MedicineLocalizedContent!`
+  """
+  localizedContent: MedicineLocalizedContent_Key @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `WarningCard`.`severity` of type `String!`
+  """
+  severity: String
+  """
+  ✨ `_expr` server value variant of `severity` (✨ Generated from Field `WarningCard`.`severity` of type `String!`)
+  """
+  severity_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `WarningCard`.`text` of type `String!`
+  """
+  text: String
+  """
+  ✨ `_expr` server value variant of `text` (✨ Generated from Field `WarningCard`.`text` of type `String!`)
+  """
+  text_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `WarningCard`.`title` of type `String!`
+  """
+  title: String
+  """
+  ✨ `_expr` server value variant of `title` (✨ Generated from Field `WarningCard`.`title` of type `String!`)
+  """
+  title_expr: String_Expr @fdc_forbiddenInVariables
+}
+"""
+✨ Generated filter input type for table 'WarningCard'. This input allows filtering objects using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input WarningCard_Filter {
+  """
+  Apply multiple filter conditions using `AND` logic.
+  """
+  _and: [WarningCard_Filter!]
+  """
+  Negate the result of the provided filter condition.
+  """
+  _not: WarningCard_Filter
+  """
+  Apply multiple filter conditions using `OR` logic.
+  """
+  _or: [WarningCard_Filter!]
+  """
+  ✨ Generated from Field `WarningCard`.`id` of type `UUID!`
+  """
+  id: UUID_Filter
+  """
+  ✨ Generated from Field `WarningCard`.`localizedContentId` of type `UUID!`
+  """
+  localizedContentId: UUID_Filter
+  """
+  ✨ Generated from Field `WarningCard`.`localizedContent` of type `MedicineLocalizedContent!`
+  """
+  localizedContent: MedicineLocalizedContent_Filter
+  """
+  ✨ Generated from Field `WarningCard`.`severity` of type `String!`
+  """
+  severity: String_Filter
+  """
+  ✨ Generated from Field `WarningCard`.`text` of type `String!`
+  """
+  text: String_Filter
+  """
+  ✨ Generated from Field `WarningCard`.`title` of type `String!`
+  """
+  title: String_Filter
+}
+"""
+✨ Generated first-row input type for table 'WarningCard'. This input selects the first row matching the filter criteria, ordered according to the specified conditions.
+"""
+input WarningCard_FirstRow {
+  """
+  Order the result by the specified fields.
+  """
+  orderBy: [WarningCard_Order!]
+  """
+  Filters rows based on the specified conditions.
+  """
+  where: WarningCard_Filter
+}
+"""
+✨ Generated having input type for table 'WarningCard'. This input allows you to filter groups during aggregate queries using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input WarningCard_Having {
+  """
+  Apply multiple Having conditions using `AND` logic.
+  """
+  _and: [WarningCard_Having!]
+  """
+  Whether to apply DISTINCT to the aggregate function.
+  """
+  _distinct: Boolean
+  """
+  Negate the result of the provided Having condition.
+  """
+  _not: WarningCard_Having
+  """
+  Apply multiple Having conditions using `OR` logic.
+  """
+  _or: [WarningCard_Having!]
+  """
+  ✨ Generated from Field `WarningCard`.`_count` of type `Int!`
+  """
+  _count: Int_Filter
+  """
+  ✨ Generated from Field `WarningCard`.`id_count` of type `Int!`
+  """
+  id_count: Int_Filter
+  """
+  ✨ Generated from Field `WarningCard`.`localizedContentId_count` of type `Int!`
+  """
+  localizedContentId_count: Int_Filter
+  """
+  ✨ Generated from Field `WarningCard`.`severity_count` of type `Int!`
+  """
+  severity_count: Int_Filter
+  """
+  ✨ Generated from Field `WarningCard`.`text_count` of type `Int!`
+  """
+  text_count: Int_Filter
+  """
+  ✨ Generated from Field `WarningCard`.`title_count` of type `Int!`
+  """
+  title_count: Int_Filter
+}
+"""
+✨ Generated key input type for table 'WarningCard'. It represents the primary key fields used to uniquely identify a row in the table.
+"""
+input WarningCard_Key {
+  """
+  ✨ Generated from Field `WarningCard`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `WarningCard`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+}
+"""
+✨ Generated list filter input type for table 'WarningCard'. This input applies filtering logic based on the count or existence of related objects that matches certain criteria.
+"""
+input WarningCard_ListFilter {
+  """
+  The desired number of objects that match the condition (defaults to at least one).
+  """
+  count: Int_Filter = {gt:0}
+  """
+  Condition of the related objects to filter for.
+  """
+  exist: WarningCard_Filter
+}
+"""
+✨ Generated order input type for table 'WarningCard'. This input defines the sorting order of rows in query results based on one or more fields.
+"""
+input WarningCard_Order {
+  """
+  ✨ Generated from Field `WarningCard`.`id` of type `UUID!`
+  """
+  id: OrderDirection
+  """
+  ✨ Generated from Field `WarningCard`.`localizedContentId` of type `UUID!`
+  """
+  localizedContentId: OrderDirection
+  """
+  ✨ Generated from Field `WarningCard`.`localizedContent` of type `MedicineLocalizedContent!`
+  """
+  localizedContent: MedicineLocalizedContent_Order
+  """
+  ✨ Generated from Field `WarningCard`.`severity` of type `String!`
+  """
+  severity: OrderDirection
+  """
+  ✨ Generated from Field `WarningCard`.`text` of type `String!`
+  """
+  text: OrderDirection
+  """
+  ✨ Generated from Field `WarningCard`.`title` of type `String!`
+  """
+  title: OrderDirection
+  """
+  ✨ Generated from Field `WarningCard`.`_count` of type `Int!`
+  """
+  _count: OrderDirection
+  """
+  ✨ Generated from Field `WarningCard`.`id_count` of type `Int!`
+  """
+  id_count: OrderDirection
+  """
+  ✨ Generated from Field `WarningCard`.`localizedContentId_count` of type `Int!`
+  """
+  localizedContentId_count: OrderDirection
+  """
+  ✨ Generated from Field `WarningCard`.`severity_count` of type `Int!`
+  """
+  severity_count: OrderDirection
+  """
+  ✨ Generated from Field `WarningCard`.`text_count` of type `Int!`
+  """
+  text_count: OrderDirection
+  """
+  ✨ Generated from Field `WarningCard`.`title_count` of type `Int!`
+  """
+  title_count: OrderDirection
+}

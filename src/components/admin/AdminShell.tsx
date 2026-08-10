@@ -2,10 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useAdminRole, PRESET_USERS, AdminUser } from '@/components/admin/AdminRoleContext';
-import { getStoredMedicines } from '@/data/medicinesData';
-import { getPendingStaffCount } from '@/data/staffData';
+import { usePathname } from 'next/navigation';
+import { useAdminRole } from '@/components/admin/AdminRoleContext';
 import { 
   LayoutDashboard, 
   Pill, 
@@ -26,36 +24,36 @@ import {
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const router = useRouter();
-  const { user, logout, switchUser, isAuthenticated } = useAdminRole();
+  const { user, logout, isAuthenticated, isLoading } = useAdminRole();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [roleMenuOpen, setRoleMenuOpen] = useState(false);
   const [pendingCount, setPendingCount] = useState(0);
   const [pendingStaffCount, setPendingStaffCount] = useState(0);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const list = getStoredMedicines();
-      const unverified = list.filter((m) => !m.verified || (m.verifications && m.verifications.length < 2));
-      setPendingCount(unverified.length);
-      setPendingStaffCount(getPendingStaffCount());
-    }
+    fetch('/api/medicine')
+      .then(res => res.json())
+      .then(data => {
+        const list = data.medicines ?? [];
+        const unverified = list.filter((m: any) => !m.verified);
+        setPendingCount(unverified.length);
+      })
+      .catch(() => {});
   }, [pathname]);
 
-  const { isLoading } = useAdminRole();
-
+  // Redirect to login if Firebase says user is not authenticated
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push('/login');
+      window.location.href = '/en/login';
     }
-  }, [isLoading, isAuthenticated, router]);
+  }, [isLoading, isAuthenticated]);
 
   if (isLoading) {
     return <div className="min-h-screen flex items-center justify-center bg-[#F4F7FA]">Loading...</div>;
   }
 
   if (!isAuthenticated) {
-    return null; // Will redirect
+    return null;
   }
 
   // Filter navigation items based on user role
@@ -192,10 +190,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                   </div>
 
                   <button
-                    onClick={() => {
-                      logout();
+                    onClick={async () => {
                       setRoleMenuOpen(false);
-                      router.push('/admin/login');
+                      await logout();
                     }}
                     className="w-full text-left p-2.5 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors flex items-center gap-2 cursor-pointer"
                   >

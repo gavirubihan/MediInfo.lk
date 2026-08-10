@@ -8,8 +8,20 @@ import {
   Pill, Camera, Search, Filter, X, ChevronRight, ShieldCheck, Stethoscope,
   Sparkles, ArrowRight, ChevronDown
 } from 'lucide-react';
-import { sampleMedicines } from '@/data/medicinesData';
 import { UploadPrescriptionButton } from '@/components/ui/UploadPrescriptionButton';
+
+type MedicineItem = {
+  id: string;
+  slug: string;
+  genericName: string;
+  chemicalName: string;
+  category: string;
+  brandNames: string[];
+  prescriptionRequired: boolean;
+  verified: boolean;
+  strength: string;
+  coverImage?: string;
+};
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type CategoryKey = string;
@@ -75,7 +87,7 @@ function FilterChip({
 }
 
 /** Premium medicine result card — vertical on ALL breakpoints */
-function MedicineCard({ med, index }: { med: typeof sampleMedicines[0]; index: number }) {
+function MedicineCard({ med, index }: { med: MedicineItem; index: number }) {
   return (
     <Link
       href={`/medicine/${med.slug}`}
@@ -146,7 +158,7 @@ function MedicineCard({ med, index }: { med: typeof sampleMedicines[0]; index: n
           </div>
 
           <p className="text-[11px] sm:text-[13px] text-dark-gray leading-relaxed line-clamp-2 sm:line-clamp-2 flex-1">
-            {med.localized.en.description}
+            {med.category} — {med.strength}
           </p>
 
           <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-light-gray/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
@@ -189,6 +201,16 @@ export default function SearchPage() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isUploadExpanded, setIsUploadExpanded] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [allMedicines, setAllMedicines] = useState<MedicineItem[]>([]);
+  const [isLoadingMedicines, setIsLoadingMedicines] = useState(true);
+
+  React.useEffect(() => {
+    fetch('/api/medicine')
+      .then(res => res.json())
+      .then(data => setAllMedicines(data.medicines ?? []))
+      .catch(console.error)
+      .finally(() => setIsLoadingMedicines(false));
+  }, []);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -215,15 +237,14 @@ export default function SearchPage() {
     if (q) setSearchQuery(q);
   }, [searchParams]);
 
-  const filteredMedicines = sampleMedicines.filter((med) => {
+  const filteredMedicines = allMedicines.filter((med) => {
     const q = searchQuery.toLowerCase();
     const matchesSearch =
       q === '' ||
       med.genericName.toLowerCase().includes(q) ||
       med.chemicalName.toLowerCase().includes(q) ||
       med.brandNames.some((b) => b.toLowerCase().includes(q)) ||
-      med.category.toLowerCase().includes(q) ||
-      med.localized.en.description.toLowerCase().includes(q);
+      med.category.toLowerCase().includes(q);
 
     const matchesCategory = selectedCategory === 'All' || med.category === selectedCategory;
     const matchesRx =

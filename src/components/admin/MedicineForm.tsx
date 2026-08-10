@@ -23,7 +23,6 @@ import {
 } from 'lucide-react';
 import { AITranslateModal } from './AITranslateModal';
 import { DoctorEmailModal } from './DoctorEmailModal';
-import { addOrUpdateMedicine, MedicineRecord } from '@/data/medicinesData';
 
 export interface DosageRow {
   ageGroup: string;
@@ -87,175 +86,73 @@ export interface MedicineFormData {
 }
 
 const initialFormState: MedicineFormData = {
-  genericName: 'Paracetamol',
-  chemicalName: 'Acetaminophen',
-  brandNames: ['Panadol', 'Calpol', 'Disprol', 'Febrex', 'P-500', 'Crocin', 'Metacin', 'SPC Paracetamol'],
-  slug: 'paracetamol',
-  category: 'Painkiller',
-  form: ['Tablet', 'Syrup'],
-  strength: '500mg / 1000mg',
-  ageGroup: 'Adults & Children',
+  genericName: '',
+  chemicalName: '',
+  brandNames: [],
+  slug: '',
+  category: '',
+  form: [],
+  strength: '',
+  ageGroup: '',
   prescriptionRequired: false,
   verified: false,
-  maxDailyDoseAdults: '4000mg',
+  maxDailyDoseAdults: '',
 
-  dosageRows: [
-    { ageGroup: 'Adults (18–64 yrs)', dose: '500–1000mg', frequency: 'Every 4–6 hours', maxPerDay: '4000mg' },
-    { ageGroup: 'Elderly (≥65 yrs)', dose: '500mg', frequency: 'Every 6–8 hours', maxPerDay: '2000mg' },
-    { ageGroup: 'Adolescents (12–17 yrs)', dose: '500mg', frequency: 'Every 4–6 hours', maxPerDay: '3000mg' },
-    { ageGroup: 'Children (6–11 yrs)', dose: '250–500mg', frequency: 'Every 4–6 hours', maxPerDay: '2000mg' },
-    { ageGroup: 'Young Children (2–5 yrs)', dose: '120–250mg (Syrup)', frequency: 'Every 4–6 hours', maxPerDay: '1000mg' },
-    { ageGroup: 'Infants (1–23 months)', dose: '60–120mg (Infant Drops)', frequency: 'Every 6 hours (Doctor advised)', maxPerDay: '480mg' },
-    { ageGroup: 'Neonates (0–28 days)', dose: 'Consult Doctor', frequency: 'Medical Supervision Only', maxPerDay: 'Specialist Specified' },
-  ],
+  dosageRows: [],
 
-  drugInteractions: [
-    { id: '1', drug: 'Warfarin', note: 'May enhance anticoagulant effect. Monitor INR closely.' },
-    { id: '2', drug: 'Carbamazepine / Phenytoin', note: 'May increase liver toxicity of paracetamol.' },
-  ],
+  drugInteractions: [],
 
   safety: {
     pregnancy: 'caution',
-    breastfeeding: 'safe',
-    elderly: 'safe',
-    children: 'safe',
+    breastfeeding: 'caution',
+    elderly: 'caution',
+    children: 'caution',
   },
 
   localizedContent: {
     en: {
-      description: 'Paracetamol (also known as acetaminophen) is one of the most widely used medicines in the world. It belongs to the analgesic (pain reliever) and antipyretic (fever reducer) class of medications. It is available over the counter in most countries without a prescription.',
-      usedFor: [
-        'Mild to moderate pain (headache, toothache, back pain)',
-        'Fever reduction in adults and children',
-        'Post-vaccination fever and discomfort',
-        'Muscle aches and cold/flu symptoms',
-      ],
-      howItWorks: 'Paracetamol works by blocking pain signals in the brain and reducing fever by acting on the hypothalamus — the part of the brain that regulates body temperature.',
-      dosageNotes: 'Always follow your doctor’s prescription. Do not exceed the maximum daily dose. Leave at least 4 hours between doses.',
-      sideEffectsCommon: [
-        'Generally very well tolerated at recommended doses',
-        'Mild nausea in some patients (rare)',
-      ],
-      sideEffectsLessCommon: [
-        'Skin rash or itching',
-        'Stomach upset or digestive discomfort',
-      ],
-      sideEffectsSerious: [
-        'Signs of liver damage (jaundice, dark urine, severe nausea)',
-        'Severe allergic reaction (rash, swelling, difficulty breathing)',
-        'Blood in urine or unusual bruising',
-      ],
-      warningCards: [
-        {
-          id: 'w1',
-          title: 'Alcohol Warning',
-          severity: 'high',
-          text: 'Do not take paracetamol if you regularly consume alcohol. Combining alcohol with paracetamol significantly increases the risk of severe liver damage.',
-        },
-        {
-          id: 'w2',
-          title: 'Liver Disease & Hepatitis',
-          severity: 'high',
-          text: 'Patients with liver disease or impaired liver function should use paracetamol only under strict medical supervision.',
-        },
-        {
-          id: 'w3',
-          title: 'Overdose Risk',
-          severity: 'high',
-          text: 'Paracetamol overdose is a major cause of acute liver failure. Never exceed 4g (4000mg) per day in adults.',
-        },
-      ],
+      description: '',
+      usedFor: [],
+      howItWorks: '',
+      dosageNotes: '',
+      sideEffectsCommon: [],
+      sideEffectsLessCommon: [],
+      sideEffectsSerious: [],
+      warningCards: [],
     },
     si: {
-      description: 'පැරසිටමෝල් (ඇසිටමිනෝෆෙන්) යනු ලෝකයේ වඩාත්ම බහුලව භාවිතා වන ඖෂධවලින් එකකි. එය වේදනා නාශක (analgesic) සහ උණ අඩු කරන (antipyretic) කාණ්ඩයට අයත් වේ. බොහෝ රටවල වෛද්‍ය නිර්දේශයක් නොමැතිව ලබාගත හැක.',
-      usedFor: [
-        'සුළු හා මධ්‍යස්ථ වේදනාවන් (හිසරදය, දත් කැක්කුම, කොන්දේ කැක්කුම)',
-        'වැඩිහිටියන්ගේ සහ ළමයින්ගේ උණ පාලනය',
-        'එන්නත් කිරීමෙන් පසු ඇතිවන උණ සහ අපහසුතාව',
-        'කැක්කුම සහ සෙම්ප්‍රතිශ්‍යාව',
-      ],
-      howItWorks: 'පැරසිටමෝල් මගින් මොළයේ වේදනා සංඥා අවහිර කරන අතර ශරීර උෂ්ණත්වය පාලනය කරන හයිපොතලමසයට බලපෑම් කර උණ අඩු කරයි.',
-      dosageNotes: 'සෑම විටම ඔබේ වෛද්‍යවරයාගේ උපදෙස් පිළිපදින්න. උපරිම දෛනික මාත්‍රාව ඉක්මවා නොයන්න. මාත්‍රා අතර අවම වශයෙන් පැය 4 ක පරතරයක් තබන්න.',
-      sideEffectsCommon: [
-        'නිර්දේශිත මාත්‍රාවලින් භාවිතයේදී අතුරු ආබාධ ඉතා අවමය',
-        'ඇතැම් රෝගීන්ට සුළු වමනය ගතිය (කලාතුරකින්)',
-      ],
-      sideEffectsLessCommon: [
-        'සමේ කුෂ්ඨ හෝ කැසීම',
-        'බඩවැල් අපහසුතාව',
-      ],
-      sideEffectsSerious: [
-        'අක්මා හානියේ ලක්ෂණ (සම කහ වීම, තද පැහැති මුත්‍රා, දැඩි වමනය)',
-        'දැඩි අසාත්මිකතා ප්‍රතික්‍රියා (ශ්වසන අපහසුතා)',
-      ],
-      warningCards: [
-        {
-          id: 'w1',
-          title: 'මත්පැන් භාවිතය පිළිබඳ අවවාදය',
-          severity: 'high',
-          text: 'ඔබ නිතිපතා මත්පැන් පානය කරන්නේ නම් පැරසිටමෝල් නොගන්න. මත්පැන් සමඟ පැරසිටමෝල් ගැනීමෙන් අක්මාවට බරපතල හානි සිදුවිය හැක.',
-        },
-        {
-          id: 'w2',
-          title: 'අක්මා රෝග අවදානම',
-          severity: 'high',
-          text: 'අක්මා රෝග හෝ හෙපටයිටිස් ඇති රෝගීන් වෛද්‍ය අධීක්ෂණය යටතේ පමණක් භාවිතා කළ යුතුය.',
-        },
-        {
-          id: 'w3',
-          title: 'අධිමාත්‍රා අවදානම',
-          severity: 'high',
-          text: 'පැරසිටමෝල් අධිමාත්‍රාව අක්මාව අක්‍රිය වීමට ප්‍රධාන හේතුවකි. වැඩිහිටියන් දිනකට ග්‍රෑම් 4 ඉක්මවා නොගත යුතුය.',
-        },
-      ],
+      description: '',
+      usedFor: [],
+      howItWorks: '',
+      dosageNotes: '',
+      sideEffectsCommon: [],
+      sideEffectsLessCommon: [],
+      sideEffectsSerious: [],
+      warningCards: [],
     },
     ta: {
-      description: 'பாரசிட்டமால் (அசிடமினோஃபென்) உலகில் மிகவும் பரவலாகப் பயன்படுத்தப்படும் மருந்துகளில் ஒன்றாகும். இது வலி நிவாரணி மற்றும் காய்ச்சலைக் குறைக்கும் மருந்துகளின் வகுப்பைச் சேர்ந்தது.',
-      usedFor: [
-        'மிதமான வலி (தலைவலி, பல் வலி, முதுகு வலி)',
-        'பெரியவர்கள் மற்றும் குழந்தைகளில் காய்ச்சலைக் குறைத்தல்',
-        'தடுப்பூசிக்கு பின் ஏற்படும் காய்ச்சல் மற்றும் அசௌகரியம்',
-      ],
-      howItWorks: 'பாரசிட்டமால் மூளையில் உள்ள வலி சமிக்ஞைகளைத் தடுப்பதன் மூலமும் உடலின் வெப்பநிலையைக் கட்டுப்படுத்தும் ஹைபோதாலமஸில் செயல்படுவதன் மூலமும் செயல்படுகிறது.',
-      dosageNotes: 'எப்போதும் உங்கள் மருத்துவரின் பரிந்துரையைப் பின்பற்றவும். அதிகபட்ச தினசரி அளவைத் தாண்டக்கூடாது.',
-      sideEffectsCommon: [
-        'பரிந்துரைக்கப்பட்ட அளவுகளில் பயன்படுத்தும்போது பக்கவிளைவுகள் மிகக் குறைவு',
-      ],
-      sideEffectsLessCommon: [
-        'தோல் சொறி அல்லது அரிப்பு',
-        'செரிமான அசௌகரியம்',
-      ],
-      sideEffectsSerious: [
-        'கல்லீரல் பாதிப்பின் அறிகுறிகள் (மஞ்சள் காமாலை, அடர் சிறுநீர்)',
-        'கடுமையான ஒவ்வாமை எதிர்வினை',
-      ],
-      warningCards: [
-        {
-          id: 'w1',
-          title: 'மதுபான எச்சரிக்கை',
-          severity: 'high',
-          text: 'நீங்கள் தவறாமல் மது அருந்தினால் பாரசிட்டமால் சாப்பிட வேண்டாம். மதுவுடன் பாரசிட்டமால் சேர்ப்பது கல்லீரலுக்கு கடுமையான பாதிப்பை ஏற்படுத்தும்.',
-        },
-        {
-          id: 'w2',
-          title: 'கல்லீரல் நோய் எச்சரிக்கை',
-          severity: 'high',
-          text: 'கல்லீரல் நோய் உள்ள நோயாளிகள் மருத்துவ மேற்பார்வையின் கீழ் மட்டுமே பயன்படுத்த வேண்டும்.',
-        },
-      ],
+      description: '',
+      usedFor: [],
+      howItWorks: '',
+      dosageNotes: '',
+      sideEffectsCommon: [],
+      sideEffectsLessCommon: [],
+      sideEffectsSerious: [],
+      warningCards: [],
     },
   },
 };
 
-export function MedicineForm() {
-  const [formData, setFormData] = useState<MedicineFormData>(initialFormState);
+export function MedicineForm({ initialData }: { initialData?: MedicineFormData & { id?: string } }) {
+  const [formData, setFormData] = useState<MedicineFormData & { id?: string }>(initialData || initialFormState);
+  const isEditing = !!initialData;
   const [activeLangTab, setActiveLangTab] = useState<'en' | 'si' | 'ta'>('en');
   const [activePreviewTab, setActivePreviewTab] = useState<string>('overview');
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [saveToast, setSaveToast] = useState(false);
   const [emailModalOpen, setEmailModalOpen] = useState(false);
-  const [savedMedicineForEmail, setSavedMedicineForEmail] = useState<MedicineRecord | null>(null);
+  const [savedMedicineForEmail, setSavedMedicineForEmail] = useState<any>(null);
   const [newBrandInput, setNewBrandInput] = useState('');
 
   const handleAddBrandName = () => {
@@ -283,22 +180,12 @@ export function MedicineForm() {
     'Alcohol Warning',
     'Liver Disease',
     'Kidney Impairment',
-    'Pregnancy & Breastfeeding',
-    'Driving & Machinery Caution',
-    'Overdose Risk',
-    'Heart / Blood Pressure',
-    'Diabetes Warning',
-    'Stomach Ulcers / Bleeding',
+    'Drowsiness',
+    'Overdose Risk'
   ];
 
   const handleGeneralChange = (field: keyof MedicineFormData, value: any) => {
-    setFormData((prev) => {
-      const updated = { ...prev, [field]: value };
-      if (field === 'genericName') {
-        updated.slug = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      }
-      return updated;
-    });
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleLocalizedTextChange = (field: keyof LanguageContent, value: any) => {
@@ -314,7 +201,7 @@ export function MedicineForm() {
     }));
   };
 
-  // Dynamic Lists (Used For, Common Side Effects, Less Common, Serious)
+  // List Handlers
   const handleListFieldChange = (
     field: 'usedFor' | 'sideEffectsCommon' | 'sideEffectsLessCommon' | 'sideEffectsSerious',
     index: number,
@@ -370,19 +257,16 @@ export function MedicineForm() {
 
   // Warning Cards Builder
   const addWarningCard = () => {
-    const newCard: WarningCard = {
-      id: Date.now().toString(),
-      title: 'New Safety Warning',
-      severity: 'high',
-      text: '',
-    };
     setFormData((prev) => ({
       ...prev,
       localizedContent: {
         ...prev.localizedContent,
         [activeLangTab]: {
           ...prev.localizedContent[activeLangTab],
-          warningCards: [...prev.localizedContent[activeLangTab].warningCards, newCard],
+          warningCards: [
+            ...prev.localizedContent[activeLangTab].warningCards,
+            { id: Date.now().toString(), title: '', severity: 'info', text: '' },
+          ],
         },
       },
     }));
@@ -390,7 +274,7 @@ export function MedicineForm() {
 
   const updateWarningCard = (id: string, key: keyof WarningCard, value: string) => {
     setFormData((prev) => {
-      const cards = prev.localizedContent[activeLangTab].warningCards.map((card) =>
+      const currentCards = prev.localizedContent[activeLangTab].warningCards.map((card) =>
         card.id === id ? { ...card, [key]: value } : card
       );
       return {
@@ -399,7 +283,7 @@ export function MedicineForm() {
           ...prev.localizedContent,
           [activeLangTab]: {
             ...prev.localizedContent[activeLangTab],
-            warningCards: cards,
+            warningCards: currentCards,
           },
         },
       };
@@ -469,39 +353,56 @@ export function MedicineForm() {
     }));
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSaveToast(true);
-    setTimeout(() => setSaveToast(false), 4500);
 
-    const medRecord: MedicineRecord = {
-      id: `med-${Date.now()}`,
-      slug: formData.slug || formData.genericName.toLowerCase().replace(/\s+/g, '-'),
-      genericName: formData.genericName,
-      chemicalName: formData.chemicalName,
-      brandNames: formData.brandNames,
-      category: formData.category,
-      coverImage: '/images/medicine/paracetamol-cover.png',
-      form: formData.form,
-      strength: formData.strength,
-      ageGroup: formData.ageGroup,
-      prescriptionRequired: formData.prescriptionRequired,
-      verified: false, // Default unverified until 2 doctor verifications
-      verifications: [],
-      createdDate: new Date().toISOString().split('T')[0],
-      maxDailyDoseAdults: formData.maxDailyDoseAdults,
-      rating: '4.9',
-      reviewCount: 'Pending Review',
-      dosageRows: formData.dosageRows,
-      drugInteractions: formData.drugInteractions,
-      localized: {
-        en: formData.localizedContent.en,
-        si: formData.localizedContent.si,
-        ta: formData.localizedContent.ta,
-      },
-    };
+    const slug = formData.slug || formData.genericName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 
-    addOrUpdateMedicine(medRecord);
+    const endpoint = isEditing && formData.id ? `/api/medicine/${slug}` : '/api/medicine';
+    const method = isEditing && formData.id ? 'PUT' : 'POST';
+
+    try {
+      const res = await fetch(endpoint, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: formData.id,
+          core: {
+            slug,
+            genericName: formData.genericName,
+            chemicalName: formData.chemicalName,
+            brandNames: formData.brandNames,
+            category: formData.category,
+            form: formData.form,
+            strength: formData.strength,
+            ageGroup: formData.ageGroup,
+            prescriptionRequired: formData.prescriptionRequired,
+            verified: false,
+            createdDate: new Date().toISOString().split('T')[0],
+            maxDailyDoseAdults: formData.maxDailyDoseAdults,
+            safetyPregnancy: formData.safety?.pregnancy || 'caution',
+            safetyBreastfeeding: formData.safety?.breastfeeding || 'caution',
+            safetyElderly: formData.safety?.elderly || 'caution',
+            safetyChildren: formData.safety?.children || 'caution',
+          },
+          dosageRows: formData.dosageRows,
+          drugInteractions: formData.drugInteractions,
+          localizedContent: {
+            en: formData.localizedContent.en,
+            si: formData.localizedContent.si,
+            ta: formData.localizedContent.ta,
+          },
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Save failed');
+
+      setSaveToast(true);
+      setTimeout(() => setSaveToast(false), 4500);
+    } catch (err: any) {
+      alert(`Error saving medicine: ${err.message}`);
+    }
   };
 
   const currentLocalized = formData.localizedContent[activeLangTab];
@@ -1138,6 +1039,35 @@ export function MedicineForm() {
               <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 rounded-xl border border-amber-500/20 text-xs font-bold text-amber-800">
                 <ShieldAlert size={15} className="text-amber-600 shrink-0" />
                 <span>Verification: Requires 2 Doctor Approvals via Review Workspace</span>
+              </div>
+            </div>
+
+            {/* Safety Quick Indicators */}
+            <div className="pt-4 border-t border-light-gray mt-4">
+              <label className="block text-xs font-bold text-dark-gray mb-3 flex items-center justify-between">
+                <span>Safety Quick Indicators</span>
+                <span className="text-[11px] text-mid-gray font-normal">Used for fast filtering and basic tags</span>
+              </label>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {(['pregnancy', 'breastfeeding', 'elderly', 'children'] as const).map((key) => (
+                  <div key={key}>
+                    <label className="block text-[11px] font-bold text-mid-gray uppercase tracking-wider mb-1.5">{key}</label>
+                    <select
+                      value={formData.safety[key]}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safety: { ...prev.safety, [key]: e.target.value as any } }))}
+                      className={`w-full h-10 px-3 rounded-xl border text-xs font-bold outline-none transition-all ${
+                        formData.safety[key] === 'safe' ? 'bg-teal/10 border-teal/20 text-teal' :
+                        formData.safety[key] === 'unsafe' ? 'bg-red-500/10 border-red-500/20 text-red-600' :
+                        'bg-amber-500/10 border-amber-500/20 text-amber-700'
+                      }`}
+                    >
+                      <option value="safe" className="bg-white text-near-black">Safe</option>
+                      <option value="caution" className="bg-white text-near-black">Caution</option>
+                      <option value="unsafe" className="bg-white text-near-black">Unsafe</option>
+                    </select>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

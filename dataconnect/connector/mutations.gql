@@ -1,0 +1,85 @@
+mutation CreateMedicine(
+  $slug: String!, $genericName: String!, $chemicalName: String!, 
+  $category: String!, $strength: String!, $ageGroup: String!,
+  $prescriptionRequired: Boolean!, $verified: Boolean!, 
+  $maxDailyDoseAdults: String!, $safetyPregnancy: String!, 
+  $safetyBreastfeeding: String!, $safetyElderly: String!, 
+  $safetyChildren: String!, $brandNames: [String!]!, $form: [String!]!, $createdDate: String!
+) @auth(level: PUBLIC) {
+  medicine_insert(data: {
+    slug: $slug, genericName: $genericName, chemicalName: $chemicalName,
+    category: $category, strength: $strength, ageGroup: $ageGroup,
+    prescriptionRequired: $prescriptionRequired, verified: $verified,
+    maxDailyDoseAdults: $maxDailyDoseAdults, safetyPregnancy: $safetyPregnancy,
+    safetyBreastfeeding: $safetyBreastfeeding, safetyElderly: $safetyElderly,
+    safetyChildren: $safetyChildren, brandNames: $brandNames, form: $form,
+    createdDate: $createdDate
+  })
+}
+
+mutation CreateMedicineLocalizedContent(
+  $medicineId: UUID!, $language: String!, $description: String!,
+  $howItWorks: String!, $dosageNotes: String!, $usedFor: [String!]!,
+  $sideEffectsCommon: [String!]!, $sideEffectsLessCommon: [String!]!,
+  $sideEffectsSerious: [String!]!
+) @auth(level: PUBLIC) {
+  medicineLocalizedContent_insert(data: {
+    medicineId: $medicineId, language: $language, description: $description,
+    howItWorks: $howItWorks, dosageNotes: $dosageNotes, usedFor: $usedFor,
+    sideEffectsCommon: $sideEffectsCommon, sideEffectsLessCommon: $sideEffectsLessCommon,
+    sideEffectsSerious: $sideEffectsSerious
+  })
+}
+
+mutation CreateDosageRow($medicineId: UUID!, $ageGroup: String!, $dose: String!, $frequency: String!, $maxPerDay: String!) @auth(level: PUBLIC) {
+  dosageRow_insert(data: {
+    medicineId: $medicineId, ageGroup: $ageGroup, dose: $dose, frequency: $frequency, maxPerDay: $maxPerDay
+  })
+}
+
+mutation CreateDrugInteraction($medicineId: UUID!, $drug: String!, $note: String!) @auth(level: PUBLIC) {
+  drugInteraction_insert(data: {
+    medicineId: $medicineId, drug: $drug, note: $note
+  })
+}
+
+mutation CreateWarningCard($localizedContentId: UUID!, $title: String!, $severity: String!, $text: String!) @auth(level: PUBLIC) {
+  warningCard_insert(data: {
+    localizedContentId: $localizedContentId, title: $title, severity: $severity, text: $text
+  })
+}
+
+mutation DeleteMedicineRelations($medicineId: UUID!) @auth(level: PUBLIC) {
+  dosageRow_deleteMany(where: { medicineId: { eq: $medicineId } })
+  drugInteraction_deleteMany(where: { medicineId: { eq: $medicineId } })
+  medicineLocalizedContent_deleteMany(where: { medicineId: { eq: $medicineId } })
+}
+
+mutation UpdateMedicineCore(
+  $id: UUID!, $slug: String!, $genericName: String!, $chemicalName: String!, 
+  $category: String!, $strength: String!, $ageGroup: String!,
+  $prescriptionRequired: Boolean!, $verified: Boolean!, 
+  $maxDailyDoseAdults: String!, $safetyPregnancy: String!, 
+  $safetyBreastfeeding: String!, $safetyElderly: String!, 
+  $safetyChildren: String!, $brandNames: [String!]!, $form: [String!]!, $createdDate: String!
+) @auth(level: PUBLIC) {
+  medicine_update(id: $id, data: {
+    slug: $slug, genericName: $genericName, chemicalName: $chemicalName,
+    category: $category, strength: $strength, ageGroup: $ageGroup,
+    prescriptionRequired: $prescriptionRequired, verified: $verified,
+    maxDailyDoseAdults: $maxDailyDoseAdults, safetyPregnancy: $safetyPregnancy,
+    safetyBreastfeeding: $safetyBreastfeeding, safetyElderly: $safetyElderly,
+    safetyChildren: $safetyChildren, brandNames: $brandNames, form: $form,
+    createdDate: $createdDate
+  })
+}
+
+mutation CreateMedicineVerification($medicineId: UUID!, $doctorId: String!, $slmcRegNo: String!, $verifiedAt: String!) @auth(level: PUBLIC) {
+  medicineVerification_insert(data: {
+    medicineId: $medicineId, doctorId: $doctorId, slmcRegNo: $slmcRegNo, verifiedAt: $verifiedAt
+  })
+}
+
+mutation SetMedicineVerified($id: UUID!, $verified: Boolean!) @auth(level: PUBLIC) {
+  medicine_update(id: $id, data: { verified: $verified })
+}

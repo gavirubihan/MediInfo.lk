@@ -1,0 +1,674 @@
+extend type Mutation {
+  """
+  ✨ Insert a single `DosageRow` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  dosageRow_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: DosageRow_Data!
+  ): DosageRow_KeyOutput! @fdc_generated(from: "DosageRow", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `DrugInteraction` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  drugInteraction_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: DrugInteraction_Data!
+  ): DrugInteraction_KeyOutput! @fdc_generated(from: "DrugInteraction", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Medicine` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  medicine_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Medicine_Data!
+  ): Medicine_KeyOutput! @fdc_generated(from: "Medicine", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `MedicineLocalizedContent` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  medicineLocalizedContent_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: MedicineLocalizedContent_Data!
+  ): MedicineLocalizedContent_KeyOutput! @fdc_generated(from: "MedicineLocalizedContent", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `MedicineVerification` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  medicineVerification_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: MedicineVerification_Data!
+  ): MedicineVerification_KeyOutput! @fdc_generated(from: "MedicineVerification", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `WarningCard` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  warningCard_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: WarningCard_Data!
+  ): WarningCard_KeyOutput! @fdc_generated(from: "WarningCard", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert `DosageRow` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  dosageRow_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [DosageRow_Data!]!
+  ): [DosageRow_KeyOutput!]! @fdc_generated(from: "DosageRow", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `DrugInteraction` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  drugInteraction_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [DrugInteraction_Data!]!
+  ): [DrugInteraction_KeyOutput!]! @fdc_generated(from: "DrugInteraction", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Medicine` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  medicine_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Medicine_Data!]!
+  ): [Medicine_KeyOutput!]! @fdc_generated(from: "Medicine", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `MedicineLocalizedContent` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  medicineLocalizedContent_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [MedicineLocalizedContent_Data!]!
+  ): [MedicineLocalizedContent_KeyOutput!]! @fdc_generated(from: "MedicineLocalizedContent", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `MedicineVerification` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  medicineVerification_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [MedicineVerification_Data!]!
+  ): [MedicineVerification_KeyOutput!]! @fdc_generated(from: "MedicineVerification", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `WarningCard` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  warningCard_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [WarningCard_Data!]!
+  ): [WarningCard_KeyOutput!]! @fdc_generated(from: "WarningCard", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert or update a single `DosageRow` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `DosageRow`.
+  """
+  dosageRow_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: DosageRow_Data!
+  ): DosageRow_KeyOutput! @fdc_generated(from: "DosageRow", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `DrugInteraction` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `DrugInteraction`.
+  """
+  drugInteraction_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: DrugInteraction_Data!
+  ): DrugInteraction_KeyOutput! @fdc_generated(from: "DrugInteraction", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Medicine` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Medicine`.
+  """
+  medicine_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Medicine_Data!
+  ): Medicine_KeyOutput! @fdc_generated(from: "Medicine", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `MedicineLocalizedContent` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `MedicineLocalizedContent`.
+  """
+  medicineLocalizedContent_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: MedicineLocalizedContent_Data!
+  ): MedicineLocalizedContent_KeyOutput! @fdc_generated(from: "MedicineLocalizedContent", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `MedicineVerification` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `MedicineVerification`.
+  """
+  medicineVerification_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: MedicineVerification_Data!
+  ): MedicineVerification_KeyOutput! @fdc_generated(from: "MedicineVerification", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `WarningCard` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `WarningCard`.
+  """
+  warningCard_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: WarningCard_Data!
+  ): WarningCard_KeyOutput! @fdc_generated(from: "WarningCard", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update `DosageRow` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `DosageRow`.
+  """
+  dosageRow_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [DosageRow_Data!]!
+  ): [DosageRow_KeyOutput!]! @fdc_generated(from: "DosageRow", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `DrugInteraction` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `DrugInteraction`.
+  """
+  drugInteraction_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [DrugInteraction_Data!]!
+  ): [DrugInteraction_KeyOutput!]! @fdc_generated(from: "DrugInteraction", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Medicine` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Medicine`.
+  """
+  medicine_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Medicine_Data!]!
+  ): [Medicine_KeyOutput!]! @fdc_generated(from: "Medicine", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `MedicineLocalizedContent` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `MedicineLocalizedContent`.
+  """
+  medicineLocalizedContent_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [MedicineLocalizedContent_Data!]!
+  ): [MedicineLocalizedContent_KeyOutput!]! @fdc_generated(from: "MedicineLocalizedContent", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `MedicineVerification` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `MedicineVerification`.
+  """
+  medicineVerification_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [MedicineVerification_Data!]!
+  ): [MedicineVerification_KeyOutput!]! @fdc_generated(from: "MedicineVerification", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `WarningCard` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `WarningCard`.
+  """
+  warningCard_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [WarningCard_Data!]!
+  ): [WarningCard_KeyOutput!]! @fdc_generated(from: "WarningCard", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Update a single `DosageRow` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `DosageRow` or `null` if not found.
+  """
+  dosageRow_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: DosageRow_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: DosageRow_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: DosageRow_Data!
+  ): DosageRow_KeyOutput @fdc_generated(from: "DosageRow", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `DrugInteraction` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `DrugInteraction` or `null` if not found.
+  """
+  drugInteraction_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: DrugInteraction_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: DrugInteraction_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: DrugInteraction_Data!
+  ): DrugInteraction_KeyOutput @fdc_generated(from: "DrugInteraction", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Medicine` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Medicine` or `null` if not found.
+  """
+  medicine_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Medicine_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Medicine_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Medicine_Data!
+  ): Medicine_KeyOutput @fdc_generated(from: "Medicine", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `MedicineLocalizedContent` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `MedicineLocalizedContent` or `null` if not found.
+  """
+  medicineLocalizedContent_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: MedicineLocalizedContent_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: MedicineLocalizedContent_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: MedicineLocalizedContent_Data!
+  ): MedicineLocalizedContent_KeyOutput @fdc_generated(from: "MedicineLocalizedContent", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `MedicineVerification` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `MedicineVerification` or `null` if not found.
+  """
+  medicineVerification_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: MedicineVerification_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: MedicineVerification_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: MedicineVerification_Data!
+  ): MedicineVerification_KeyOutput @fdc_generated(from: "MedicineVerification", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `WarningCard` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `WarningCard` or `null` if not found.
+  """
+  warningCard_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: WarningCard_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: WarningCard_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: WarningCard_Data!
+  ): WarningCard_KeyOutput @fdc_generated(from: "WarningCard", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update `DosageRow` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  dosageRow_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: DosageRow_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: DosageRow_Data!
+  ): Int! @fdc_generated(from: "DosageRow", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `DrugInteraction` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  drugInteraction_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: DrugInteraction_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: DrugInteraction_Data!
+  ): Int! @fdc_generated(from: "DrugInteraction", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Medicine` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  medicine_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Medicine_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Medicine_Data!
+  ): Int! @fdc_generated(from: "Medicine", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `MedicineLocalizedContent` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  medicineLocalizedContent_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: MedicineLocalizedContent_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: MedicineLocalizedContent_Data!
+  ): Int! @fdc_generated(from: "MedicineLocalizedContent", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `MedicineVerification` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  medicineVerification_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: MedicineVerification_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: MedicineVerification_Data!
+  ): Int! @fdc_generated(from: "MedicineVerification", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `WarningCard` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  warningCard_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: WarningCard_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: WarningCard_Data!
+  ): Int! @fdc_generated(from: "WarningCard", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Delete a single `DosageRow` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  dosageRow_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: DosageRow_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: DosageRow_FirstRow
+  ): DosageRow_KeyOutput @fdc_generated(from: "DosageRow", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `DrugInteraction` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  drugInteraction_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: DrugInteraction_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: DrugInteraction_FirstRow
+  ): DrugInteraction_KeyOutput @fdc_generated(from: "DrugInteraction", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Medicine` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  medicine_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Medicine_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Medicine_FirstRow
+  ): Medicine_KeyOutput @fdc_generated(from: "Medicine", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `MedicineLocalizedContent` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  medicineLocalizedContent_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: MedicineLocalizedContent_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: MedicineLocalizedContent_FirstRow
+  ): MedicineLocalizedContent_KeyOutput @fdc_generated(from: "MedicineLocalizedContent", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `MedicineVerification` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  medicineVerification_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: MedicineVerification_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: MedicineVerification_FirstRow
+  ): MedicineVerification_KeyOutput @fdc_generated(from: "MedicineVerification", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `WarningCard` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  warningCard_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: WarningCard_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: WarningCard_FirstRow
+  ): WarningCard_KeyOutput @fdc_generated(from: "WarningCard", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete `DosageRow` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  dosageRow_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: DosageRow_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "DosageRow", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `DrugInteraction` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  drugInteraction_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: DrugInteraction_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "DrugInteraction", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Medicine` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  medicine_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Medicine_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Medicine", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `MedicineLocalizedContent` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  medicineLocalizedContent_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: MedicineLocalizedContent_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "MedicineLocalizedContent", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `MedicineVerification` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  medicineVerification_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: MedicineVerification_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "MedicineVerification", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `WarningCard` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  warningCard_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: WarningCard_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "WarningCard", purpose: DELETE_MULTIPLE)
+}

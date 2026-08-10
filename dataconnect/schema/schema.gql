@@ -1,0 +1,76 @@
+# Core Medicine Table (Language Agnostic)
+type Medicine @table {
+  id: UUID! @default(expr: "uuidV4()")
+  slug: String! @unique
+  genericName: String!
+  chemicalName: String!
+  category: String!
+  strength: String!
+  ageGroup: String!
+  prescriptionRequired: Boolean!
+  verified: Boolean!
+  createdDate: String!
+  maxDailyDoseAdults: String!
+  
+  # Safety Indicators
+  safetyPregnancy: String! 
+  safetyBreastfeeding: String!
+  safetyElderly: String!
+  safetyChildren: String!
+
+  # Arrays supported natively by PostgreSQL
+  brandNames: [String!]!
+  form: [String!]!
+}
+
+# Dosage & Interactions (Linked to Core Medicine)
+type DosageRow @table {
+  id: UUID! @default(expr: "uuidV4()")
+  medicine: Medicine!
+  ageGroup: String!
+  dose: String!
+  frequency: String!
+  maxPerDay: String!
+}
+
+type DrugInteraction @table {
+  id: UUID! @default(expr: "uuidV4()")
+  medicine: Medicine!
+  drug: String!
+  note: String!
+}
+
+# Trilingual Content Table (3 rows per medicine typically: en, si, ta)
+type MedicineLocalizedContent @table {
+  id: UUID! @default(expr: "uuidV4()")
+  medicine: Medicine!
+  language: String!
+  
+  description: String!
+  howItWorks: String!
+  dosageNotes: String!
+  
+  # PostgreSQL Text Arrays for lists
+  usedFor: [String!]!
+  sideEffectsCommon: [String!]!
+  sideEffectsLessCommon: [String!]!
+  sideEffectsSerious: [String!]!
+}
+
+# Warning Cards (Linked to Localized Content)
+type WarningCard @table {
+  id: UUID! @default(expr: "uuidV4()")
+  localizedContent: MedicineLocalizedContent!
+  title: String!
+  severity: String!
+  text: String!
+}
+
+# Medicine Verifications (Linked to Medicine)
+type MedicineVerification @table {
+  id: UUID! @default(expr: "uuidV4()")
+  medicine: Medicine!
+  doctorId: String!
+  slmcRegNo: String!
+  verifiedAt: String!
+}
