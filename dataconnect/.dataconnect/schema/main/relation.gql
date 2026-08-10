@@ -562,6 +562,119 @@ extend type MedicineVerification {
   """
   _id: ID! @fdc_generated(from: "MedicineVerification.id", purpose: ENTITY_ID)
 }
+extend type StaffAccount {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "StaffAccount", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `StaffAccount` table.
+  """
+  _count: Int! @fdc_generated(from: "StaffAccount.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `StaffAccount` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "StaffAccount.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `StaffAccount` table where the `email` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  email_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "StaffAccount.email", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `StaffAccount` table where the `firebaseUid` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  firebaseUid_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "StaffAccount.firebaseUid", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `StaffAccount` table where the `hospital` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  hospital_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "StaffAccount.hospital", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `StaffAccount` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "StaffAccount.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `StaffAccount` table where the `name` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  name_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "StaffAccount.name", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `StaffAccount` table where the `profession` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  profession_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "StaffAccount.profession", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `StaffAccount` table where the `proofUrl` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  proofUrl_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "StaffAccount.proofUrl", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `StaffAccount` table where the `slmcRegNo` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  slmcRegNo_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "StaffAccount.slmcRegNo", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `StaffAccount` table where the `specialization` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  specialization_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "StaffAccount.specialization", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `StaffAccount` table where the `status` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  status_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "StaffAccount.status", purpose: QUERY_COUNT)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "StaffAccount.id", purpose: ENTITY_ID)
+}
 extend type WarningCard {
   """
   Implicit metadata field that cannot be written. It provides extra information about query results.

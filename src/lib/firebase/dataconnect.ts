@@ -53,6 +53,12 @@ export interface MedicineListItem {
   verified: boolean;
   prescriptionRequired: boolean;
   createdDate: string;
+  medicineVerifications_on_medicine?: {
+    id: string;
+    doctorId: string;
+    slmcRegNo: string;
+    verifiedAt: string;
+  }[];
 }
 
 export interface MedicineFull extends MedicineListItem {
@@ -310,3 +316,85 @@ export async function deleteMedicineRelations(medicineId: string): Promise<boole
   `, { medicineId });
   return true;
 }
+
+
+// --- Staff Accounts ------------------------------------------------------------
+
+export async function createStaffAccount(input: any): Promise<any> {
+  return await executeGraphql(` 
+    mutation CreateStaffAccount(
+      $firebaseUid: String!
+      $email: String!
+      $name: String!
+      $profession: String!
+      $slmcRegNo: String!
+      $proofUrl: String!
+      $status: String!
+      $hospital: String
+      $specialization: String
+      $createdAt: String!
+    ) {
+      staffAccount_insert(data: {
+        firebaseUid: $firebaseUid
+        email: $email
+        name: $name
+        profession: $profession
+        slmcRegNo: $slmcRegNo
+        proofUrl: $proofUrl
+        status: $status
+        hospital: $hospital
+        specialization: $specialization
+        createdAt: $createdAt
+      })
+    }
+  `, input);
+}
+
+export async function listStaffAccounts(): Promise<any> {
+  return await executeGraphql(` 
+    query ListStaffAccounts {
+      staffAccounts {
+        id
+        firebaseUid
+        email
+        name
+        profession
+        slmcRegNo
+        proofUrl
+        status
+        hospital
+        specialization
+        createdAt
+      }
+    }
+  `);
+}
+
+export async function getStaffAccountByFirebaseUid(input: { firebaseUid: string }): Promise<any> {
+  return await executeGraphql(` 
+    query GetStaffAccountByFirebaseUid($firebaseUid: String!) {
+      staffAccounts(where: { firebaseUid: { eq: $firebaseUid } }) {
+        id
+        firebaseUid
+        email
+        name
+        profession
+        slmcRegNo
+        proofUrl
+        status
+        hospital
+        specialization
+        createdAt
+      }
+    }
+  `, input);
+}
+
+export async function updateStaffStatus(input: { id: string, status: string }): Promise<any> {
+  return await executeGraphql(` 
+    mutation UpdateStaffStatus($id: UUID!, $status: String!) {
+      staffAccount_update(id: $id, data: { status: $status })
+    }
+  `, input);
+}
+

@@ -133,6 +133,34 @@ exports.setMedicineVerified = function setMedicineVerified(dcOrVars, vars) {
 }
 ;
 
+const createStaffAccountRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'CreateStaffAccount', inputVars);
+}
+createStaffAccountRef.operationName = 'CreateStaffAccount';
+exports.createStaffAccountRef = createStaffAccountRef;
+
+exports.createStaffAccount = function createStaffAccount(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(createStaffAccountRef(dcInstance, inputVars));
+}
+;
+
+const updateStaffStatusRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'UpdateStaffStatus', inputVars);
+}
+updateStaffStatusRef.operationName = 'UpdateStaffStatus';
+exports.updateStaffStatusRef = updateStaffStatusRef;
+
+exports.updateStaffStatus = function updateStaffStatus(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(updateStaffStatusRef(dcInstance, inputVars));
+}
+;
+
 const listMedicinesRef = (dc) => {
   const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
   dcInstance._useGeneratedSdk();
@@ -160,5 +188,35 @@ exports.getMedicineBySlug = function getMedicineBySlug(dcOrVars, varsOrOptions, 
   
   const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
   return executeQuery(getMedicineBySlugRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
+}
+;
+
+const listStaffAccountsRef = (dc) => {
+  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'ListStaffAccounts');
+}
+listStaffAccountsRef.operationName = 'ListStaffAccounts';
+exports.listStaffAccountsRef = listStaffAccountsRef;
+
+exports.listStaffAccounts = function listStaffAccounts(dcOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  return executeQuery(listStaffAccountsRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
+}
+;
+
+const getStaffAccountByFirebaseUidRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'GetStaffAccountByFirebaseUid', inputVars);
+}
+getStaffAccountByFirebaseUidRef.operationName = 'GetStaffAccountByFirebaseUid';
+exports.getStaffAccountByFirebaseUidRef = getStaffAccountByFirebaseUidRef;
+
+exports.getStaffAccountByFirebaseUid = function getStaffAccountByFirebaseUid(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(getStaffAccountByFirebaseUidRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
 }
 ;

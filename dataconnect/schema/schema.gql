@@ -74,3 +74,19 @@ type MedicineVerification @table {
   slmcRegNo: String!
   verifiedAt: String!
 }
+
+
+# Medical Staff Accounts (Approval requests)
+type StaffAccount @table {
+  id: UUID! @default(expr: "uuidV4()")
+  firebaseUid: String! @unique
+  email: String! @unique
+  name: String!
+  profession: String!
+  slmcRegNo: String!
+  proofUrl: String!
+  status: String! # pending, approved, rejected
+  hospital: String
+  specialization: String
+  createdAt: String!
+}

@@ -82,6 +82,23 @@ export interface CreateMedicineVerificationVariables {
   verifiedAt: string;
 }
 
+export interface CreateStaffAccountData {
+  staffAccount_insert: StaffAccount_Key;
+}
+
+export interface CreateStaffAccountVariables {
+  firebaseUid: string;
+  email: string;
+  name: string;
+  profession: string;
+  slmcRegNo: string;
+  proofUrl: string;
+  status: string;
+  hospital?: string | null;
+  specialization?: string | null;
+  createdAt: string;
+}
+
 export interface CreateWarningCardData {
   warningCard_insert: WarningCard_Key;
 }
@@ -173,6 +190,26 @@ export interface GetMedicineBySlugVariables {
   slug: string;
 }
 
+export interface GetStaffAccountByFirebaseUidData {
+  staffAccounts: ({
+    id: UUIDString;
+    firebaseUid: string;
+    email: string;
+    name: string;
+    profession: string;
+    slmcRegNo: string;
+    proofUrl: string;
+    status: string;
+    hospital?: string | null;
+    specialization?: string | null;
+    createdAt: string;
+  } & StaffAccount_Key)[];
+}
+
+export interface GetStaffAccountByFirebaseUidVariables {
+  firebaseUid: string;
+}
+
 export interface ListMedicinesData {
   medicines: ({
     id: UUIDString;
@@ -230,6 +267,22 @@ export interface ListMedicinesData {
   } & Medicine_Key)[];
 }
 
+export interface ListStaffAccountsData {
+  staffAccounts: ({
+    id: UUIDString;
+    firebaseUid: string;
+    email: string;
+    name: string;
+    profession: string;
+    slmcRegNo: string;
+    proofUrl: string;
+    status: string;
+    hospital?: string | null;
+    specialization?: string | null;
+    createdAt: string;
+  } & StaffAccount_Key)[];
+}
+
 export interface MedicineLocalizedContent_Key {
   id: UUIDString;
   __typename?: 'MedicineLocalizedContent_Key';
@@ -254,6 +307,11 @@ export interface SetMedicineVerifiedVariables {
   verified: boolean;
 }
 
+export interface StaffAccount_Key {
+  id: UUIDString;
+  __typename?: 'StaffAccount_Key';
+}
+
 export interface UpdateMedicineCoreData {
   medicine_update?: Medicine_Key | null;
 }
@@ -276,6 +334,15 @@ export interface UpdateMedicineCoreVariables {
   brandNames: string[];
   form: string[];
   createdDate: string;
+}
+
+export interface UpdateStaffStatusData {
+  staffAccount_update?: StaffAccount_Key | null;
+}
+
+export interface UpdateStaffStatusVariables {
+  id: UUIDString;
+  status: string;
 }
 
 export interface WarningCard_Key {
@@ -391,6 +458,30 @@ export const setMedicineVerifiedRef: SetMedicineVerifiedRef;
 export function setMedicineVerified(vars: SetMedicineVerifiedVariables): MutationPromise<SetMedicineVerifiedData, SetMedicineVerifiedVariables>;
 export function setMedicineVerified(dc: DataConnect, vars: SetMedicineVerifiedVariables): MutationPromise<SetMedicineVerifiedData, SetMedicineVerifiedVariables>;
 
+interface CreateStaffAccountRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: CreateStaffAccountVariables): MutationRef<CreateStaffAccountData, CreateStaffAccountVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: CreateStaffAccountVariables): MutationRef<CreateStaffAccountData, CreateStaffAccountVariables>;
+  operationName: string;
+}
+export const createStaffAccountRef: CreateStaffAccountRef;
+
+export function createStaffAccount(vars: CreateStaffAccountVariables): MutationPromise<CreateStaffAccountData, CreateStaffAccountVariables>;
+export function createStaffAccount(dc: DataConnect, vars: CreateStaffAccountVariables): MutationPromise<CreateStaffAccountData, CreateStaffAccountVariables>;
+
+interface UpdateStaffStatusRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpdateStaffStatusVariables): MutationRef<UpdateStaffStatusData, UpdateStaffStatusVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpdateStaffStatusVariables): MutationRef<UpdateStaffStatusData, UpdateStaffStatusVariables>;
+  operationName: string;
+}
+export const updateStaffStatusRef: UpdateStaffStatusRef;
+
+export function updateStaffStatus(vars: UpdateStaffStatusVariables): MutationPromise<UpdateStaffStatusData, UpdateStaffStatusVariables>;
+export function updateStaffStatus(dc: DataConnect, vars: UpdateStaffStatusVariables): MutationPromise<UpdateStaffStatusData, UpdateStaffStatusVariables>;
+
 interface ListMedicinesRef {
   /* Allow users to create refs without passing in DataConnect */
   (): QueryRef<ListMedicinesData, undefined>;
@@ -414,4 +505,28 @@ export const getMedicineBySlugRef: GetMedicineBySlugRef;
 
 export function getMedicineBySlug(vars: GetMedicineBySlugVariables, options?: ExecuteQueryOptions): QueryPromise<GetMedicineBySlugData, GetMedicineBySlugVariables>;
 export function getMedicineBySlug(dc: DataConnect, vars: GetMedicineBySlugVariables, options?: ExecuteQueryOptions): QueryPromise<GetMedicineBySlugData, GetMedicineBySlugVariables>;
+
+interface ListStaffAccountsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<ListStaffAccountsData, undefined>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect): QueryRef<ListStaffAccountsData, undefined>;
+  operationName: string;
+}
+export const listStaffAccountsRef: ListStaffAccountsRef;
+
+export function listStaffAccounts(options?: ExecuteQueryOptions): QueryPromise<ListStaffAccountsData, undefined>;
+export function listStaffAccounts(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListStaffAccountsData, undefined>;
+
+interface GetStaffAccountByFirebaseUidRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: GetStaffAccountByFirebaseUidVariables): QueryRef<GetStaffAccountByFirebaseUidData, GetStaffAccountByFirebaseUidVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: GetStaffAccountByFirebaseUidVariables): QueryRef<GetStaffAccountByFirebaseUidData, GetStaffAccountByFirebaseUidVariables>;
+  operationName: string;
+}
+export const getStaffAccountByFirebaseUidRef: GetStaffAccountByFirebaseUidRef;
+
+export function getStaffAccountByFirebaseUid(vars: GetStaffAccountByFirebaseUidVariables, options?: ExecuteQueryOptions): QueryPromise<GetStaffAccountByFirebaseUidData, GetStaffAccountByFirebaseUidVariables>;
+export function getStaffAccountByFirebaseUid(dc: DataConnect, vars: GetStaffAccountByFirebaseUidVariables, options?: ExecuteQueryOptions): QueryPromise<GetStaffAccountByFirebaseUidData, GetStaffAccountByFirebaseUidVariables>;
 

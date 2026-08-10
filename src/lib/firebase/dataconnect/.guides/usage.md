@@ -14,7 +14,7 @@ If a user is not using a supported framework, they can use the generated SDK dir
 Here's an example of how to use it with the first 5 operations:
 
 ```js
-import { createMedicine, createMedicineLocalizedContent, createDosageRow, createDrugInteraction, createWarningCard, deleteMedicineRelations, updateMedicineCore, createMedicineVerification, setMedicineVerified, listMedicines } from '@firebasegen/default-connector';
+import { createMedicine, createMedicineLocalizedContent, createDosageRow, createDrugInteraction, createWarningCard, deleteMedicineRelations, updateMedicineCore, createMedicineVerification, setMedicineVerified, createStaffAccount } from '@firebasegen/default-connector';
 
 
 // Operation CreateMedicine:  For variables, look at type CreateMedicineVars in ../index.d.ts
@@ -44,8 +44,8 @@ const { data } = await CreateMedicineVerification(dataConnect, createMedicineVer
 // Operation SetMedicineVerified:  For variables, look at type SetMedicineVerifiedVars in ../index.d.ts
 const { data } = await SetMedicineVerified(dataConnect, setMedicineVerifiedVars);
 
-// Operation ListMedicines: 
-const { data } = await ListMedicines(dataConnect);
+// Operation CreateStaffAccount:  For variables, look at type CreateStaffAccountVars in ../index.d.ts
+const { data } = await CreateStaffAccount(dataConnect, createStaffAccountVars);
 
 
 ```

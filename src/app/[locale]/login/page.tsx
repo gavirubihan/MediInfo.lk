@@ -27,9 +27,11 @@ export default function AuthPage() {
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState('');
+  const [file, setFile] = useState<File | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [authError, setAuthError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   // Medical Signup form state
   const [medName, setMedName] = useState('');
@@ -79,13 +81,118 @@ export default function AuthPage() {
     e.stopPropagation();
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      setFile(e.dataTransfer.files[0]);
       setFileName(e.dataTransfer.files[0].name);
     }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
       setFileName(e.target.files[0].name);
+    }
+  };
+
+  const handleNormalSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError('');
+    try {
+      setIsLoading(true);
+      const { createUserWithEmailAndPassword } = await import('firebase/auth');
+      await createUserWithEmailAndPassword(auth, email, password);
+      setView('success');
+      setTimeout(() => { window.location.href = '/en'; }, 2000);
+    } catch (err: any) {
+      setAuthError(err.message || 'Signup failed.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const convertToWebP = (file: File): Promise<File> => {
+    return new Promise((resolve, reject) => {
+      if (!file.type.startsWith('image/')) {
+        resolve(file); // Don't convert non-images like PDFs
+        return;
+      }
+      
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          resolve(file); // fallback
+          return;
+        }
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const newFile = new File([blob], file.name.replace(/\.[^/.]+$/, "") + ".webp", {
+              type: 'image/webp',
+            });
+            resolve(newFile);
+          } else {
+            resolve(file); // fallback
+          }
+        }, 'image/webp', 0.8);
+      };
+      img.onerror = () => resolve(file); // fallback
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  const handleMedicalSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError('');
+    if (!file) {
+      setAuthError('Please upload proof of your medical registration.');
+      return;
+    }
+    try {
+      setIsLoading(true);
+      
+      // Convert image to WebP if applicable
+      const processedFile = await convertToWebP(file);
+      
+      const formData = new FormData();
+      formData.append('file', processedFile);
+      formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'mediinfo_preset');
+      
+      const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'demo';
+      const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!uploadRes.ok) throw new Error('Failed to upload document to Cloudinary.');
+      const uploadData = await uploadRes.json();
+      const proofUrl = uploadData.secure_url;
+
+      const { createUserWithEmailAndPassword } = await import('firebase/auth');
+      const userCredential = await createUserWithEmailAndPassword(auth, medEmail, medPassword);
+      
+      const res = await fetch('/api/register-staff', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firebaseUid: userCredential.user.uid,
+          email: medEmail,
+          name: medName,
+          profession: medProfession,
+          slmcRegNo: medSlmcRegNo,
+          proofUrl: proofUrl,
+        })
+      });
+      
+      if (!res.ok) throw new Error('Failed to register medical staff account.');
+      
+      setView('staff-pending-success');
+    } catch (err: any) {
+      setAuthError(err.message || 'Registration failed.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -268,7 +375,7 @@ export default function AuthPage() {
                   <h2 className="text-[28px] font-extrabold font-plus-jakarta text-near-black mb-2 tracking-tight">{t('normalSignUpTitle')}</h2>
                   <p className="text-[15px] text-mid-gray">{t('normalSignUpSubtitle')}</p>
                 </div>
-                <form className="flex flex-col gap-5" onSubmit={(e) => { e.preventDefault(); setView('success'); }}>
+                <form className="flex flex-col gap-5" onSubmit={handleNormalSignup}>
                   <div>
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">{t('fullNameLabel')}</label>
                     <div className="relative">
@@ -295,8 +402,8 @@ export default function AuthPage() {
                       {authError}
                     </div>
                   )}
-                  <Button variant="primary" className="w-full justify-center py-4 rounded-xl text-[15px] shadow-[0_4px_12px_rgba(26,111,191,0.2)] mt-2 font-bold group">
-                    {t('createAccountBtn')} <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                  <Button type="submit" disabled={isLoading} variant="primary" className="w-full justify-center py-4 rounded-xl text-[15px] shadow-[0_4px_12px_rgba(26,111,191,0.2)] mt-2 font-bold group">
+                    {isLoading ? 'Creating Account...' : <>{t('createAccountBtn')} <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform" /></>}
                   </Button>
                 </form>
                 <SocialButtons />
@@ -360,7 +467,7 @@ export default function AuthPage() {
                       />
                     </div>
                   </div>
-                  <Button variant="primary" style={{ backgroundColor: 'var(--color-teal)', borderColor: 'var(--color-teal)' }} className="w-full justify-center py-4 rounded-xl text-[15px] shadow-[0_4px_12px_rgba(23,169,142,0.2)] mt-2 font-bold group border hover:bg-opacity-90">
+                  <Button type="submit" variant="primary" style={{ backgroundColor: 'var(--color-teal)', borderColor: 'var(--color-teal)' }} className="w-full justify-center py-4 rounded-xl text-[15px] shadow-[0_4px_12px_rgba(23,169,142,0.2)] mt-2 font-bold group border hover:bg-opacity-90">
                     Next Step <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </form>
@@ -384,18 +491,7 @@ export default function AuthPage() {
                 </div>
                 <form
                   className="flex flex-col gap-5"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    addStaffRequest({
-                      name: medName || 'Medical Professional',
-                      email: medEmail || 'staff@hospital.lk',
-                      password: medPassword,
-                      profession: medProfession,
-                      slmcRegNo: medSlmcRegNo || 'SLMC-99999',
-                      proofFileName: fileName || 'Medical_License_Verification.pdf'
-                    });
-                    setView('staff-pending-success');
-                  }}
+                  onSubmit={handleMedicalSignup}
                 >
                   <div>
                     <label className="block text-[13px] font-bold text-dark-gray uppercase tracking-wide mb-1.5">Position</label>
@@ -456,8 +552,14 @@ export default function AuthPage() {
                     </div>
                   </div>
 
-                  <Button variant="primary" style={{ backgroundColor: 'var(--color-teal)', borderColor: 'var(--color-teal)' }} className="w-full justify-center py-4 rounded-xl text-[15px] shadow-[0_4px_12px_rgba(23,169,142,0.2)] mt-4 font-bold border">
-                    Submit Verification
+                  {authError && (
+                    <div className="p-3.5 bg-red/10 border border-red/20 rounded-xl text-xs font-bold text-red animate-fade-up">
+                      {authError}
+                    </div>
+                  )}
+
+                  <Button type="submit" disabled={isLoading} variant="primary" style={{ backgroundColor: 'var(--color-teal)', borderColor: 'var(--color-teal)' }} className="w-full justify-center py-4 rounded-xl text-[15px] shadow-[0_4px_12px_rgba(23,169,142,0.2)] mt-4 font-bold border">
+                    {isLoading ? 'Submitting Registration...' : 'Submit Verification'}
                   </Button>
                 </form>
               </div>

@@ -87,10 +87,50 @@ export function AdminRoleProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (fbUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
       if (fbUser) {
         setFirebaseUser(fbUser);
-        setUser(getUserMetadata(fbUser));
+        
+        // Check if the user is a preset user (like super admin)
+        const email = fbUser.email?.toLowerCase() || '';
+        const preset = PRESET_USERS.find((u) => u.email.toLowerCase() === email);
+        
+        if (preset) {
+          setUser(preset);
+        } else {
+          // Fetch from our new API
+          try {
+            const res = await fetch(`/api/user-role?uid=${fbUser.uid}`);
+            if (res.ok) {
+              const data = await res.json();
+              if (data.status === 'pending') {
+                // If pending, they can't access admin
+                setUser(null);
+                window.location.href = '/en/login?view=staff-pending-success';
+              } else if (data.role === 'normal_user') {
+                // Normal users have no access to admin
+                setUser(null);
+                window.location.href = '/en';
+              } else {
+                setUser({
+                  id: fbUser.uid,
+                  email: fbUser.email || '',
+                  name: data.staffDetails?.name || fbUser.displayName || fbUser.email || 'Admin User',
+                  role: data.role,
+                  doctorId: data.staffDetails?.id,
+                  slmcRegNo: data.staffDetails?.slmcRegNo,
+                  specialization: data.staffDetails?.specialization,
+                  hospital: data.staffDetails?.hospital,
+                });
+              }
+            } else {
+              setUser(null);
+            }
+          } catch (e) {
+            console.error('Error fetching role:', e);
+            setUser(null);
+          }
+        }
       } else {
         setFirebaseUser(null);
         setUser(null);

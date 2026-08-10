@@ -41,30 +41,58 @@ export default function StaffApprovalsPage() {
   const [adminNotes, setAdminNotes] = useState('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  const loadRequests = async () => {
+    try {
+      const res = await fetch('/api/admin/staff');
+      const data = await res.json();
+      if (data.success && data.data) {
+        setRequests(data.data);
+      }
+    } catch (e) {
+      console.error('Failed to load requests', e);
+    }
+  };
+
   useEffect(() => {
-    setRequests(getStaffRequests());
+    loadRequests();
   }, []);
 
   const refreshData = () => {
-    setRequests(getStaffRequests());
+    loadRequests();
   };
 
-  const handleApprove = (reqId: string, notes?: string) => {
-    approveStaffRequest(reqId, notes || adminNotes, user?.name || 'Super Administrator');
-    refreshData();
-    setSelectedRequest(null);
-    setAdminNotes('');
-    setToastMessage('Staff member approved! Access granted for login.');
-    setTimeout(() => setToastMessage(null), 3500);
+  const handleApprove = async (reqId: string, notes?: string) => {
+    try {
+      await fetch('/api/admin/staff/approve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: reqId, status: 'approved' })
+      });
+      refreshData();
+      setSelectedRequest(null);
+      setAdminNotes('');
+      setToastMessage('Staff member approved! Access granted for login.');
+      setTimeout(() => setToastMessage(null), 3500);
+    } catch (e) {
+      console.error('Failed to approve request', e);
+    }
   };
 
-  const handleReject = (reqId: string, notes?: string) => {
-    rejectStaffRequest(reqId, notes || adminNotes, user?.name || 'Super Administrator');
-    refreshData();
-    setSelectedRequest(null);
-    setAdminNotes('');
-    setToastMessage('Staff registration request declined.');
-    setTimeout(() => setToastMessage(null), 3500);
+  const handleReject = async (reqId: string, notes?: string) => {
+    try {
+      await fetch('/api/admin/staff/approve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: reqId, status: 'rejected' })
+      });
+      refreshData();
+      setSelectedRequest(null);
+      setAdminNotes('');
+      setToastMessage('Registration request rejected.');
+      setTimeout(() => setToastMessage(null), 3500);
+    } catch (e) {
+      console.error('Failed to reject request', e);
+    }
   };
 
   const pendingList = requests.filter((r) => r.status === 'pending');

@@ -119,3 +119,36 @@ query GetMedicineBySlug($slug: String!) @auth(level: PUBLIC) {
     }
   }
 }
+
+
+query ListStaffAccounts @auth(level: PUBLIC) {
+  staffAccounts {
+    id
+    firebaseUid
+    email
+    name
+    profession
+    slmcRegNo
+    proofUrl
+    status
+    hospital
+    specialization
+    createdAt
+  }
+}
+
+query GetStaffAccountByFirebaseUid($firebaseUid: String!) @auth(level: PUBLIC) {
+  staffAccounts(where: { firebaseUid: { eq: $firebaseUid } }) {
+    id
+    firebaseUid
+    email
+    name
+    profession
+    slmcRegNo
+    proofUrl
+    status
+    hospital
+    specialization
+    createdAt
+  }
+}

@@ -10,6 +10,8 @@ This README will guide you through the process of using the generated JavaScript
 - [**Queries**](#queries)
   - [*ListMedicines*](#listmedicines)
   - [*GetMedicineBySlug*](#getmedicinebyslug)
+  - [*ListStaffAccounts*](#liststaffaccounts)
+  - [*GetStaffAccountByFirebaseUid*](#getstaffaccountbyfirebaseuid)
 - [**Mutations**](#mutations)
   - [*CreateMedicine*](#createmedicine)
   - [*CreateMedicineLocalizedContent*](#createmedicinelocalizedcontent)
@@ -20,6 +22,8 @@ This README will guide you through the process of using the generated JavaScript
   - [*UpdateMedicineCore*](#updatemedicinecore)
   - [*CreateMedicineVerification*](#createmedicineverification)
   - [*SetMedicineVerified*](#setmedicineverified)
+  - [*CreateStaffAccount*](#createstaffaccount)
+  - [*UpdateStaffStatus*](#updatestaffstatus)
 
 # Accessing the connector
 A connector is a collection of Queries and Mutations. One SDK is generated for each connector - this SDK is generated for the connector `default`. You can find more information about connectors in the [Data Connect documentation](https://firebase.google.com/docs/data-connect#how-does).
@@ -368,6 +372,230 @@ console.log(data.medicines);
 executeQuery(ref).then((response) => {
   const data = response.data;
   console.log(data.medicines);
+});
+```
+
+## ListStaffAccounts
+You can execute the `ListStaffAccounts` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
+```typescript
+listStaffAccounts(options?: ExecuteQueryOptions): QueryPromise<ListStaffAccountsData, undefined>;
+
+interface ListStaffAccountsRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<ListStaffAccountsData, undefined>;
+}
+export const listStaffAccountsRef: ListStaffAccountsRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+listStaffAccounts(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListStaffAccountsData, undefined>;
+
+interface ListStaffAccountsRef {
+  ...
+  (dc: DataConnect): QueryRef<ListStaffAccountsData, undefined>;
+}
+export const listStaffAccountsRef: ListStaffAccountsRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the listStaffAccountsRef:
+```typescript
+const name = listStaffAccountsRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `ListStaffAccounts` query has no variables.
+### Return Type
+Recall that executing the `ListStaffAccounts` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `ListStaffAccountsData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface ListStaffAccountsData {
+  staffAccounts: ({
+    id: UUIDString;
+    firebaseUid: string;
+    email: string;
+    name: string;
+    profession: string;
+    slmcRegNo: string;
+    proofUrl: string;
+    status: string;
+    hospital?: string | null;
+    specialization?: string | null;
+    createdAt: string;
+  } & StaffAccount_Key)[];
+}
+```
+### Using `ListStaffAccounts`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, listStaffAccounts } from '@firebasegen/default-connector';
+
+
+// Call the `listStaffAccounts()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await listStaffAccounts();
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await listStaffAccounts(dataConnect);
+
+console.log(data.staffAccounts);
+
+// Or, you can use the `Promise` API.
+listStaffAccounts().then((response) => {
+  const data = response.data;
+  console.log(data.staffAccounts);
+});
+```
+
+### Using `ListStaffAccounts`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, listStaffAccountsRef } from '@firebasegen/default-connector';
+
+
+// Call the `listStaffAccountsRef()` function to get a reference to the query.
+const ref = listStaffAccountsRef();
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = listStaffAccountsRef(dataConnect);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.staffAccounts);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.staffAccounts);
+});
+```
+
+## GetStaffAccountByFirebaseUid
+You can execute the `GetStaffAccountByFirebaseUid` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
+```typescript
+getStaffAccountByFirebaseUid(vars: GetStaffAccountByFirebaseUidVariables, options?: ExecuteQueryOptions): QueryPromise<GetStaffAccountByFirebaseUidData, GetStaffAccountByFirebaseUidVariables>;
+
+interface GetStaffAccountByFirebaseUidRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: GetStaffAccountByFirebaseUidVariables): QueryRef<GetStaffAccountByFirebaseUidData, GetStaffAccountByFirebaseUidVariables>;
+}
+export const getStaffAccountByFirebaseUidRef: GetStaffAccountByFirebaseUidRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+getStaffAccountByFirebaseUid(dc: DataConnect, vars: GetStaffAccountByFirebaseUidVariables, options?: ExecuteQueryOptions): QueryPromise<GetStaffAccountByFirebaseUidData, GetStaffAccountByFirebaseUidVariables>;
+
+interface GetStaffAccountByFirebaseUidRef {
+  ...
+  (dc: DataConnect, vars: GetStaffAccountByFirebaseUidVariables): QueryRef<GetStaffAccountByFirebaseUidData, GetStaffAccountByFirebaseUidVariables>;
+}
+export const getStaffAccountByFirebaseUidRef: GetStaffAccountByFirebaseUidRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the getStaffAccountByFirebaseUidRef:
+```typescript
+const name = getStaffAccountByFirebaseUidRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `GetStaffAccountByFirebaseUid` query requires an argument of type `GetStaffAccountByFirebaseUidVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface GetStaffAccountByFirebaseUidVariables {
+  firebaseUid: string;
+}
+```
+### Return Type
+Recall that executing the `GetStaffAccountByFirebaseUid` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `GetStaffAccountByFirebaseUidData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface GetStaffAccountByFirebaseUidData {
+  staffAccounts: ({
+    id: UUIDString;
+    firebaseUid: string;
+    email: string;
+    name: string;
+    profession: string;
+    slmcRegNo: string;
+    proofUrl: string;
+    status: string;
+    hospital?: string | null;
+    specialization?: string | null;
+    createdAt: string;
+  } & StaffAccount_Key)[];
+}
+```
+### Using `GetStaffAccountByFirebaseUid`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, getStaffAccountByFirebaseUid, GetStaffAccountByFirebaseUidVariables } from '@firebasegen/default-connector';
+
+// The `GetStaffAccountByFirebaseUid` query requires an argument of type `GetStaffAccountByFirebaseUidVariables`:
+const getStaffAccountByFirebaseUidVars: GetStaffAccountByFirebaseUidVariables = {
+  firebaseUid: ..., 
+};
+
+// Call the `getStaffAccountByFirebaseUid()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await getStaffAccountByFirebaseUid(getStaffAccountByFirebaseUidVars);
+// Variables can be defined inline as well.
+const { data } = await getStaffAccountByFirebaseUid({ firebaseUid: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await getStaffAccountByFirebaseUid(dataConnect, getStaffAccountByFirebaseUidVars);
+
+console.log(data.staffAccounts);
+
+// Or, you can use the `Promise` API.
+getStaffAccountByFirebaseUid(getStaffAccountByFirebaseUidVars).then((response) => {
+  const data = response.data;
+  console.log(data.staffAccounts);
+});
+```
+
+### Using `GetStaffAccountByFirebaseUid`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, getStaffAccountByFirebaseUidRef, GetStaffAccountByFirebaseUidVariables } from '@firebasegen/default-connector';
+
+// The `GetStaffAccountByFirebaseUid` query requires an argument of type `GetStaffAccountByFirebaseUidVariables`:
+const getStaffAccountByFirebaseUidVars: GetStaffAccountByFirebaseUidVariables = {
+  firebaseUid: ..., 
+};
+
+// Call the `getStaffAccountByFirebaseUidRef()` function to get a reference to the query.
+const ref = getStaffAccountByFirebaseUidRef(getStaffAccountByFirebaseUidVars);
+// Variables can be defined inline as well.
+const ref = getStaffAccountByFirebaseUidRef({ firebaseUid: ..., });
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = getStaffAccountByFirebaseUidRef(dataConnect, getStaffAccountByFirebaseUidVars);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.staffAccounts);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.staffAccounts);
 });
 ```
 
@@ -1530,6 +1758,254 @@ console.log(data.medicine_update);
 executeMutation(ref).then((response) => {
   const data = response.data;
   console.log(data.medicine_update);
+});
+```
+
+## CreateStaffAccount
+You can execute the `CreateStaffAccount` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
+```typescript
+createStaffAccount(vars: CreateStaffAccountVariables): MutationPromise<CreateStaffAccountData, CreateStaffAccountVariables>;
+
+interface CreateStaffAccountRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: CreateStaffAccountVariables): MutationRef<CreateStaffAccountData, CreateStaffAccountVariables>;
+}
+export const createStaffAccountRef: CreateStaffAccountRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
+```typescript
+createStaffAccount(dc: DataConnect, vars: CreateStaffAccountVariables): MutationPromise<CreateStaffAccountData, CreateStaffAccountVariables>;
+
+interface CreateStaffAccountRef {
+  ...
+  (dc: DataConnect, vars: CreateStaffAccountVariables): MutationRef<CreateStaffAccountData, CreateStaffAccountVariables>;
+}
+export const createStaffAccountRef: CreateStaffAccountRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the createStaffAccountRef:
+```typescript
+const name = createStaffAccountRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `CreateStaffAccount` mutation requires an argument of type `CreateStaffAccountVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface CreateStaffAccountVariables {
+  firebaseUid: string;
+  email: string;
+  name: string;
+  profession: string;
+  slmcRegNo: string;
+  proofUrl: string;
+  status: string;
+  hospital?: string | null;
+  specialization?: string | null;
+  createdAt: string;
+}
+```
+### Return Type
+Recall that executing the `CreateStaffAccount` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `CreateStaffAccountData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface CreateStaffAccountData {
+  staffAccount_insert: StaffAccount_Key;
+}
+```
+### Using `CreateStaffAccount`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, createStaffAccount, CreateStaffAccountVariables } from '@firebasegen/default-connector';
+
+// The `CreateStaffAccount` mutation requires an argument of type `CreateStaffAccountVariables`:
+const createStaffAccountVars: CreateStaffAccountVariables = {
+  firebaseUid: ..., 
+  email: ..., 
+  name: ..., 
+  profession: ..., 
+  slmcRegNo: ..., 
+  proofUrl: ..., 
+  status: ..., 
+  hospital: ..., // optional
+  specialization: ..., // optional
+  createdAt: ..., 
+};
+
+// Call the `createStaffAccount()` function to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await createStaffAccount(createStaffAccountVars);
+// Variables can be defined inline as well.
+const { data } = await createStaffAccount({ firebaseUid: ..., email: ..., name: ..., profession: ..., slmcRegNo: ..., proofUrl: ..., status: ..., hospital: ..., specialization: ..., createdAt: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await createStaffAccount(dataConnect, createStaffAccountVars);
+
+console.log(data.staffAccount_insert);
+
+// Or, you can use the `Promise` API.
+createStaffAccount(createStaffAccountVars).then((response) => {
+  const data = response.data;
+  console.log(data.staffAccount_insert);
+});
+```
+
+### Using `CreateStaffAccount`'s `MutationRef` function
+
+```typescript
+import { getDataConnect, executeMutation } from 'firebase/data-connect';
+import { connectorConfig, createStaffAccountRef, CreateStaffAccountVariables } from '@firebasegen/default-connector';
+
+// The `CreateStaffAccount` mutation requires an argument of type `CreateStaffAccountVariables`:
+const createStaffAccountVars: CreateStaffAccountVariables = {
+  firebaseUid: ..., 
+  email: ..., 
+  name: ..., 
+  profession: ..., 
+  slmcRegNo: ..., 
+  proofUrl: ..., 
+  status: ..., 
+  hospital: ..., // optional
+  specialization: ..., // optional
+  createdAt: ..., 
+};
+
+// Call the `createStaffAccountRef()` function to get a reference to the mutation.
+const ref = createStaffAccountRef(createStaffAccountVars);
+// Variables can be defined inline as well.
+const ref = createStaffAccountRef({ firebaseUid: ..., email: ..., name: ..., profession: ..., slmcRegNo: ..., proofUrl: ..., status: ..., hospital: ..., specialization: ..., createdAt: ..., });
+
+// You can also pass in a `DataConnect` instance to the `MutationRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = createStaffAccountRef(dataConnect, createStaffAccountVars);
+
+// Call `executeMutation()` on the reference to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeMutation(ref);
+
+console.log(data.staffAccount_insert);
+
+// Or, you can use the `Promise` API.
+executeMutation(ref).then((response) => {
+  const data = response.data;
+  console.log(data.staffAccount_insert);
+});
+```
+
+## UpdateStaffStatus
+You can execute the `UpdateStaffStatus` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
+```typescript
+updateStaffStatus(vars: UpdateStaffStatusVariables): MutationPromise<UpdateStaffStatusData, UpdateStaffStatusVariables>;
+
+interface UpdateStaffStatusRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpdateStaffStatusVariables): MutationRef<UpdateStaffStatusData, UpdateStaffStatusVariables>;
+}
+export const updateStaffStatusRef: UpdateStaffStatusRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
+```typescript
+updateStaffStatus(dc: DataConnect, vars: UpdateStaffStatusVariables): MutationPromise<UpdateStaffStatusData, UpdateStaffStatusVariables>;
+
+interface UpdateStaffStatusRef {
+  ...
+  (dc: DataConnect, vars: UpdateStaffStatusVariables): MutationRef<UpdateStaffStatusData, UpdateStaffStatusVariables>;
+}
+export const updateStaffStatusRef: UpdateStaffStatusRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the updateStaffStatusRef:
+```typescript
+const name = updateStaffStatusRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `UpdateStaffStatus` mutation requires an argument of type `UpdateStaffStatusVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface UpdateStaffStatusVariables {
+  id: UUIDString;
+  status: string;
+}
+```
+### Return Type
+Recall that executing the `UpdateStaffStatus` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `UpdateStaffStatusData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface UpdateStaffStatusData {
+  staffAccount_update?: StaffAccount_Key | null;
+}
+```
+### Using `UpdateStaffStatus`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, updateStaffStatus, UpdateStaffStatusVariables } from '@firebasegen/default-connector';
+
+// The `UpdateStaffStatus` mutation requires an argument of type `UpdateStaffStatusVariables`:
+const updateStaffStatusVars: UpdateStaffStatusVariables = {
+  id: ..., 
+  status: ..., 
+};
+
+// Call the `updateStaffStatus()` function to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await updateStaffStatus(updateStaffStatusVars);
+// Variables can be defined inline as well.
+const { data } = await updateStaffStatus({ id: ..., status: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await updateStaffStatus(dataConnect, updateStaffStatusVars);
+
+console.log(data.staffAccount_update);
+
+// Or, you can use the `Promise` API.
+updateStaffStatus(updateStaffStatusVars).then((response) => {
+  const data = response.data;
+  console.log(data.staffAccount_update);
+});
+```
+
+### Using `UpdateStaffStatus`'s `MutationRef` function
+
+```typescript
+import { getDataConnect, executeMutation } from 'firebase/data-connect';
+import { connectorConfig, updateStaffStatusRef, UpdateStaffStatusVariables } from '@firebasegen/default-connector';
+
+// The `UpdateStaffStatus` mutation requires an argument of type `UpdateStaffStatusVariables`:
+const updateStaffStatusVars: UpdateStaffStatusVariables = {
+  id: ..., 
+  status: ..., 
+};
+
+// Call the `updateStaffStatusRef()` function to get a reference to the mutation.
+const ref = updateStaffStatusRef(updateStaffStatusVars);
+// Variables can be defined inline as well.
+const ref = updateStaffStatusRef({ id: ..., status: ..., });
+
+// You can also pass in a `DataConnect` instance to the `MutationRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = updateStaffStatusRef(dataConnect, updateStaffStatusVars);
+
+// Call `executeMutation()` on the reference to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeMutation(ref);
+
+console.log(data.staffAccount_update);
+
+// Or, you can use the `Promise` API.
+executeMutation(ref).then((response) => {
+  const data = response.data;
+  console.log(data.staffAccount_update);
 });
 ```
 

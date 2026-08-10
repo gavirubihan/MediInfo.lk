@@ -83,3 +83,39 @@ mutation CreateMedicineVerification($medicineId: UUID!, $doctorId: String!, $slm
 mutation SetMedicineVerified($id: UUID!, $verified: Boolean!) @auth(level: PUBLIC) {
   medicine_update(id: $id, data: { verified: $verified })
 }
+
+
+mutation CreateStaffAccount(
+  $firebaseUid: String!
+  $email: String!
+  $name: String!
+  $profession: String!
+  $slmcRegNo: String!
+  $proofUrl: String!
+  $status: String!
+  $hospital: String
+  $specialization: String
+  $createdAt: String!
+) @auth(level: PUBLIC) {
+  staffAccount_insert(
+    data: {
+      firebaseUid: $firebaseUid
+      email: $email
+      name: $name
+      profession: $profession
+      slmcRegNo: $slmcRegNo
+      proofUrl: $proofUrl
+      status: $status
+      hospital: $hospital
+      specialization: $specialization
+      createdAt: $createdAt
+    }
+  )
+}
+
+mutation UpdateStaffStatus(
+  $id: UUID!
+  $status: String!
+) @auth(level: PUBLIC) {
+  staffAccount_update(id: $id, data: { status: $status })
+}
