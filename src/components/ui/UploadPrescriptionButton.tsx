@@ -23,7 +23,7 @@ export const UploadPrescriptionButton: React.FC<UploadPrescriptionButtonProps> =
     if (isLoggedIn) {
       setIsOpen(true);
     } else {
-      router.push('/login?view=signup');
+      router.push('/login');
     }
   };
 

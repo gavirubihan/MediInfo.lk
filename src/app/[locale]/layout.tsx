@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Nunito, JetBrains_Mono, Noto_Sans_Sinhala } from "ne
 import "../globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import {notFound} from 'next/navigation';
@@ -63,6 +64,7 @@ export default async function RootLayout({
             {children}
           </main>
           <Footer />
+          <ScrollToTop />
         </NextIntlClientProvider>
       </body>
     </html>

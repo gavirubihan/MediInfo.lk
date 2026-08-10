@@ -21,7 +21,7 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [userProfile, setUserProfile] = useState<{name: string, email: string} | null>(null);
+  const [userProfile, setUserProfile] = useState<{name: string, email: string, isAdmin: boolean} | null>(null);
 
   useEffect(() => {
     setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
@@ -29,15 +29,15 @@ export const Navbar = () => {
     if (adminUser) {
       try {
         const parsed = JSON.parse(adminUser);
-        setUserProfile({ name: parsed.name, email: parsed.email });
+        setUserProfile({ name: parsed.name, email: parsed.email, isAdmin: true });
       } catch (e) {}
     } else {
       const uName = localStorage.getItem('userName');
       const uEmail = localStorage.getItem('userEmail');
       if (uName && uEmail) {
-        setUserProfile({ name: uName, email: uEmail });
+        setUserProfile({ name: uName, email: uEmail, isAdmin: false });
       } else {
-        setUserProfile({ name: 'Nirosha', email: 'nirosha@example.com' });
+        setUserProfile({ name: 'Nirosha', email: 'nirosha@example.com', isAdmin: false });
       }
     }
   }, [pathname]);
@@ -142,10 +142,10 @@ export const Navbar = () => {
             {isLoggedIn ? (
               <div className="relative">
                 <div 
-                  className="w-[38px] h-[38px] rounded-full bg-[#9c27b0] text-white flex items-center justify-center font-bold text-lg shadow-[0_4px_12px_rgba(156,39,176,0.3)] hover:scale-105 transition-transform cursor-pointer border-2 border-white"
+                  className="w-[38px] h-[38px] rounded-full bg-blue-50 flex items-center justify-center shadow-[0_4px_12px_rgba(26,111,191,0.2)] hover:scale-105 transition-transform cursor-pointer border-2 border-white overflow-hidden"
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
                 >
-                  {userProfile?.name ? userProfile.name.charAt(0).toUpperCase() : 'N'}
+                  <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${userProfile?.name || 'User'}&backgroundColor=e8f3fc`} alt="Profile" className="w-full h-full object-cover" />
                 </div>
 
                 {/* Profile Popup Menu */}
@@ -156,13 +156,15 @@ export const Navbar = () => {
                       <div className="text-[13px] text-mid-gray truncate mt-0.5">{userProfile?.email || 'nirosha@example.com'}</div>
                     </div>
                     <div className="p-2 flex flex-col gap-1">
-                      <Link 
-                        href="/admin" 
-                        className="px-3 py-2.5 hover:bg-off-white rounded-xl text-[14px] font-medium text-dark-gray transition-colors cursor-pointer no-underline flex items-center"
-                        onClick={() => setIsProfileMenuOpen(false)}
-                      >
-                        Dashboard
-                      </Link>
+                      {userProfile?.isAdmin && (
+                        <a 
+                          href="/admin" 
+                          className="px-3 py-2.5 hover:bg-off-white rounded-xl text-[14px] font-medium text-dark-gray transition-colors cursor-pointer no-underline flex items-center"
+                          onClick={() => setIsProfileMenuOpen(false)}
+                        >
+                          Dashboard
+                        </a>
+                      )}
                       <button 
                         onClick={handleLogout}
                         className="px-3 py-2.5 hover:bg-red-50 hover:text-red-600 rounded-xl text-[14px] font-medium text-dark-gray transition-colors cursor-pointer text-left border-none bg-transparent flex items-center w-full"
@@ -235,17 +237,19 @@ export const Navbar = () => {
             {isLoggedIn ? (
               <div className="flex flex-col gap-2 mt-2 pt-2 border-t border-light-gray/50">
                 <div className="w-full flex items-center gap-3 bg-off-white rounded-2xl py-3 px-4 border border-light-gray/50">
-                  <div className="w-10 h-10 rounded-full bg-[#9c27b0] text-white flex items-center justify-center font-bold text-lg shrink-0">
-                    {userProfile?.name ? userProfile.name.charAt(0).toUpperCase() : 'N'}
+                  <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0 border-2 border-white overflow-hidden shadow-sm">
+                    <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${userProfile?.name || 'User'}&backgroundColor=e8f3fc`} alt="Profile" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex flex-col overflow-hidden">
                     <span className="font-bold text-[15px] text-near-black truncate">{userProfile?.name || 'Nirosha'}</span>
                     <span className="text-[13px] text-mid-gray truncate">{userProfile?.email || 'nirosha@example.com'}</span>
                   </div>
                 </div>
-                <Link href="/admin" className="no-underline block" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button variant="secondary" className="w-full justify-center rounded-xl py-3 h-auto font-bold text-[14px]">Dashboard</Button>
-                </Link>
+                {userProfile?.isAdmin && (
+                  <a href="/admin" className="no-underline block" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button variant="secondary" className="w-full justify-center rounded-xl py-3 h-auto font-bold text-[14px]">Dashboard</Button>
+                  </a>
+                )}
               <button 
                   type="button"
                   className="w-full flex items-center justify-center rounded-xl py-3 h-auto font-bold text-[14px] text-red-600 border-2 border-red-200 hover:bg-red-50 bg-white transition-colors cursor-pointer"
