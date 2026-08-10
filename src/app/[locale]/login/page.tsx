@@ -49,7 +49,7 @@ export default function AuthPage() {
 
     if (matchedPreset) {
       localStorage.setItem('mediinfo_admin_user', JSON.stringify(matchedPreset));
-      router.push('/admin');
+      window.location.href = '/admin';
       return;
     }
 
@@ -67,7 +67,7 @@ export default function AuthPage() {
           hospital: staffRecord.hospital || 'Registered Healthcare Staff'
         };
         localStorage.setItem('mediinfo_admin_user', JSON.stringify(approvedUser));
-        router.push('/admin');
+        window.location.href = '/admin';
         return;
       } else if (staffRecord.status === 'pending') {
         setAuthError('Your registration is pending Super Admin verification. You will gain access once approved.');
@@ -489,7 +489,7 @@ export default function AuthPage() {
                   <div
                     onClick={() => {
                       localStorage.setItem('isLoggedIn', 'true');
-                      router.push('/admin');
+                      window.location.href = '/admin';
                     }}
                     className="flex items-center gap-4 p-4 hover:bg-off-white transition-colors cursor-pointer border-b border-light-gray"
                   >
