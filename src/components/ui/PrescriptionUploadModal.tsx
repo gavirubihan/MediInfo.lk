@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   X,
   UploadCloud,
@@ -33,6 +34,11 @@ const SCAN_STEPS = [
 
 export const PrescriptionUploadModal: React.FC<PrescriptionUploadModalProps> = ({ isOpen, onClose }) => {
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const [dragActive, setDragActive] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -58,7 +64,7 @@ export const PrescriptionUploadModal: React.FC<PrescriptionUploadModalProps> = (
     }
   }, [file]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
   // ── Drag & drop ────────────────────────────────────────────────────────────
   const handleDrag = (e: React.DragEvent) => {
@@ -173,8 +179,8 @@ export const PrescriptionUploadModal: React.FC<PrescriptionUploadModalProps> = (
   const step = uploadState === 'results' ? 3 : uploadState === 'scanning' ? 2 : 1;
 
   // ── Render ─────────────────────────────────────────────────────────────────
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-near-black/55 backdrop-blur-md transition-opacity duration-300"
@@ -581,6 +587,7 @@ export const PrescriptionUploadModal: React.FC<PrescriptionUploadModalProps> = (
           />
         </div>
       )}
-    </div>
+    </div>,
+    document.body
   );
 };

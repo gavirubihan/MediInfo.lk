@@ -30,7 +30,7 @@ export default function AboutPage() {
       role: t('teamRole1'),
       color: 'bg-blue',
       desc: t('teamDesc1'),
-      image: '/images/team/team_1.png',
+      image: '/images/team/team_1.webp',
     },
     {
       initials: 'KP',
@@ -38,7 +38,7 @@ export default function AboutPage() {
       role: t('teamRole2'),
       color: 'bg-teal',
       desc: t('teamDesc2'),
-      image: '/images/team/team_2.png',
+      image: '/images/team/team_2.webp',
     },
     {
       initials: 'NK',
@@ -46,7 +46,7 @@ export default function AboutPage() {
       role: t('teamRole3'),
       color: 'bg-blue',
       desc: t('teamDesc3'),
-      image: '/images/team/team_3.png',
+      image: '/images/team/team_3.webp',
     },
     {
       initials: 'CF',
@@ -54,7 +54,7 @@ export default function AboutPage() {
       role: t('teamRole4'),
       color: 'bg-teal',
       desc: t('teamDesc4'),
-      image: '/images/team/team_4.png',
+      image: '/images/team/team_4.webp',
     },
   ];
 
@@ -102,7 +102,7 @@ export default function AboutPage() {
     <>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-[#FAFCFF] pt-36 pb-24">
-        
+
         {/* Glow Effects */}
         <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue/10 blur-[80px] animate-pulse" style={{ animationDuration: '4s' }}></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-teal/10 blur-[100px] animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
