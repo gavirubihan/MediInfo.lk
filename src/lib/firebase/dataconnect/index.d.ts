@@ -69,6 +69,7 @@ export interface CreateMedicineVariables {
   brandNames: string[];
   form: string[];
   createdDate: string;
+  imageUrl?: string | null;
 }
 
 export interface CreateMedicineVerificationData {
@@ -148,6 +149,8 @@ export interface GetMedicineBySlugData {
     safetyChildren: string;
     brandNames: string[];
     form: string[];
+    createdDate: string;
+    imageUrl?: string | null;
     dosageRows_on_medicine: ({
       id: UUIDString;
       ageGroup: string;
@@ -229,6 +232,7 @@ export interface ListMedicinesData {
     brandNames: string[];
     form: string[];
     createdDate: string;
+    imageUrl?: string | null;
     dosageRows_on_medicine: ({
       id: UUIDString;
       ageGroup: string;
@@ -334,6 +338,7 @@ export interface UpdateMedicineCoreVariables {
   brandNames: string[];
   form: string[];
   createdDate: string;
+  imageUrl?: string | null;
 }
 
 export interface UpdateStaffStatusData {

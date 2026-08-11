@@ -4,7 +4,7 @@ mutation CreateMedicine(
   $prescriptionRequired: Boolean!, $verified: Boolean!, 
   $maxDailyDoseAdults: String!, $safetyPregnancy: String!, 
   $safetyBreastfeeding: String!, $safetyElderly: String!, 
-  $safetyChildren: String!, $brandNames: [String!]!, $form: [String!]!, $createdDate: String!
+  $safetyChildren: String!, $brandNames: [String!]!, $form: [String!]!, $createdDate: String!, $imageUrl: String
 ) @auth(level: PUBLIC) {
   medicine_insert(data: {
     slug: $slug, genericName: $genericName, chemicalName: $chemicalName,
@@ -13,7 +13,7 @@ mutation CreateMedicine(
     maxDailyDoseAdults: $maxDailyDoseAdults, safetyPregnancy: $safetyPregnancy,
     safetyBreastfeeding: $safetyBreastfeeding, safetyElderly: $safetyElderly,
     safetyChildren: $safetyChildren, brandNames: $brandNames, form: $form,
-    createdDate: $createdDate
+    createdDate: $createdDate, imageUrl: $imageUrl
   })
 }
 
@@ -61,7 +61,7 @@ mutation UpdateMedicineCore(
   $prescriptionRequired: Boolean!, $verified: Boolean!, 
   $maxDailyDoseAdults: String!, $safetyPregnancy: String!, 
   $safetyBreastfeeding: String!, $safetyElderly: String!, 
-  $safetyChildren: String!, $brandNames: [String!]!, $form: [String!]!, $createdDate: String!
+  $safetyChildren: String!, $brandNames: [String!]!, $form: [String!]!, $createdDate: String!, $imageUrl: String
 ) @auth(level: PUBLIC) {
   medicine_update(id: $id, data: {
     slug: $slug, genericName: $genericName, chemicalName: $chemicalName,
@@ -70,7 +70,7 @@ mutation UpdateMedicineCore(
     maxDailyDoseAdults: $maxDailyDoseAdults, safetyPregnancy: $safetyPregnancy,
     safetyBreastfeeding: $safetyBreastfeeding, safetyElderly: $safetyElderly,
     safetyChildren: $safetyChildren, brandNames: $brandNames, form: $form,
-    createdDate: $createdDate
+    createdDate: $createdDate, imageUrl: $imageUrl
   })
 }
 

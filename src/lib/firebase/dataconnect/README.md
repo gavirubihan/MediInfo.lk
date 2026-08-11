@@ -125,6 +125,7 @@ export interface ListMedicinesData {
     brandNames: string[];
     form: string[];
     createdDate: string;
+    imageUrl?: string | null;
     dosageRows_on_medicine: ({
       id: UUIDString;
       ageGroup: string;
@@ -274,6 +275,8 @@ export interface GetMedicineBySlugData {
     safetyChildren: string;
     brandNames: string[];
     form: string[];
+    createdDate: string;
+    imageUrl?: string | null;
     dosageRows_on_medicine: ({
       id: UUIDString;
       ageGroup: string;
@@ -664,6 +667,7 @@ export interface CreateMedicineVariables {
   brandNames: string[];
   form: string[];
   createdDate: string;
+  imageUrl?: string | null;
 }
 ```
 ### Return Type
@@ -699,13 +703,14 @@ const createMedicineVars: CreateMedicineVariables = {
   brandNames: ..., 
   form: ..., 
   createdDate: ..., 
+  imageUrl: ..., // optional
 };
 
 // Call the `createMedicine()` function to execute the mutation.
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await createMedicine(createMedicineVars);
 // Variables can be defined inline as well.
-const { data } = await createMedicine({ slug: ..., genericName: ..., chemicalName: ..., category: ..., strength: ..., ageGroup: ..., prescriptionRequired: ..., verified: ..., maxDailyDoseAdults: ..., safetyPregnancy: ..., safetyBreastfeeding: ..., safetyElderly: ..., safetyChildren: ..., brandNames: ..., form: ..., createdDate: ..., });
+const { data } = await createMedicine({ slug: ..., genericName: ..., chemicalName: ..., category: ..., strength: ..., ageGroup: ..., prescriptionRequired: ..., verified: ..., maxDailyDoseAdults: ..., safetyPregnancy: ..., safetyBreastfeeding: ..., safetyElderly: ..., safetyChildren: ..., brandNames: ..., form: ..., createdDate: ..., imageUrl: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
@@ -744,12 +749,13 @@ const createMedicineVars: CreateMedicineVariables = {
   brandNames: ..., 
   form: ..., 
   createdDate: ..., 
+  imageUrl: ..., // optional
 };
 
 // Call the `createMedicineRef()` function to get a reference to the mutation.
 const ref = createMedicineRef(createMedicineVars);
 // Variables can be defined inline as well.
-const ref = createMedicineRef({ slug: ..., genericName: ..., chemicalName: ..., category: ..., strength: ..., ageGroup: ..., prescriptionRequired: ..., verified: ..., maxDailyDoseAdults: ..., safetyPregnancy: ..., safetyBreastfeeding: ..., safetyElderly: ..., safetyChildren: ..., brandNames: ..., form: ..., createdDate: ..., });
+const ref = createMedicineRef({ slug: ..., genericName: ..., chemicalName: ..., category: ..., strength: ..., ageGroup: ..., prescriptionRequired: ..., verified: ..., maxDailyDoseAdults: ..., safetyPregnancy: ..., safetyBreastfeeding: ..., safetyElderly: ..., safetyChildren: ..., brandNames: ..., form: ..., createdDate: ..., imageUrl: ..., });
 
 // You can also pass in a `DataConnect` instance to the `MutationRef` function.
 const dataConnect = getDataConnect(connectorConfig);
@@ -1425,6 +1431,7 @@ export interface UpdateMedicineCoreVariables {
   brandNames: string[];
   form: string[];
   createdDate: string;
+  imageUrl?: string | null;
 }
 ```
 ### Return Type
@@ -1461,13 +1468,14 @@ const updateMedicineCoreVars: UpdateMedicineCoreVariables = {
   brandNames: ..., 
   form: ..., 
   createdDate: ..., 
+  imageUrl: ..., // optional
 };
 
 // Call the `updateMedicineCore()` function to execute the mutation.
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await updateMedicineCore(updateMedicineCoreVars);
 // Variables can be defined inline as well.
-const { data } = await updateMedicineCore({ id: ..., slug: ..., genericName: ..., chemicalName: ..., category: ..., strength: ..., ageGroup: ..., prescriptionRequired: ..., verified: ..., maxDailyDoseAdults: ..., safetyPregnancy: ..., safetyBreastfeeding: ..., safetyElderly: ..., safetyChildren: ..., brandNames: ..., form: ..., createdDate: ..., });
+const { data } = await updateMedicineCore({ id: ..., slug: ..., genericName: ..., chemicalName: ..., category: ..., strength: ..., ageGroup: ..., prescriptionRequired: ..., verified: ..., maxDailyDoseAdults: ..., safetyPregnancy: ..., safetyBreastfeeding: ..., safetyElderly: ..., safetyChildren: ..., brandNames: ..., form: ..., createdDate: ..., imageUrl: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
@@ -1507,12 +1515,13 @@ const updateMedicineCoreVars: UpdateMedicineCoreVariables = {
   brandNames: ..., 
   form: ..., 
   createdDate: ..., 
+  imageUrl: ..., // optional
 };
 
 // Call the `updateMedicineCoreRef()` function to get a reference to the mutation.
 const ref = updateMedicineCoreRef(updateMedicineCoreVars);
 // Variables can be defined inline as well.
-const ref = updateMedicineCoreRef({ id: ..., slug: ..., genericName: ..., chemicalName: ..., category: ..., strength: ..., ageGroup: ..., prescriptionRequired: ..., verified: ..., maxDailyDoseAdults: ..., safetyPregnancy: ..., safetyBreastfeeding: ..., safetyElderly: ..., safetyChildren: ..., brandNames: ..., form: ..., createdDate: ..., });
+const ref = updateMedicineCoreRef({ id: ..., slug: ..., genericName: ..., chemicalName: ..., category: ..., strength: ..., ageGroup: ..., prescriptionRequired: ..., verified: ..., maxDailyDoseAdults: ..., safetyPregnancy: ..., safetyBreastfeeding: ..., safetyElderly: ..., safetyChildren: ..., brandNames: ..., form: ..., createdDate: ..., imageUrl: ..., });
 
 // You can also pass in a `DataConnect` instance to the `MutationRef` function.
 const dataConnect = getDataConnect(connectorConfig);

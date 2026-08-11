@@ -17,6 +17,7 @@ query ListMedicines @auth(level: PUBLIC) {
     brandNames
     form
     createdDate
+    imageUrl
     
     dosageRows_on_medicine {
       id
@@ -77,7 +78,8 @@ query GetMedicineBySlug($slug: String!) @auth(level: PUBLIC) {
     safetyChildren
     brandNames
     form
-    
+    createdDate
+    imageUrl
     dosageRows_on_medicine {
       id
       ageGroup
