@@ -19,11 +19,18 @@ if (!getApps().length) {
 
 const auth = getAuth();
 
+// NOTE: These seed accounts are used for initial setup only.
+// Set SEED_PASSWORD in your .env.local before running this script.
+const seedPassword = process.env.SEED_PASSWORD;
+if (!seedPassword) {
+  throw new Error('SEED_PASSWORD env var is required. Set it in .env.local before running.');
+}
+
 const users = [
-  { email: 'admin@mediinfo.lk', password: 'password123', displayName: 'Admin User' },
-  { email: 'staff@mediinfo.lk', password: 'password123', displayName: 'Staff User' },
-  { email: 'doctor@mediinfo.lk', password: 'password123', displayName: 'Doctor User' },
-  { email: 'nimali.silva@mediinfo.lk', password: 'password123', displayName: 'Nimali Silva' }
+  { email: 'admin@mediinfo.lk', password: seedPassword, displayName: 'Admin User' },
+  { email: 'staff@mediinfo.lk', password: seedPassword, displayName: 'Staff User' },
+  { email: 'doctor@mediinfo.lk', password: seedPassword, displayName: 'Doctor User' },
+  { email: 'nimali.silva@mediinfo.lk', password: seedPassword, displayName: 'Nimali Silva' }
 ];
 
 async function seedAuth() {

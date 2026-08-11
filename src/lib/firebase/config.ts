@@ -11,8 +11,8 @@ export const firebaseConfig = {
 export const serverConfig = {
   cookieName: 'AuthToken',
   cookieSignatureKeys: [
-    process.env.FIREBASE_COOKIE_SIGNATURE_KEY || 'secret-key-1-must-be-at-least-32-chars-long', 
-    process.env.FIREBASE_COOKIE_SIGNATURE_KEY_2 || 'secret-key-2-must-be-at-least-32-chars-long'
+    process.env.FIREBASE_COOKIE_SIGNATURE_KEY || '',
+    process.env.FIREBASE_COOKIE_SIGNATURE_KEY_2 || ''
   ],
   cookieSerializeOptions: {
     path: '/',

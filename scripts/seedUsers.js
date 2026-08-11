@@ -6,11 +6,13 @@ process.env.FIREBASE_AUTH_EMULATOR_HOST = '127.0.0.1:9099';
 
 initializeApp({ projectId: 'mediinfo-lk' });
 
+// NOTE: These are LOCAL EMULATOR ONLY seed accounts. Do NOT use real passwords here.
+// For local dev, any password works since the emulator is not a real Firebase project.
 const users = [
-  { email: 'admin@mediinfo.lk', password: 'password123', role: 'super_admin' },
-  { email: 'doctor@mediinfo.lk', password: 'password123', role: 'doctor' },
-  { email: 'nimali.silva@mediinfo.lk', password: 'password123', role: 'doctor' },
-  { email: 'staff@mediinfo.lk', password: 'password123', role: 'other_medical' }
+  { email: 'admin@mediinfo.lk', password: process.env.SEED_PASSWORD || 'dev-password-local', role: 'super_admin' },
+  { email: 'doctor@mediinfo.lk', password: process.env.SEED_PASSWORD || 'dev-password-local', role: 'doctor' },
+  { email: 'nimali.silva@mediinfo.lk', password: process.env.SEED_PASSWORD || 'dev-password-local', role: 'doctor' },
+  { email: 'staff@mediinfo.lk', password: process.env.SEED_PASSWORD || 'dev-password-local', role: 'other_medical' }
 ];
 
 async function seed() {
