@@ -20,7 +20,7 @@ type MedicineItem = {
   prescriptionRequired: boolean;
   verified: boolean;
   strength: string;
-  coverImage?: string;
+  imageUrl?: string;
 };
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -105,11 +105,17 @@ function MedicineCard({ med, index }: { med: MedicineItem; index: number }) {
         {/* Image */}
         <div className="relative w-full h-[120px] sm:h-[190px] shrink-0 bg-off-white overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={med.coverImage}
-            alt={med.genericName}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
+          {med.imageUrl ? (
+            <img
+              src={med.imageUrl}
+              alt={med.genericName}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-blue/10 to-teal/10 flex items-center justify-center text-blue/30 group-hover:scale-105 transition-transform duration-500">
+              <Pill size={48} strokeWidth={1.5} />
+            </div>
+          )}
           {/* gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
