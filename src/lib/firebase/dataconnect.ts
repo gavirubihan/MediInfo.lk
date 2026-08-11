@@ -53,6 +53,7 @@ export interface MedicineListItem {
   verified: boolean;
   prescriptionRequired: boolean;
   createdDate: string;
+  imageUrl?: string;
   medicineVerifications_on_medicine?: {
     id: string;
     doctorId: string;
@@ -90,7 +91,7 @@ export async function listMedicines(): Promise<MedicineListItem[]> {
   const data = await executeGraphql(`
     query ListMedicines {
       medicines {
-        id slug genericName chemicalName category brandNames form strength verified prescriptionRequired createdDate
+        id slug genericName chemicalName category brandNames form strength verified prescriptionRequired createdDate imageUrl
       }
     }
   `);
@@ -102,7 +103,7 @@ export async function getMedicineBySlug(slug: string): Promise<MedicineFull | nu
     query GetMedicineBySlug($slug: String!) {
       medicines(where: {slug: {eq: $slug}}) {
         id slug genericName chemicalName category brandNames form strength ageGroup
-        prescriptionRequired verified maxDailyDoseAdults createdDate
+        prescriptionRequired verified maxDailyDoseAdults createdDate imageUrl
         safetyPregnancy safetyBreastfeeding safetyElderly safetyChildren
         dosageRows_on_medicine { id ageGroup dose frequency maxPerDay }
         drugInteractions_on_medicine { id drug note }
@@ -147,6 +148,7 @@ export async function createMedicine(input: {
   brandNames: string[];
   form: string[];
   createdDate: string;
+  imageUrl?: string;
 }): Promise<string> {
   const data = await executeGraphql(`
     mutation CreateMedicine(
@@ -156,7 +158,7 @@ export async function createMedicine(input: {
       $maxDailyDoseAdults: String!, $safetyPregnancy: String!, 
       $safetyBreastfeeding: String!, $safetyElderly: String!, 
       $safetyChildren: String!, $brandNames: [String!]!, $form: [String!]!,
-      $createdDate: String!
+      $createdDate: String!, $imageUrl: String
     ) {
       medicine_insert(data: {
         slug: $slug, genericName: $genericName, chemicalName: $chemicalName,
@@ -165,7 +167,7 @@ export async function createMedicine(input: {
         maxDailyDoseAdults: $maxDailyDoseAdults, safetyPregnancy: $safetyPregnancy,
         safetyBreastfeeding: $safetyBreastfeeding, safetyElderly: $safetyElderly,
         safetyChildren: $safetyChildren, brandNames: $brandNames, form: $form,
-        createdDate: $createdDate
+        createdDate: $createdDate, imageUrl: $imageUrl
       })
     }
   `, input);
@@ -281,6 +283,7 @@ export async function updateMedicineCore(input: {
   brandNames: string[];
   form: string[];
   createdDate: string;
+  imageUrl?: string;
 }): Promise<boolean> {
   await executeGraphql(`
     mutation UpdateMedicineCore(
@@ -290,7 +293,7 @@ export async function updateMedicineCore(input: {
       $maxDailyDoseAdults: String!, $safetyPregnancy: String!, 
       $safetyBreastfeeding: String!, $safetyElderly: String!, 
       $safetyChildren: String!, $brandNames: [String!]!, $form: [String!]!,
-      $createdDate: String!
+      $createdDate: String!, $imageUrl: String
     ) {
       medicine_update(id: $id, data: {
         slug: $slug, genericName: $genericName, chemicalName: $chemicalName,
@@ -299,7 +302,7 @@ export async function updateMedicineCore(input: {
         maxDailyDoseAdults: $maxDailyDoseAdults, safetyPregnancy: $safetyPregnancy,
         safetyBreastfeeding: $safetyBreastfeeding, safetyElderly: $safetyElderly,
         safetyChildren: $safetyChildren, brandNames: $brandNames, form: $form,
-        createdDate: $createdDate
+        createdDate: $createdDate, imageUrl: $imageUrl
       })
     }
   `, input);

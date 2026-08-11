@@ -1,5 +1,6 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { 
   Pill, 
   Sparkles, 
@@ -19,10 +20,14 @@ import {
   Share2,
   ShieldAlert,
   Activity,
-  Tag
+  Tag,
+  ImagePlus,
+  Loader2,
+  Upload
 } from 'lucide-react';
 import { AITranslateModal } from './AITranslateModal';
 import { DoctorEmailModal } from './DoctorEmailModal';
+import { useCloudinaryUpload } from '@/hooks/useCloudinaryUpload';
 
 export interface DosageRow {
   ageGroup: string;
@@ -67,6 +72,7 @@ export interface MedicineFormData {
   prescriptionRequired: boolean;
   verified: boolean;
   maxDailyDoseAdults: string;
+  imageUrl?: string;
 
   dosageRows: DosageRow[];
   drugInteractions: DrugInteraction[];
@@ -144,6 +150,9 @@ const initialFormState: MedicineFormData = {
 };
 
 export function MedicineForm({ initialData }: { initialData?: MedicineFormData & { id?: string } }) {
+  const router = useRouter();
+  const { upload, uploading: imageUploading, progress: uploadProgress } = useCloudinaryUpload();
+
   const [formData, setFormData] = useState<MedicineFormData & { id?: string }>(initialData || initialFormState);
   const isEditing = !!initialData;
   const [activeLangTab, setActiveLangTab] = useState<'en' | 'si' | 'ta'>('en');
@@ -151,9 +160,36 @@ export function MedicineForm({ initialData }: { initialData?: MedicineFormData &
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [saveToast, setSaveToast] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [emailModalOpen, setEmailModalOpen] = useState(false);
   const [savedMedicineForEmail, setSavedMedicineForEmail] = useState<any>(null);
   const [newBrandInput, setNewBrandInput] = useState('');
+
+  // Photo upload state
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>(initialData?.imageUrl ?? '');
+  const [imageDragActive, setImageDragActive] = useState(false);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageSelect = useCallback((file: File) => {
+    if (!file.type.startsWith('image/')) {
+      setSaveError('Please select a valid image file (JPG, PNG, WebP, etc.)');
+      return;
+    }
+    setImageFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => setImagePreview(reader.result as string);
+    reader.readAsDataURL(file);
+  }, []);
+
+  const handleImageDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setImageDragActive(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) handleImageSelect(file);
+  }, [handleImageSelect]);
 
   const handleAddBrandName = () => {
     if (!newBrandInput.trim()) return;
@@ -355,13 +391,34 @@ export function MedicineForm({ initialData }: { initialData?: MedicineFormData &
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSaveError(null);
 
-    const slug = formData.slug || formData.genericName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    // Basic validation
+    if (!formData.genericName.trim()) {
+      setSaveError('Generic Name is required.');
+      return;
+    }
+    if (!formData.category.trim()) {
+      setSaveError('Category is required.');
+      return;
+    }
 
-    const endpoint = isEditing && formData.id ? `/api/medicine/${slug}` : '/api/medicine';
-    const method = isEditing && formData.id ? 'PUT' : 'POST';
+    const slug = formData.slug.trim() ||
+      formData.genericName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 
+    setIsSaving(true);
     try {
+      // 1. Upload image to Cloudinary if a new file was selected
+      let imageUrl = formData.imageUrl ?? '';
+      if (imageFile) {
+        const result = await upload(imageFile, 'medicines');
+        imageUrl = result.secureUrl;
+      }
+
+      // 2. Save medicine data
+      const endpoint = isEditing && formData.id ? `/api/medicine/${slug}` : '/api/medicine';
+      const method = isEditing && formData.id ? 'PUT' : 'POST';
+
       const res = await fetch(endpoint, {
         method,
         headers: { 'Content-Type': 'application/json' },
@@ -380,28 +437,30 @@ export function MedicineForm({ initialData }: { initialData?: MedicineFormData &
             verified: false,
             createdDate: new Date().toISOString().split('T')[0],
             maxDailyDoseAdults: formData.maxDailyDoseAdults,
-            safetyPregnancy: formData.safety?.pregnancy || 'caution',
-            safetyBreastfeeding: formData.safety?.breastfeeding || 'caution',
-            safetyElderly: formData.safety?.elderly || 'caution',
-            safetyChildren: formData.safety?.children || 'caution',
+            safetyPregnancy: formData.safety?.pregnancy ?? 'caution',
+            safetyBreastfeeding: formData.safety?.breastfeeding ?? 'caution',
+            safetyElderly: formData.safety?.elderly ?? 'caution',
+            safetyChildren: formData.safety?.children ?? 'caution',
+            imageUrl: imageUrl || undefined,
           },
           dosageRows: formData.dosageRows,
           drugInteractions: formData.drugInteractions,
-          localizedContent: {
-            en: formData.localizedContent.en,
-            si: formData.localizedContent.si,
-            ta: formData.localizedContent.ta,
-          },
+          localizedContent: formData.localizedContent,
         }),
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Save failed');
+      if (!res.ok) throw new Error(data.error ?? 'Save failed. Please try again.');
 
       setSaveToast(true);
       setTimeout(() => setSaveToast(false), 4500);
+
+      // Redirect to list after successful save
+      setTimeout(() => router.push('/admin/medicine/list'), 1500);
     } catch (err: any) {
-      alert(`Error saving medicine: ${err.message}`);
+      setSaveError(err.message ?? 'An unexpected error occurred.');
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -435,9 +494,11 @@ export function MedicineForm({ initialData }: { initialData?: MedicineFormData &
         <div>
           <h1 className="text-xl font-extrabold font-plus-jakarta text-near-black tracking-tight m-0 flex items-center gap-2">
             <Pill className="text-blue" size={20} />
-            <span>Add New Medicine</span>
+            <span>{isEditing ? 'Edit Medicine' : 'Add New Medicine'}</span>
           </h1>
-          <p className="text-xs text-mid-gray m-0 mt-0.5">Enter medical details, localized content & safety information</p>
+          <p className="text-xs text-mid-gray m-0 mt-0.5">
+            {isEditing ? `Editing: ${formData.genericName}` : 'Enter medical details, localized content & safety information'}
+          </p>
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
@@ -466,13 +527,31 @@ export function MedicineForm({ initialData }: { initialData?: MedicineFormData &
           <button
             onClick={handleSave}
             type="button"
-            className="px-4 py-2 bg-teal hover:bg-teal/90 text-white font-bold text-xs rounded-xl shadow-sm shadow-teal/20 transition-all flex items-center gap-1.5"
+            disabled={isSaving}
+            className="px-4 py-2 bg-teal hover:bg-teal/90 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-xs rounded-xl shadow-sm shadow-teal/20 transition-all flex items-center gap-1.5"
           >
-            <Save size={13} />
-            <span>Save & Publish</span>
+            {isSaving ? (
+              <><Loader2 size={13} className="animate-spin" /><span>{imageUploading ? `Uploading… ${uploadProgress}%` : 'Saving…'}</span></>
+            ) : (
+              <><Save size={13} /><span>{isEditing ? 'Save Changes' : 'Save & Publish'}</span></>
+            )}
           </button>
         </div>
       </div>
+
+      {/* Inline Save Error Banner */}
+      {saveError && (
+        <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-2xl animate-fade-up">
+          <AlertOctagon size={18} className="text-red-500 shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="text-sm font-bold text-red-700 m-0">Save Failed</p>
+            <p className="text-xs text-red-600 m-0 mt-0.5">{saveError}</p>
+          </div>
+          <button type="button" onClick={() => setSaveError(null)} className="text-red-400 hover:text-red-600 transition-colors">
+            <X size={16} />
+          </button>
+        </div>
+      )}
 
       {/* Live Preview Mode (FULL PUBLIC SITE REPLICA) */}
       {isPreviewMode ? (
@@ -854,6 +933,108 @@ export function MedicineForm({ initialData }: { initialData?: MedicineFormData &
         </div>
       ) : (
         <form onSubmit={handleSave} className="space-y-5">
+          {/* Section 0: Medicine Photo */}
+          <div className="bg-white border border-light-gray/60 rounded-2xl p-5 space-y-4">
+            <div className="flex items-center gap-2 pb-3 border-b border-light-gray">
+              <ImagePlus className="text-blue" size={16} />
+              <h2 className="text-sm font-bold text-near-black font-plus-jakarta m-0">Medicine Photo</h2>
+              <span className="text-[10px] text-mid-gray font-medium ml-auto">Optional — converted to WebP automatically</span>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-5 items-start">
+              {/* Drop Zone */}
+              <div
+                className={`relative flex-1 min-h-[140px] rounded-2xl border-2 border-dashed transition-all cursor-pointer flex flex-col items-center justify-center gap-3 p-6 ${
+                  imageDragActive
+                    ? 'border-blue bg-blue/5'
+                    : imagePreview
+                    ? 'border-teal/40 bg-teal/5'
+                    : 'border-light-gray hover:border-blue/50 hover:bg-blue/3 bg-off-white'
+                }`}
+                onDragEnter={(e) => { e.preventDefault(); setImageDragActive(true); }}
+                onDragLeave={(e) => { e.preventDefault(); setImageDragActive(false); }}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleImageDrop}
+                onClick={() => imageInputRef.current?.click()}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && imageInputRef.current?.click()}
+                aria-label="Upload medicine photo"
+              >
+                <input
+                  ref={imageInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => { const f = e.target.files?.[0]; if (f) handleImageSelect(f); }}
+                />
+                {imagePreview ? (
+                  <div className="text-center">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-teal justify-center">
+                      <Check size={14} />
+                      <span>{imageFile ? 'New image selected (will upload on save)' : 'Current photo'}</span>
+                    </div>
+                    <p className="text-[11px] text-mid-gray mt-1">Click or drag to replace</p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="w-12 h-12 rounded-2xl bg-blue/10 flex items-center justify-center text-blue">
+                      <Upload size={22} />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-bold text-near-black">Drop image here or click to browse</p>
+                      <p className="text-xs text-mid-gray mt-0.5">JPG, PNG, WebP — auto-converted to WebP before upload</p>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Preview Panel */}
+              {imagePreview && (
+                <div className="relative shrink-0 w-[160px]">
+                  <img
+                    src={imagePreview}
+                    alt="Medicine preview"
+                    className="w-[160px] h-[160px] object-cover rounded-2xl border border-light-gray shadow-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setImageFile(null);
+                      setImagePreview('');
+                      setFormData((prev) => ({ ...prev, imageUrl: '' }));
+                      if (imageInputRef.current) imageInputRef.current.value = '';
+                    }}
+                    className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-near-black text-white flex items-center justify-center shadow-md hover:bg-red-600 transition-colors"
+                    aria-label="Remove photo"
+                  >
+                    <X size={13} />
+                  </button>
+                  <p className="text-[10px] text-mid-gray text-center mt-2 font-medium">
+                    {imageFile ? `${(imageFile.size / 1024).toFixed(0)} KB → WebP` : 'Current photo'}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Upload progress bar */}
+            {imageUploading && (
+              <div className="space-y-1.5">
+                <div className="flex justify-between text-xs font-bold">
+                  <span className="text-blue flex items-center gap-1.5"><Loader2 size={12} className="animate-spin" />Uploading to Cloudinary…</span>
+                  <span className="text-mid-gray">{uploadProgress}%</span>
+                </div>
+                <div className="h-1.5 w-full bg-light-gray rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-blue to-teal rounded-full transition-all duration-300"
+                    style={{ width: `${uploadProgress}%` }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* Section 1: General Information & Metadata */}
           <div className="bg-white border border-light-gray/60 rounded-2xl p-5 space-y-5">
             <div className="flex items-center gap-2 pb-3 border-b border-light-gray">

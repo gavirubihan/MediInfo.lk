@@ -60,7 +60,8 @@ export async function PUT(request: any, context: { params: Promise<{ slug: strin
     // 1. Update core medicine record
     await updateMedicineCore({
       id,
-      ...core
+      ...core,
+      imageUrl: core.imageUrl ?? undefined,
     });
 
     // 2. Delete all existing relations for this medicine

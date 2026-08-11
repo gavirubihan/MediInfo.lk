@@ -11,7 +11,8 @@ type Medicine @table {
   verified: Boolean!
   createdDate: String!
   maxDailyDoseAdults: String!
-  
+  imageUrl: String
+
   # Safety Indicators
   safetyPregnancy: String! 
   safetyBreastfeeding: String!
