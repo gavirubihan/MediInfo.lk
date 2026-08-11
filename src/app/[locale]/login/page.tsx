@@ -182,6 +182,7 @@ export default function AuthPage() {
       const formData = new FormData();
       formData.append('file', processedFile);
       formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'mediinfo_preset');
+      formData.append('folder', 'staff_proofs');
       
       const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'demo';
       const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, {
